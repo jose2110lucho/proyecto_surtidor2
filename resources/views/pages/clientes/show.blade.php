@@ -58,6 +58,10 @@
                                 <label>Telefono</label>
                                 <p type="text" class="form-control my-colorpicker1">{{ $cliente->telefono }}</p>
                             </div>
+                            <div class="form-group">
+                                <label>Estado</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->estado ? 'Activo' : 'Inactivo' }}</p>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex flex-row-reverse">

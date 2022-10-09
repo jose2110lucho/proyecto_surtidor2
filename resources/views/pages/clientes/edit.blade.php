@@ -66,6 +66,13 @@
                                     <input name="telefono" type="text" class="form-control my-colorpicker1"
                                         value="{{ old('telefono', $cliente->telefono) }}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="estado">Estado</label>
+                                    <select name="estado" class="form-control select2" style="width: 100%;">
+                                        <option value="1" selected="{{$cliente->estado ? 'selected' : ''}}">Activo</option>
+                                        <option value="0" selected="{{$cliente->estado ? '' : 'selected'}}">Inactivo</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex flex-row-reverse">

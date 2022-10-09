@@ -21,7 +21,7 @@
                         <div class="col-xs">
                             <form action="{{route('clientes.index')}}" method="GET">
                                 <div class="input-group">
-                                    <input name="nombre" id="nombre" type="text" class="form-control" placeholder="buscar cliente...">
+                                    <input name="buscar" id="buscar" type="text" class="form-control" placeholder="buscar cliente" value="{{ old('buscar') }}">
                                     <button class="btn btn-outline-primary" type="submit">
                                         <span class="fa fa-search"></span>
                                     </button>
@@ -57,7 +57,7 @@
                                                     style="width:{{ $cliente->puntos / 10 }}%"></div>
                                             </div>
                                         </td>
-                                        <td class="text-center"><span class="badge bg-success">ACTIVO</span></td>
+                                        <td class="text-center"><span class="badge {{$cliente->estado ? 'bg-success' : 'bg-secondary'}}">{{$cliente->estado ? 'ACTIVO' : 'INACTIVO'}}</span></td>
                                         <td class="text-center"><a href="{{ route('clientes.show', $cliente) }}">Ver</a>
                                         </td>
                                     </tr>
