@@ -325,14 +325,26 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
+        ],
+        //-------------------modulo clientes---------------------------------
+        [
+            'text'    => 'Clientes',
+            'icon'    => 'fas fa-fw fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Registrar',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'url'  => 'clientes/create',
+                ],
+                [
+                    'text' => 'Lista de clientes',
+                    'icon'    => 'fas fa-fw fa-list-ul',
+                    'url'  => 'clientes',
+                ],
+            ],
         ],
         //-------------------modulo inventario---------------------------------
         [
@@ -351,32 +363,6 @@ return [
                     'text' => 'Gestionar Tanque',
                     'url'  => '#',
                 ],
-             /* [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                */
-                
             ],
         ],
         //------------------------------------------------------------------
@@ -418,7 +404,7 @@ return [
                         ],
                     ],
                 ],
-              */  
+              */
             ],
         ],
         //------------------------------------------------------------------
@@ -471,7 +457,7 @@ return [
                         ],
                     ],
                 ],
-                
+
             ],
         ],
         //------------------------------------------------------------------
@@ -555,8 +541,8 @@ return [
             ],
         ],
         //------------------------------------------------------------------
-         //-------------------modulo administrativo---------------------------------
-         [
+        //-------------------modulo administrativo---------------------------------
+        [
             'text'    => 'Administrativo',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -600,7 +586,7 @@ return [
                         ],
                     ],
                 ],
-                
+
             ],
         ],
         //------------------------------------------------------------------
