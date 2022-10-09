@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>SurtidorBicentenario</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/SurtidorLogo.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -150,7 +150,7 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
@@ -311,13 +311,13 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        [
+    /*    [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],
+        ], 
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -333,7 +333,7 @@ return [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-        ],
+        ], */
         //-------------------modulo inventario---------------------------------
         [
             'text'    => 'Inventario',
@@ -447,7 +447,7 @@ return [
                     'text' => 'Gestionar canjeo',
                     'url'  => '#',
                 ],
-                [
+            /*    [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -470,7 +470,7 @@ return [
                             ],
                         ],
                     ],
-                ],
+                ],*/
                 
             ],
         ],
@@ -489,11 +489,11 @@ return [
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
+                            'text' => 'Reporte de Inventario',
                             'url'  => '#',
                         ],
                         [
-                            'text'    => 'level_two',
+                            'text'    => 'Reporte de Ventas',
                             'url'     => '#',
                             'submenu' => [
                                 [
@@ -507,10 +507,6 @@ return [
                             ],
                         ],
                     ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
                 ],
             ],
         ],
@@ -524,7 +520,7 @@ return [
                     'text' => 'Gestionar factura',
                     'url'  => '#',
                 ],
-                [
+             /*   [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -548,10 +544,7 @@ return [
                         ],
                     ],
                 ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
+                */
             ],
         ],
         //------------------------------------------------------------------
@@ -561,8 +554,8 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Gestionar personal',
-                    'url'  => '#',
+                    'text' => 'Gestionar empleado',
+                    'url'  => 'empleado/create',
                 ],
                 [
                     'text' => 'Gestionar turno',
@@ -576,7 +569,7 @@ return [
                     'text' => 'Gestionar privilegio',
                     'url'  => '#',
                 ],
-                [
+               /* [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -599,12 +592,12 @@ return [
                             ],
                         ],
                     ],
-                ],
+                ],*/
                 
             ],
         ],
         //------------------------------------------------------------------
-        ['header' => 'labels'],
+       /* ['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',
@@ -619,7 +612,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ], */
     ],
 
     /*
