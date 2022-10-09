@@ -28,6 +28,12 @@
                 <input name="direccion" type="text" class="form-control" id="direccion" placeholder="introduzca su direccion">
             </div>
             <!--fin campo direccion-->
+            <!--inicio campo telefono-->
+            <div class="mb-3">
+                <label for="telefono" class="form-label">telefono</label>
+                <input name="telefono" type="number" class="form-control" id="telefono" placeholder="introduzca su telefono">
+            </div>
+            <!--fin campo telefono-->
             <!--inicio campo contraseña-->
              <div class="mb-3">
                 <label for="password" class="form-label">constraseña</label>
@@ -37,7 +43,9 @@
             <!--inicio campo cantidad-->
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-success">guardar</button>
-                <button class="btn btn-secondary">limpiar</button>
+                <a href="{{ url('/empleado') }}" class="btn btn-secondary">
+                    Cancelar
+                </a>
             </div>
             <!--fin campo cantidad-->
         </form>

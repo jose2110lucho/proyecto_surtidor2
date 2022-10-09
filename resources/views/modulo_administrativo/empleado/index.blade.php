@@ -19,11 +19,12 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">nombre</th>
-                <th scope="col">correo</th>
-                <th scope="col">direccion</th>
-                <th scope="col">estado</th>
-                <th scope="col">accion</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Accion</th>
               </tr>
             </thead>
             <tbody>
@@ -33,12 +34,23 @@
                     <td>{{$usuario->name}}</td>
                     <td>{{$usuario->email}}</td>
                     <td>{{$usuario->direccion}}</td>
+                    <td>{{$usuario->telefono}}</td>
                     <td>{{$usuario->estado}}</td>
                     <td>
-                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-warning">editar</button>
-                            <button type="button" class="btn btn-danger">borrar</button>
-                          </div>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="{{ url('/empleado/' . $usuario->id . '/edit') }}"
+                                 class="btn btn-warning">
+                                 Editar
+                             </a>
+                             <form action="{{ url('/empleado/' . $usuario->id) }}"
+                                     method="post">
+                                     @csrf
+                                 {{ method_field('DELETE') }}
+                                 <input type="submit"
+                                 onclick="return confirm('¿Estas Seguro de Eliminarlo?')"
+                                 value="Borrar" class="btn btn-danger">
+                             </form> 
+                         </div>
                     </td>
                   </tr>  
                 @endforeach  

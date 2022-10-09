@@ -42,6 +42,7 @@ class EmpleadoController extends Controller
         $user->email = $request->correo;
         $user->password = Hash::make($request->password);
         $user->direccion = $request->direccion;
+        $user->telefono = $request->telefono;
         $user->estado = true;
         $user->save();
 
@@ -67,7 +68,8 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::findOrFail($id); 
+        return view('modulo_administrativo.empleado.edit',compact('usuario')); 
     }
 
     /**
@@ -79,7 +81,9 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $datosUsuario = request()->except(['_token','_method']);
+        User::where('id','=',$id)->update($datosUsuario);
+        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');  
     }
 
     /**
@@ -90,6 +94,7 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return redirect('empleado');
     }
 }
