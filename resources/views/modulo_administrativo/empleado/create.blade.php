@@ -1,7 +1,7 @@
 @extends('layouts/master')
 
 @section('content_header')
-<p>empleado</p>
+<h1>Empleado</h1>
 @stop
 
 @section('content')

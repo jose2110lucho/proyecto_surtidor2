@@ -345,7 +345,7 @@ return [
                 ],
                 [
                     'text' => 'Gestionar Producto',
-                    'url'  => '#',
+                    'url'  => '/producto',
                 ],
                 [
                     'text' => 'Gestionar Tanque',
