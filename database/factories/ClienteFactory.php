@@ -19,6 +19,7 @@ class ClienteFactory extends Factory
             'apellido' => $this->faker->lastName(),
             'puntos' => $this->faker->numberBetween(1,99),
             'telefono' => $this->faker->numberBetween(60000000, 79999999),
+            'estado' => (bool)random_int(0, 1),
         ];
     }
 }

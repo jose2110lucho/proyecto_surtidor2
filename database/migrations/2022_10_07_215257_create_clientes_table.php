@@ -19,6 +19,7 @@ class CreateClientesTable extends Migration
             $table->string('apellido');
             $table->string('telefono');
             $table->integer('puntos')->nullable();
+            $table->boolean('estado');
             $table->timestamps();
         });
     }

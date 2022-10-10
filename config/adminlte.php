@@ -333,6 +333,7 @@ return [
         [
             'text'    => 'Clientes',
             'icon'    => 'fas fa-fw fa-users',
+            'url'  => 'clientes/*',
             'submenu' => [
                 [
                     'text' => 'Registrar',
@@ -359,9 +360,30 @@ return [
                     'text' => 'Gestionar Producto',
                     'url'  => '#',
                 ],
+            ],
+        ],
+        //------------------------------------------------------------------
+        //-------------------modulo infraestructura---------------------------------
+        [
+            'text'    => 'Infraestructura',
+            'icon'    => 'fas fa-fw fa-building',
+            'submenu' => [
                 [
-                    'text' => 'Gestionar Tanque',
-                    'url'  => '#',
+                    'text' => 'Tanques',
+                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
+                    'url'  => 'tanques/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo tanque',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'tanques/create',
+                        ],
+                        [
+                            'text' => 'Lista de tanques',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'tanques',
+                        ],
+                    ],
                 ],
             ],
         ],
