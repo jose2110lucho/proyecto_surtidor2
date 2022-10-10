@@ -325,15 +325,32 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
+
         ], */
+
+        
+        //-------------------modulo clientes---------------------------------
+        [
+            'text'    => 'Clientes',
+            'icon'    => 'fas fa-fw fa-users',
+            'url'  => 'clientes/*',
+            'submenu' => [
+                [
+                    'text' => 'Registrar',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'url'  => 'clientes/create',
+                ],
+                [
+                    'text' => 'Lista de clientes',
+                    'icon'    => 'fas fa-fw fa-list-ul',
+                    'url'  => 'clientes',
+                ],
+            ],
+        ],
+
         //-------------------modulo inventario---------------------------------
         [
             'text'    => 'Inventario',
@@ -347,36 +364,31 @@ return [
                     'text' => 'Gestionar Producto',
                     'url'  => '/producto',
                 ],
+            ],
+        ],
+        //------------------------------------------------------------------
+        //-------------------modulo infraestructura---------------------------------
+        [
+            'text'    => 'Infraestructura',
+            'icon'    => 'fas fa-fw fa-building',
+            'submenu' => [
                 [
-                    'text' => 'Gestionar Tanque',
-                    'url'  => '#',
-                ],
-             /* [
-                    'text'    => 'level_one',
-                    'url'     => '#',
+                    'text' => 'Tanques',
+                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
+                    'url'  => 'tanques/*',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
-                            'url'  => '#',
+                            'text' => 'Nuevo tanque',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'tanques/create',
                         ],
                         [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
+                            'text' => 'Lista de tanques',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'tanques',
                         ],
                     ],
                 ],
-                */
-                
             ],
         ],
         //------------------------------------------------------------------
@@ -418,7 +430,7 @@ return [
                         ],
                     ],
                 ],
-              */  
+              */
             ],
         ],
         //------------------------------------------------------------------
@@ -470,8 +482,11 @@ return [
                             ],
                         ],
                     ],
+
                 ],*/
                 
+
+               
             ],
         ],
         //------------------------------------------------------------------
@@ -548,8 +563,8 @@ return [
             ],
         ],
         //------------------------------------------------------------------
-         //-------------------modulo administrativo---------------------------------
-         [
+        //-------------------modulo administrativo---------------------------------
+        [
             'text'    => 'Administrativo',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -592,8 +607,13 @@ return [
                             ],
                         ],
                     ],
+
                 ],*/
                 
+
+              
+
+
             ],
         ],
         //------------------------------------------------------------------
