@@ -42,7 +42,7 @@
                                     <th>CI</th>
                                     <th>NOMBRE</th>
                                     <th style="width: 15%">PUNTOS</th>
-                                    <th style="width: 40px" class="text-center">ESTADO</th>
+                                    <th style="width: 15%" class="text-center">ESTADO</th>
                                     <th style="width: 15%" class="text-center">OPCIONES</th>
                                 </tr>
                             </thead>
@@ -58,7 +58,9 @@
                                             </div>
                                         </td>
                                         <td class="text-center"><span class="badge {{$cliente->estado ? 'bg-success' : 'bg-secondary'}}">{{$cliente->estado ? 'ACTIVO' : 'INACTIVO'}}</span></td>
-                                        <td class="text-center"><a href="{{ route('clientes.show', $cliente) }}">Ver</a>
+                                        <td class="text-center">
+                                            <a href="{{ route('clientes.show', $cliente) }}" class="mx-2"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('clientes.edit', $cliente) }}" class="mx-2"><i class="fa fa-pen"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

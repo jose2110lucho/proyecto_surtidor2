@@ -15,7 +15,8 @@ class TanqueController extends Controller
      */
     public function index()
     {
-        //
+        $tanques = Tanque::orderby('codigo', 'desc')->get();
+        return view('pages.tanques.index', compact('tanques'));
     }
 
     /**
@@ -25,7 +26,7 @@ class TanqueController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.tanques.create');
     }
 
     /**
@@ -36,7 +37,8 @@ class TanqueController extends Controller
      */
     public function store(StoreTanqueRequest $request)
     {
-        //
+        $Tanque = Tanque::create($request->all());
+        return redirect()->route('tanques.show', $Tanque);
     }
 
     /**
@@ -47,7 +49,7 @@ class TanqueController extends Controller
      */
     public function show(Tanque $tanque)
     {
-        //
+        return view('pages.tanques.show', compact('tanque'));
     }
 
     /**
@@ -58,7 +60,7 @@ class TanqueController extends Controller
      */
     public function edit(Tanque $tanque)
     {
-        //
+        return view('pages.tanques.edit', compact('tanque'));
     }
 
     /**
@@ -70,7 +72,8 @@ class TanqueController extends Controller
      */
     public function update(UpdateTanqueRequest $request, Tanque $tanque)
     {
-        //
+        $tanque->update($request->all());
+        return redirect()->route('tanques.show', $tanque);
     }
 
     /**
@@ -81,6 +84,7 @@ class TanqueController extends Controller
      */
     public function destroy(Tanque $tanque)
     {
-        //
+        $tanque->delete();
+        return redirect()->route('tanques.index');
     }
 }

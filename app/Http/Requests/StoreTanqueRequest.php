@@ -13,7 +13,7 @@ class StoreTanqueRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class StoreTanqueRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'codigo' => 'required | max:30 | min:1',
+            'combustible' => 'required | max:30 | min:1',
+            'capacidad_max' => 'required',
+            'estado' => 'required',
+            'cantidad_disponible' => 'required'
         ];
     }
 }
