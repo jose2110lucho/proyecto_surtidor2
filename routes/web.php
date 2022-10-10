@@ -3,7 +3,8 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\ProductoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +24,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+Route::resource('empleado',EmpleadoController::class);
+
+Route::resource('producto',ProductoController::class);
+
 Route::resource('clientes', ClienteController::class);
 
 Route::resource('tanques', TanqueController::class);
+
