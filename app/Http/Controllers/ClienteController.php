@@ -19,7 +19,7 @@ class ClienteController extends Controller
         $clientes = Cliente::orderby('nombre', 'desc')
             ->where('nombre', 'ilike', '%' . $request->buscar . '%')
             ->orwhere('apellido', 'ilike', '%' . $request->buscar . '%')
-            ->paginate(10);
+            ->paginate(9);
         return view('pages.clientes.index', compact('clientes'));
     }
 
