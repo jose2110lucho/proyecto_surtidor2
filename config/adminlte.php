@@ -311,7 +311,7 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-    /*    [
+        /*    [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
@@ -331,7 +331,7 @@ return [
 
         ], */
 
-        
+
         //-------------------modulo clientes---------------------------------
         [
             'text'    => 'Clientes',
@@ -339,7 +339,7 @@ return [
             'url'  => 'clientes/*',
             'submenu' => [
                 [
-                    'text' => 'Registrar',
+                    'text' => 'Nuevo cliente',
                     'icon'    => 'fas fa-fw fa-plus',
                     'url'  => 'clientes/create',
                 ],
@@ -350,6 +350,25 @@ return [
                 ],
             ],
         ],
+
+        //-------------------modulo premios---------------------------------
+/*         [
+            'text'    => 'Premios',
+            'icon'    => 'fas fa-fw fa-gift',
+            'url'  => 'premios/*',
+            'submenu' => [
+                [
+                    'text' => 'Nuevo premio',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'url'  => 'premios/create',
+                ],
+                [
+                    'text' => 'Lista de premios',
+                    'icon'    => 'fas fa-fw fa-list-ul',
+                    'url'  => 'premios',
+                ],
+            ],
+        ], */
 
         //-------------------modulo inventario---------------------------------
         [
@@ -366,7 +385,7 @@ return [
                 ],
             ],
         ],
-        //------------------------------------------------------------------
+
         //-------------------modulo infraestructura---------------------------------
         [
             'text'    => 'Infraestructura',
@@ -459,7 +478,7 @@ return [
                     'text' => 'Gestionar canjeo',
                     'url'  => '#',
                 ],
-            /*    [
+                /*    [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -484,9 +503,9 @@ return [
                     ],
 
                 ],*/
-                
 
-               
+
+
             ],
         ],
         //------------------------------------------------------------------
@@ -535,7 +554,7 @@ return [
                     'text' => 'Gestionar factura',
                     'url'  => '#',
                 ],
-             /*   [
+                /*   [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -584,7 +603,7 @@ return [
                     'text' => 'Gestionar privilegio',
                     'url'  => '#',
                 ],
-               /* [
+                /* [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -609,15 +628,15 @@ return [
                     ],
 
                 ],*/
-                
 
-              
+
+
 
 
             ],
         ],
         //------------------------------------------------------------------
-       /* ['header' => 'labels'],
+        /* ['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',

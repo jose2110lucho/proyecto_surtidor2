@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Registrar tanque')
+@section('title', 'Registrar premio')
 
 @section('content')
     <section class="content">
@@ -10,31 +10,31 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h4 class="card-title">
-                            <strong>REGISTRAR TANQUE</strong>
+                            <strong>REGISTRAR PREMIO</strong>
                         </h4>
                     </div>
                 </div>
-                <form action="{{ route('tanques.store') }}" method="post">
+                <form action="{{ route('premios.store') }}" method="post">
                     @csrf
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="codigo">Codigo</label>
-                                    <input type="text" name="codigo" class="form-control my-colorpicker1"
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" name="nombre" class="form-control my-colorpicker1"
                                         value="{{ old('codigo') }}">
 
-                                    @error('codigo')
+                                    @error('nombre')
                                         <small class="text-danger">*{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="combustible">Combustible</label>
-                                    <input name="combustible" class="form-control my-colorpicker1"
-                                        value="{{ old('combustible') }}">
+                                    <label for="unidades">Unidades</label>
+                                    <input name="unidades" class="form-control my-colorpicker1"
+                                        value="{{ old('unidades') }}" type="number">
 
                                     @error('combustible')
                                         <small class="text-danger">*{{ $message }}</small>
@@ -55,45 +55,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="descripcion">Descripción</label>
-                            <textarea name="descripcion" class="form-control my-colorpicker1">{{ old('descripcion') }}</textarea>
 
-                            @error('descripcion')
-                                <small class="text-danger">*{{ $message }}</small>
-                            @enderror
-                            <div class="py-3">
-                                <hr />
-                            </div>
-                        </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="cantidad_disponible">Cantidad disponible (lts)</label>
-                                    <input name="cantidad_disponible" class="form-control my-colorpicker1" type="number"
-                                        value="{{ old('cantidad_disponible') }}" step=".01" min="0">
+                                    <label for="descripcion">Descripción</label>
+                                    <textarea name="descripcion" class="form-control my-colorpicker1" style="height: auto">
+                                        {{ old('descripcion') }}
+                                    </textarea>
 
-                                    @error('cantidad_disponible')
+                                    @error('descripcion')
                                         <small class="text-danger">*{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="cantidad_min">Cantidad mínima (lts)</label>
-                                    <input name="cantidad_min" class="form-control my-colorpicker1" type="number"
-                                        value="{{ old('cantidad_min') }}" step=".01" min="0">
-
-                                    @error('cantidad_min')
-                                        <small class="text-danger">*{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="capacidad">Capacidad (lts)</label>
-                                    <input name="capacidad" class="form-control my-colorpicker1" type="number"
-                                        value="{{ old('capacidad') }}" step=".01" min="0" required>
+                                    <label for="puntos_requeridos">Puntos requeridos</label>
+                                    <input name="puntos_requeridos" class="form-control my-colorpicker1" type="number"
+                                        value="{{ old('puntos_requeridos') }}" step=".01" min="0">
 
                                     @error('capacidad')
                                         <small class="text-danger">*{{ $message }}</small>
@@ -109,7 +89,7 @@
                         <div class="card-tools">
                             <div class="d-flex justify-content-end">
                                 <a type="button" class="btn btn-danger mr-2"
-                                    href="{{ route('tanques.index') }}">Cancelar</a>
+                                    href="{{ route('premios.index') }}">Cancelar</a>
 
                                 <button type="submit" class="btn btn-info">Guardar</a>
 

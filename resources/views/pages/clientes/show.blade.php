@@ -8,7 +8,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card">
                 <div class="d-flex justify-content-between">
-                    <div >
+                    <div>
                         <h4 class="px-3 pt-3">
                             <strong>{{ $cliente->nombre . ' ' . $cliente->apellido }}</strong>
                         </h4>
@@ -35,37 +35,47 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Nombre</label>
                                 <p type="text" class="form-control my-colorpicker1">{{ $cliente->nombre }}</p>
                             </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->apellido }}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Carnet de identidad</label>
                                 <p type="text" class="form-control my-colorpicker1">{{ $cliente->ci }}</p>
                             </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Telefono</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->telefono }}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Puntos acumulados</label>
                                 <p type="text" class="form-control my-colorpicker1">{{ $cliente->puntos }}</p>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Apellido</label>
-                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->apellido }}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Telefono</label>
-                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->telefono }}</p>
-                            </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Estado</label>
-                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->estado ? 'Activo' : 'Inactivo' }}</p>
+                                <p type="text" class="form-control my-colorpicker1">
+                                    {{ $cliente->estado ? 'Activo' : 'Inactivo' }}</p>
                             </div>
                         </div>
                     </div>
+
                     <div class="d-flex flex-row-reverse">
-                        <a type="button" class="btn btn-info" href="{{route('clientes.edit',$cliente)}}">Editar</a>
+                        <a type="button" class="btn btn-info" href="{{ route('clientes.edit', $cliente) }}">Editar</a>
                     </div>
                 </div>
                 <!-- /.card-body -->

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Producto extends Migration
+class CreatePremiosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class Producto extends Migration
      */
     public function up()
     {
-        Schema::create('producto', function (Blueprint $table) {
-            $table->id(); 
+        Schema::create('premios', function (Blueprint $table) {
+            $table->id();
             $table->string('nombre');
-            $table->decimal('precio_compra', 8,2);
-            $table->decimal('precio_venta', 8,2);
-            $table->boolean('estado')->default(true);
+            $table->text('descripcion')->nullable();
+            $table->integer('unidades');
+            $table->integer('puntos_requeridos');
+            $table->boolean('estado');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class Producto extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('producto');
+        Schema::dropIfExists('premios');
     }
 }
