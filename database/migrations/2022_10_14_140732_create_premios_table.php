@@ -20,6 +20,7 @@ class CreatePremiosTable extends Migration
             $table->integer('unidades');
             $table->integer('puntos_requeridos');
             $table->boolean('estado');
+            $table->foreignId('producto_id')->nullable()->constrained('producto');
             $table->timestamps();
         });
     }

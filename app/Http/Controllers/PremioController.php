@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Premio;
 use App\Http\Requests\StorePremioRequest;
 use App\Http\Requests\UpdatePremioRequest;
+use App\Models\Producto;
 
 class PremioController extends Controller
 {
@@ -15,7 +16,7 @@ class PremioController extends Controller
      */
     public function index()
     {
-        $premios = Premio::paginate(9);
+        $premios = Premio::orderby('id','asc')->paginate(9);
         return view('pages.premios.index', compact('premios'));
     }
 
@@ -26,7 +27,8 @@ class PremioController extends Controller
      */
     public function create()
     {
-        return view('pages.premios.create');
+        $productos = Producto::get();
+        return view('pages.premios.create', compact('productos'));
     }
 
     /**
@@ -37,7 +39,8 @@ class PremioController extends Controller
      */
     public function store(StorePremioRequest $request)
     {
-        //
+        $premio = Premio::create($request->all());
+        return redirect()->route('premios.show', $premio);
     }
 
     /**
@@ -48,7 +51,7 @@ class PremioController extends Controller
      */
     public function show(Premio $premio)
     {
-        //
+        return view('pages.premios.show', compact('premio'));
     }
 
     /**
@@ -59,7 +62,8 @@ class PremioController extends Controller
      */
     public function edit(Premio $premio)
     {
-        //
+        $productos = Producto::get();
+        return view('pages.premios.edit', compact('premio','productos'));
     }
 
     /**
@@ -71,7 +75,8 @@ class PremioController extends Controller
      */
     public function update(UpdatePremioRequest $request, Premio $premio)
     {
-        //
+        $premio->update($request->all());
+        return redirect()->route('premios.show', compact('premio'));
     }
 
     /**
@@ -82,6 +87,7 @@ class PremioController extends Controller
      */
     public function destroy(Premio $premio)
     {
-        //
+        $premio->delete();
+        return redirect()->route('premios.index');
     }
 }

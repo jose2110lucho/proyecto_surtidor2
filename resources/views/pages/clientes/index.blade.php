@@ -8,7 +8,7 @@
 
 @section('content')
     <section class="content">
-        <div class="container-fluid p-4">
+        <div class="container-fluid pt-4">
             <div class="card">
                 <div class="card-header justify-content-between">
                     <div class="row g-2">
@@ -16,33 +16,31 @@
                             <h3 class="card-title">
                                 <strong>LISTA DE CLIENTES</strong>
                             </h3>
-
                         </div>
-                        <div class="col-sm-3 text-right">
-                            <a class="btn btn-primary" href="{{route('clientes.create')}}">Nuevo</a>
+                        <div class="col-sm-3 text-right my-auto">
+                            <a class="btn btn-primary" href="{{ route('clientes.create') }}">Nuevo</a>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-3 my-auto">
                             <form action="{{ route('clientes.index') }}" method="GET">
                                 <div class="input-group">
                                     <input name="buscar" id="buscar" type="text" class="form-control"
                                         placeholder="buscar cliente" value="{{ old('buscar') }}">
-                                    <button class="btn btn-outline-primary" type="submit">
-                                        <span class="fa fa-search"></span>
-                                    </button>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-default" type="submit">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
 
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
-
+                <div class="card-body table-responsive p-0" style="height: 450;">
                     @if ($clientes->count())
-                        <table class="table table-hover">
-                            <thead class="table-light ">
+                        <table class="table table-hover table-head-fixed">
+                            <thead class="table-light">
                                 <tr>
                                     <th>CI</th>
                                     <th>NOMBRE</th>
@@ -66,16 +64,18 @@
                                                 class="badge {{ $cliente->estado ? 'bg-success' : 'bg-secondary' }}">{{ $cliente->estado ? 'ACTIVO' : 'INACTIVO' }}</span>
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('clientes.show', $cliente) }}" class="mx-2"><i
-                                                    class="fa fa-eye"></i></a>
-                                            <a href="{{ route('clientes.edit', $cliente) }}" class="mx-2"><i
-                                                    class="fa fa-pen"></i></a>
+                                            <a href="{{ route('clientes.show', $cliente) }}" class="mx-2">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+{{--                                             <a href="{{ route('clientes.edit', $cliente) }}" class="mx-2">
+                                                <i class="fa fa-pen"></i>
+                                            </a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="d-flex px-4 py-2 flex-row-reverse">
+                        <div class="d-flex px-3 pt-3 flex-row-reverse">
                             {{ $clientes->links() }}
                         </div>
                     @else

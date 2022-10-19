@@ -13,7 +13,7 @@ class StorePremioRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StorePremioRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required | max:30 | min:2',
+            'unidades' => 'required',
+            'puntos_requeridos' => 'required',
+            'estado' => 'required',
         ];
     }
 }
