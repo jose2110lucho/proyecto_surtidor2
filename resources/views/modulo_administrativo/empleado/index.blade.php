@@ -6,8 +6,6 @@
 
 @section('content')
 
-
-
 <div class="d-grid gap-2">
     <a class="btn btn-success" href="{{ route('empleado.create') }}"> crear </a>
 </div>
@@ -35,20 +33,27 @@
                     <td>{{$usuario->email}}</td>
                     <td>{{$usuario->direccion}}</td>
                     <td>{{$usuario->telefono}}</td>
-                    <td>{{$usuario->estado}}</td>
+                    <td class="text-center" style="display: inline-block"><span class="badge {{$usuario->estado ? 'bg-success' : 'bg-secondary'}}">{{$usuario->estado ? 'ACTIVO' : 'INACTIVO'}}</span></td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
+
+                          <a href="{{ url('/empleado/' . $usuario->id . '/') }}"
+                            class="btn btn-success">
+                              VER
+                          </a>
+
                             <a href="{{ url('/empleado/' . $usuario->id . '/edit') }}"
                                  class="btn btn-warning">
-                                 Editar
-                             </a>
+                                 EDITAR
+                            </a>
+              
                              <form action="{{ url('/empleado/' . $usuario->id) }}"
                                      method="post">
                                      @csrf
                                  {{ method_field('DELETE') }}
                                  <input type="submit"
                                  onclick="return confirm('¿Estas Seguro de Eliminarlo?')"
-                                 value="Borrar" class="btn btn-danger">
+                                 value="ELIMINAR" class="btn btn-danger">
                              </form> 
                          </div>
                     </td>

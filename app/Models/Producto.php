@@ -17,6 +17,9 @@ class Producto extends Model
         'precio_compra',
         'precio_venta',
         'estado',
+        'cantidad',
+        'descripcion',
+        'nombre_imagen',
     ];
 
 

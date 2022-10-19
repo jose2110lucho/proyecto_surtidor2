@@ -39,6 +39,15 @@
                 required value="{{ $usuario->telefono }}" >
             </div>
             <!--fin campo telefono-->
+            <!--inicio campo estado-->
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                <select name="estado" class="form-control select2" style="width: 100%;">
+                    <option value="1" selected="{{$usuario->estado ? 'selected' : ''}}">Activo</option>
+                    <option value="0" selected="{{$usuario->estado ? '' : 'selected'}}">Inactivo</option>
+                </select>
+            </div>
+            <!--fin campo estado-->
             <!--inicio campo cantidad-->
             <div class="row mb-0">
                
