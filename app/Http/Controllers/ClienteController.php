@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use App\Models\Premio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 
 class ClienteController extends Controller
 {
@@ -19,7 +22,7 @@ class ClienteController extends Controller
         $clientes = Cliente::orderby('nombre', 'desc')
             ->where('nombre', 'ilike', '%' . $request->buscar . '%')
             ->orwhere('apellido', 'ilike', '%' . $request->buscar . '%')
-            ->paginate(10);
+            ->paginate(9);
         return view('pages.clientes.index', compact('clientes'));
     }
 
@@ -42,7 +45,6 @@ class ClienteController extends Controller
     public function store(StoreClienteRequest $request)
     {
         $cliente = Cliente::create($request->all());
-
         return redirect()->route('clientes.show', $cliente);
     }
 
@@ -69,6 +71,67 @@ class ClienteController extends Controller
     }
 
     /**
+     * Muestra el formulario para canjear los puntos acumulados del cliente por premios.
+     *
+     * @param  \App\Models\Cliente  $cliente
+     * @return \Illuminate\Http\Response
+     */
+    public function canjeo(Cliente $cliente)
+    {
+        $premios = Premio::all();
+        return view('pages.clientes.canjear', compact('cliente', 'premios'));
+    }
+
+    /**
+     * Almacena el nuevo registro de la tabla cliente_premio.
+     *
+     * @param  \App\Models\Cliente  $cliente
+     * @return \Illuminate\Http\Response
+     */
+    public function canjear(Cliente $cliente, Request $request)
+    {
+        $premio = Premio::find($request->premio_id);
+
+        $validator = Validator::make($request->all(), [
+            'premio_id' => 'required',
+        ], $messages = [
+            'premio_id.required' => 'Seleccione el premio para canjear',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        if ($premio->puntos_requeridos <= $cliente->puntos) {
+            $cliente->premios()->attach($request->premio_id);
+            $sobrante = $cliente->puntos - $premio->puntos_requeridos;
+
+            $cliente->update(['puntos' => $sobrante]);
+            return redirect()->route('clientes.show', compact('cliente'));
+        } else {
+            $errors = new MessageBag();
+            $errors->add('premio_id', 'Puntos insuficientes!');
+            return redirect()->back()->withErrors($errors);
+        }
+
+        
+    }
+
+    /**
+     * Almacena el nuevo registro de la tabla cliente_premio.
+     *
+     * @param  \App\Models\Cliente  $cliente
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPremio(Cliente $cliente, $cliente_premio_id)
+    {
+        $cliente->premios()->wherePivot('id', '=', $cliente_premio_id)->detach();
+        return redirect()->route('clientes.show', compact('cliente'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateClienteRequest  $request
@@ -78,7 +141,7 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         $cliente->update($request->all());
-        return redirect()->route('clientes.show', $cliente);
+        return redirect()->route('clientes.show', [$cliente]);
     }
 
     /**

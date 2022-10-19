@@ -23,8 +23,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="codigo">Codigo</label>
-                                    <input name="codigo" class="form-control my-colorpicker1"
-                                        value="{{ old('codigo', $tanque->codigo) }}">
+                                    <input name="codigo" class="form-control my-colorpicker1" type="text"
+                                        value="{{ old('codigo', $tanque->codigo) }}" required>
 
                                     @error('codigo')
                                         <small class="text-danger">*{{ $message }}</small>
@@ -47,9 +47,9 @@
                                 <div class="form-group">
                                     <label for="estado">Estado</label>
                                     <select name="estado" class="form-control select2" style="width: 100%;">
-                                        <option value="1" selected="{{ $tanque->estado ? 'selected' : '' }}">Activo
+                                        <option value="1" {{ $tanque->estado ? 'selected' : '' }}>Activo
                                         </option>
-                                        <option value="0" selected="{{ $tanque->estado ? '' : 'selected' }}">Inactivo
+                                        <option value="0" {{ $tanque->estado ? '' : 'selected' }}>Inactivo
                                         </option>
                                     </select>
                                 </div>
@@ -71,8 +71,8 @@
                                     <div class="form-group">
                                         <label for="cantidad_disponible">Cantidad disponible (lts)</label>
                                         <input name="cantidad_disponible" class="form-control my-colorpicker1"
-                                            type="number"
-                                            value="{{ old('cantidad_disponible', $tanque->cantidad_disponible) }}">
+                                            type="number" step=".01" min="0"
+                                            value="{{ old('cantidad_disponible', $tanque->cantidad_disponible) }}" required>
 
                                         @error('cantidad_disponible')
                                             <small class="text-danger">*{{ $message }}</small>
@@ -83,7 +83,7 @@
                                     <div class="form-group">
                                         <label for="cantidad_min">Cantidad mínima (lts)</label>
                                         <input name="cantidad_min" class="form-control my-colorpicker1" type="number"
-                                            value="{{ old('cantidad_min', $tanque->cantidad_min) }}">
+                                            value="{{ old('cantidad_min', $tanque->cantidad_min) }}" step=".01" min="0">
 
                                         @error('cantidad_min')
                                             <small class="text-danger">*{{ $message }}</small>
@@ -92,11 +92,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="capacidad_max">Capacidad (lts)</label>
-                                        <input name="capacidad_max" class="form-control my-colorpicker1" type="number"
-                                            value="{{ old('capacidad_max', $tanque->capacidad_max) }}">
+                                        <label for="capacidad">Capacidad (lts)</label>
+                                        <input name="capacidad" class="form-control my-colorpicker1" type="number"
+                                            value="{{ old('capacidad', $tanque->capacidad) }}" step=".01" min="0" required>
 
-                                        @error('capacidad_max')
+                                        @error('capacidad')
                                             <small class="text-danger">*{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -107,18 +107,23 @@
                             <div class="col">
                                 <div class="progress my-1" style="height: 2px;">
                                     <div class="progress-bar bg-cyan "
-                                        style="width:{{ ($tanque->cantidad_min * 100) / $tanque->capacidad_max }}%;">
+                                        style="width:{{ ($tanque->cantidad_min * 100) / $tanque->capacidad }}%;">
                                     </div>
                                 </div>
                                 <div class="progress" style="height: 30px;">
                                     <div class="progress-bar text-left p-2 progress-bar-striped progress-bar-animated 
                                 @if ($tanque->cantidad_disponible > $tanque->cantidad_min) bg-cyan
                                 @else bg-red @endif"
-                                        style="width: {{ ($tanque->cantidad_disponible / $tanque->capacidad_max) * 100 }}%">
-                                        {{ 'Cantidad disponible: ' . $tanque->cantidad_disponible . ' lts' }}
-
+                                        style="width: {{ ($tanque->cantidad_disponible / $tanque->capacidad) * 100 }}%">
                                     </div>
                                 </div>
+
+                                @if ($tanque->cantidad_disponible > $tanque->cantidad_min)
+                                    <small>No se requiere recarga</small>
+                                @else
+                                    <small class="text-danger">¡Es necesario recargar el tanque!</small>
+                                @endif
+                                
                             </div>
                         </div>
 
@@ -130,7 +135,7 @@
                                 <a type="button" class="btn btn-danger mr-2"
                                     href="{{ route('tanques.show', $tanque) }}">Cancelar</a>
 
-                                <button type="submit" class="btn btn-info">Guardar</a>
+                                <button type="submit" class="btn btn-info">Guardar</button>
 
                             </div>
                         </div>

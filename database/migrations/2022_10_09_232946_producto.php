@@ -17,7 +17,7 @@ class Producto extends Migration
             $table->id(); 
             $table->string('nombre');
             $table->decimal('precio_compra', 8,2);
-            $table->decimal('precio_venta',8,2);
+            $table->decimal('precio_venta', 8,2);
             $table->boolean('estado')->default(true);
             $table->integer('cantidad');
             $table->string('descripcion');
