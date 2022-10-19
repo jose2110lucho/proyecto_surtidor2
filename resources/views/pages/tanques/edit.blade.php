@@ -135,7 +135,7 @@
                                 <a type="button" class="btn btn-danger mr-2"
                                     href="{{ route('tanques.show', $tanque) }}">Cancelar</a>
 
-                                <button type="submit" class="btn btn-info">Guardar</a>
+                                <button type="submit" class="btn btn-info">Guardar</button>
 
                             </div>
                         </div>

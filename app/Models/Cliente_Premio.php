@@ -10,4 +10,9 @@ class Cliente_Premio extends Model
     use HasFactory;
 
     protected $table = 'cliente_premio';
+
+    protected $fillable = [
+        'cliente_id',
+        'premio_id',
+    ];
 }

@@ -54,7 +54,7 @@ class TanqueController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Tanque $tanque)
-    {
+    { 
         return view('pages.tanques.show', compact('tanque'));
     }
 
@@ -84,8 +84,7 @@ class TanqueController extends Controller
             'cantidad_disponible' => $cantidad_actual,
             'fecha_carga' => Carbon::now(),
         ]);
-
-        return redirect()->route('tanques.show', $tanque);
+        return redirect()->route('tanques.show', compact('tanque'))->with('mensaje', 'Se cargaron '.$request->cantidad_recarga.' litros al tanque');
     }
 
     /**
@@ -101,7 +100,7 @@ class TanqueController extends Controller
             'fecha_carga' => Carbon::now(),
         ]);
 
-        return redirect()->route('tanques.show', $tanque);
+        return redirect()->route('tanques.show', $tanque)->with('mensaje', 'Tanque cargado al máximo');
     }
 
     /**

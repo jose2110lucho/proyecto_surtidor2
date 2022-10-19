@@ -90,7 +90,7 @@
                         <div class="d-flex flex-row-reverse">
                             <button type="submit" class="btn btn-info">Guardar</button>
                             <a type="button" class="btn btn-danger mx-2"
-                                href="{{ route('clientes.show', $cliente) }}">Cancelar</a>
+                                href="{{ url()->previous() }}">Cancelar</a>
                         </div>
                     </form>
                 </div>

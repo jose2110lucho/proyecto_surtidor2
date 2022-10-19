@@ -9,11 +9,20 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ci', 'nombre', 'apellido', 'telefono', 'puntos', 'estado'];
+    protected $fillable = [
+        'ci',
+        'nombre',
+        'apellido',
+        'telefono',
+        'puntos',
+        'estado'
+    ];
 
 
     public function premios()
     {
-        return $this->belongsToMany(Premio::class);
+        return $this->belongsToMany(Premio::class, 'cliente_premio')
+        ->withPivot('id')
+        ->withTimestamps();
     }
 }
