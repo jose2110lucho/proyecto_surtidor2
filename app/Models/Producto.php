@@ -17,7 +17,9 @@ class Producto extends Model
         'precio_compra',
         'precio_venta',
         'estado',
-        'producto_id'
+        'cantidad',
+        'descripcion',
+        'nombre_imagen',
     ];
 
     public function premio()

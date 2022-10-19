@@ -13,31 +13,31 @@
             <!--inicio campo nombre-->
             <div class="mb-3">
                 <label for="nombre" class="form-label">nombre</label>
-                <input name="nombre" type="text" class="form-control" id="nombre" placeholder="introduzca su nombre">
+                <input name="nombre" type="text" class="form-control" id="nombre" placeholder="introduzca su nombre" required>
             </div>
             <!--fin campo nombre-->
             <!--inicio campo correo-->
             <div class="mb-3">
                 <label for="correo" class="form-label">correo</label>
-                <input name="correo" type="email" class="form-control" id="correo" placeholder="introduzca su correo">
+                <input name="correo" type="email" class="form-control" id="correo" placeholder="introduzca su correo" required>
             </div>
             <!--fin campo correo-->
             <!--inicio campo direccion-->
             <div class="mb-3">
                 <label for="direccion" class="form-label">direccion</label>
-                <input name="direccion" type="text" class="form-control" id="direccion" placeholder="introduzca su direccion">
+                <input name="direccion" type="text" class="form-control" id="direccion" placeholder="introduzca su direccion" required>
             </div>
             <!--fin campo direccion-->
             <!--inicio campo telefono-->
             <div class="mb-3">
                 <label for="telefono" class="form-label">telefono</label>
-                <input name="telefono" type="number" class="form-control" id="telefono" placeholder="introduzca su telefono">
+                <input name="telefono" type="number" class="form-control" id="telefono" placeholder="introduzca su telefono" required>
             </div>
             <!--fin campo telefono-->
             <!--inicio campo contraseña-->
              <div class="mb-3">
                 <label for="password" class="form-label">constraseña</label>
-                <input name="password" type="password" class="form-control" id="direccion" placeholder="introduzca su constraseña">
+                <input name="password" type="password" class="form-control" id="direccion" placeholder="introduzca su constraseña" required>
             </div>
             <!--fin campo contraseña-->
             <!--inicio campo cantidad-->

@@ -56,8 +56,9 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    { 
+        $usuario = User::findOrFail($id);
+        return view('modulo_administrativo.empleado.show',compact('usuario'));
     }
 
     /**
