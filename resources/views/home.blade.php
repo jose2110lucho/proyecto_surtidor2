@@ -1,12 +1,15 @@
+
 @extends('layouts/master')
 
 @section('content_header')
     
 @stop
 
-@section('content')
+@extends('layouts.app')
+
 
     <p>Welcome to this beautiful admin panel.</p>
+
 
 @stop
 
@@ -19,3 +22,6 @@
 @stop
 
 @section('plugins.Sweetalert2', true);
+
+@endsection
+
