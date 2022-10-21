@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
-});
+})->middleware('auth');
 
 Auth::routes();
 
@@ -31,9 +31,9 @@ Route::resource('empleado',EmpleadoController::class)->middleware('auth');
 
 Route::resource('producto',ProductoController::class)->middleware('auth');
 
-Route::resource('clientes', ClienteController::class);
+Route::resource('clientes', ClienteController::class)->middleware('auth');
 
-Route::resource('tanques', TanqueController::class);
+Route::resource('tanques', TanqueController::class)->middleware('auth');
 
 
-Route::resource('premios', PremioController::class);
+Route::resource('premios', PremioController::class)->middleware('auth');
