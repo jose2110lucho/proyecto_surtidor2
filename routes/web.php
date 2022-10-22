@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
-use Illuminate\Support\Facades\Auth;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,13 +16,11 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
 })->middleware('auth');
-
-Auth::routes();
-
 
 
 Route::resource('empleado',EmpleadoController::class)->middleware('auth');
