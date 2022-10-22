@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
-use Illuminate\Support\Facades\Auth;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,22 +16,33 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
+
 Route::get('/', function () {
-    return view('layouts/master');
+    return view('home');
 });
 
-Auth::routes();
+//Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+Route::resource('empleado',EmpleadoController::class);
 
-Route::resource('empleado',EmpleadoController::class)->middleware('auth');
+Route::resource('producto',ProductoController::class);
 
-Route::resource('producto',ProductoController::class)->middleware('auth');
+//-----------------CLIENTES-----------------//
 
 Route::resource('clientes', ClienteController::class);
+Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
+Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
+Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
+
+//-----------------CLIENTES-----------------//
 
 Route::resource('tanques', TanqueController::class);
 
+Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
+
+Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name('tanques.llenar');
 
 Route::resource('premios', PremioController::class);
