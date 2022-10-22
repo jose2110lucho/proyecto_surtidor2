@@ -13,8 +13,8 @@ class Proveedor extends Migration
      */
     public function up()
     {
-        Schema::create('proveedor', function (Blueprint $table) {
-            $table->id()->primary(); 
+        /*Schema::create('proveedor', function (Blueprint $table) {
+            $table->id()->primary();
             $table->string('nombre');
             $table->integer('telefono');
             $table->string('correo');
@@ -22,7 +22,7 @@ class Proveedor extends Migration
             $table->integer('nit');
             $table->string('descripcion');
             $table->boolean('estado')->default(true);
-        });
+        });*/
     }
 
     /**
