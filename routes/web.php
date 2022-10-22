@@ -17,19 +17,38 @@ use App\Http\Controllers\ProductoController;
 |
 */
 
+
+/*Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
+
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
 })->middleware('auth');
 
 
-Route::resource('empleado',EmpleadoController::class)->middleware('auth');
+Route::resource('empleado',EmpleadoController::class);
 
-Route::resource('producto',ProductoController::class)->middleware('auth');
+Route::resource('producto',ProductoController::class);
+
+//-----------------CLIENTES-----------------//
 
 Route::resource('clientes', ClienteController::class)->middleware('auth');
+Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
+Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
+Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
+
+//-----------------CLIENTES-----------------//
+
 
 Route::resource('tanques', TanqueController::class)->middleware('auth');
 
+Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
+
+Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name('tanques.llenar');
 
 Route::resource('premios', PremioController::class)->middleware('auth');
+
