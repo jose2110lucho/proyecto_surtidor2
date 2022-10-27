@@ -12,15 +12,16 @@ class Premio extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
-        'unidades',
+        'stock',
         'puntos_requeridos',
         'estado',
         'producto_id',
+        'unidades_producto',
     ];
 
     public function clientes()
     {
-        return $this->belongsToMany(Cliente::class, 'cliente_premio')->withTimestamps();
+        return $this->belongsToMany(Cliente::class, 'cliente_premio')->withTimestamps()->withPivot('id','cantidad','puntos_canjeados');
     }
 
     public function producto()

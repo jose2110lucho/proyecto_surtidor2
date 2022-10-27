@@ -17,10 +17,11 @@ class CreatePremiosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->text('descripcion')->nullable();
-            $table->integer('unidades');
+            $table->integer('stock');
             $table->integer('puntos_requeridos');
             $table->boolean('estado');
             $table->foreignId('producto_id')->nullable()->constrained('producto');
+            $table->integer('unidades_producto')->nullable();
             $table->timestamps();
         });
     }

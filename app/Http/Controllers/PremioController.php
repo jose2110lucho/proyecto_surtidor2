@@ -16,8 +16,9 @@ class PremioController extends Controller
      */
     public function index()
     {
-        $premios = Premio::orderby('id','asc')->paginate(9);
-        return view('pages.premios.index', compact('premios'));
+        $productos = Producto::get();
+        $premios = Premio::orderby('id', 'asc')->paginate(9);
+        return view('pages.premios.index', compact('premios', 'productos'));
     }
 
     /**
@@ -39,7 +40,22 @@ class PremioController extends Controller
      */
     public function store(StorePremioRequest $request)
     {
-        $premio = Premio::create($request->all());
+        $unidades_producto = $request->unidades_producto;
+        if (is_null($request->producto_id)) {
+            $unidades_producto = null;
+        }
+
+        $premio = Premio::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'stock' => $request->stock,
+            'puntos_requeridos' => $request->puntos_requeridos,
+            'estado' => $request->estado,
+            'producto_id' => $request->producto_id,
+            'estado' => $request->estado,
+            'unidades_producto' => $unidades_producto
+        ]);
+
         return redirect()->route('premios.show', $premio);
     }
 
@@ -51,7 +67,8 @@ class PremioController extends Controller
      */
     public function show(Premio $premio)
     {
-        return view('pages.premios.show', compact('premio'));
+        $productos = Producto::get();
+        return view('pages.premios.show', compact('premio', 'productos'));
     }
 
     /**
@@ -63,7 +80,7 @@ class PremioController extends Controller
     public function edit(Premio $premio)
     {
         $productos = Producto::get();
-        return view('pages.premios.edit', compact('premio','productos'));
+        return view('pages.premios.edit', compact('premio', 'productos'));
     }
 
     /**

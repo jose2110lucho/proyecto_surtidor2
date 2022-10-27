@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CanjearRequest;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
@@ -88,7 +89,7 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function canjear(Cliente $cliente, Request $request)
+    public function canjear(Cliente $cliente, CanjearRequest $request)
     {
         $premio = Premio::find($request->premio_id);
 
@@ -104,19 +105,26 @@ class ClienteController extends Controller
                 ->withInput();
         }
 
-        if ($premio->puntos_requeridos <= $cliente->puntos) {
-            $cliente->premios()->attach($request->premio_id);
-            $sobrante = $cliente->puntos - $premio->puntos_requeridos;
+        $total_puntos_req = $premio->puntos_requeridos * $request->cantidad;
 
-            $cliente->update(['puntos' => $sobrante]);
-            return redirect()->route('clientes.show', compact('cliente'));
+        if ($request->cantidad <= $premio->stock) {
+            if ($total_puntos_req <= $cliente->puntos) {
+                $cliente->premios()->attach($request->premio_id, ['cantidad' => $request->cantidad, 'puntos_canjeados' => $total_puntos_req]);
+                $sobrante = $cliente->puntos - $total_puntos_req;
+
+                $cliente->update(['puntos' => $sobrante]);
+                $premio->update(['stock' => $premio->stock - $request->cantidad]);
+                return redirect()->route('clientes.show', compact('cliente'));
+            } else {
+                $errors = new MessageBag();
+                $errors->add('premio_id', 'Puntos insuficientes!');
+                return redirect()->back()->withInput()->withErrors($errors);
+            }
         } else {
             $errors = new MessageBag();
-            $errors->add('premio_id', 'Puntos insuficientes!');
-            return redirect()->back()->withErrors($errors);
+                $errors->add('cantidad', 'La cantidad de premios a canjear supera el stock');
+                return redirect()->back()->withInput()->withErrors($errors);
         }
-
-        
     }
 
     /**
@@ -128,7 +136,7 @@ class ClienteController extends Controller
     public function destroyPremio(Cliente $cliente, $cliente_premio_id)
     {
         $cliente->premios()->wherePivot('id', '=', $cliente_premio_id)->detach();
-        return redirect()->route('clientes.show', compact('cliente'));
+        return redirect()->back();
     }
 
     /**

@@ -14,7 +14,7 @@
                         </h4>
                     </div>
                 </div>
-                <form action="{{ route('tanques.store') }}" method="post">
+                <form action="{{ route('tanques.store') }}" method="POST">
                     @csrf
                     <!-- /.card-header -->
                     <div class="card-body">

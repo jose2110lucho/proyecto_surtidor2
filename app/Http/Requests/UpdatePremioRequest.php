@@ -25,9 +25,10 @@ class UpdatePremioRequest extends FormRequest
     {
         return [
             'nombre' => 'required | max:30 | min:2',
-            'unidades' => 'required',
             'puntos_requeridos' => 'required',
             'estado' => 'required',
+            'stock' => 'required',
+            'unidades_producto' => 'integer | min:1 | nullable'
         ];
     }
 }

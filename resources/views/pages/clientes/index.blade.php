@@ -1,10 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Clientes')
-
-{{-- @section('content_header')
-    <h1>Clientes</h1>
-@stop --}}
+@section('title', 'Lista de clientes')
 
 @section('content')
     <section class="content">
@@ -18,8 +14,27 @@
                             </h3>
                         </div>
                         <div class="col-sm-3 text-right my-auto">
-                            <a class="btn btn-primary" href="{{ route('clientes.create') }}">Nuevo</a>
+                            <button data-toggle="modal" data-target="#formCreateModal" class="btn btn-primary"
+                                type="button">Nuevo</button>
                         </div>
+
+                        <div class="modal fade" id="formCreateModal" tabindex="-1" aria-labelledby="formCreateLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="fomrCreateLabel">Registrar nuevo premio</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @include('partials.clientes.form_create')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-sm-3 my-auto">
                             <form action="{{ route('clientes.index') }}" method="GET">
                                 <div class="input-group">
@@ -46,14 +61,16 @@
                                     <th>NOMBRE</th>
                                     <th style="width: 15%">PUNTOS</th>
                                     <th style="width: 15%" class="text-center">ESTADO</th>
-                                    <th style="width: 15%" class="text-center">OPCIONES</th>
+                                    {{-- <th style="width: 15%" class="text-center">OPCIONES</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($clientes as $cliente)
                                     <tr>
                                         <td>{{ $cliente->ci }}</td>
-                                        <td>{{ $cliente->nombre . ' ' . $cliente->apellido }}</td>
+                                        <td><a
+                                                href="{{ route('clientes.show', $cliente) }}">{{ $cliente->nombre . ' ' . $cliente->apellido }}</a>
+                                        </td>
                                         <td>
                                             <div class="progress progress-xs">
                                                 <div class="progress-bar progress-bar-danger"
@@ -61,18 +78,17 @@
                                             </div>
                                         </td>
 
-                                        
-                                        <td class="text-center"><span class="badge {{$cliente->estado ? 'bg-success' : 'bg-secondary'}}">{{$cliente->estado ? 'ACTIVO' : 'INACTIVO'}}</span></td>
+
+                                        <td class="text-center"><span
+                                                class="badge {{ $cliente->estado ? 'bg-success' : 'bg-secondary' }}">{{ $cliente->estado ? 'ACTIVO' : 'INACTIVO' }}</span>
+                                        </td>
 
 
-                                        <td class="text-center">
+                                        {{--                                         <td class="text-center">
                                             <a href="{{ route('clientes.show', $cliente) }}" class="mx-2">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-{{--                                             <a href="{{ route('clientes.edit', $cliente) }}" class="mx-2">
-                                                <i class="fa fa-pen"></i>
-                                            </a> --}}
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -86,9 +102,18 @@
                         </p>
                     @endif
                 </div>
-                <!-- /.card-body -->
             </div>
-        </div><!-- /.container-fluid -->
-
+        </div>
     </section>
+@stop
+
+@section('js')
+    <script>
+        $(window).on('load', function() {
+            let a = 'hola'
+            if ('{{$errors->any()}}') {
+                $('#formCreateModal').modal('show');
+            }
+        });
+    </script>
 @stop
