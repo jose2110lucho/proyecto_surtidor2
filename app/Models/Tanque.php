@@ -9,6 +9,12 @@ class Tanque extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['codigo','combustible','descripcion', 'capacidad_max', 'cantidad_disponible','cantidad_min','estado'];
+    protected $fillable = ['codigo','combustible','descripcion', 'capacidad_max', 'cantidad_disponible',
+    'cantidad_min','estado'];
+
+    public function bombas(){
+        return $this->hasMany(Bomba::class,'id'); // 1 tanque  tiene muchas bombas
+
+    }
 
 }
