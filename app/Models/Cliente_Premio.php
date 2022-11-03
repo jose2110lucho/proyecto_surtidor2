@@ -14,5 +14,6 @@ class Cliente_Premio extends Model
     protected $fillable = [
         'cliente_id',
         'premio_id',
+        'puntos_canjeados',
     ];
 }

@@ -331,28 +331,8 @@ return [
 
         ], */
 
-
-        //-------------------modulo clientes---------------------------------
-        [
-            'text'    => 'Clientes',
-            'icon'    => 'fas fa-fw fa-users',
-            'url'  => 'clientes/*',
-            'submenu' => [
-                [
-                    'text' => 'Nuevo cliente',
-                    'icon'    => 'fas fa-fw fa-plus',
-                    'url'  => 'clientes/create',
-                ],
-                [
-                    'text' => 'Lista de clientes',
-                    'icon'    => 'fas fa-fw fa-list-ul',
-                    'url'  => 'clientes',
-                ],
-            ],
-        ],
-
         //-------------------modulo premios---------------------------------
-/*         [
+        [
             'text'    => 'Premios',
             'icon'    => 'fas fa-fw fa-gift',
             'url'  => 'premios/*',
@@ -368,7 +348,7 @@ return [
                     'url'  => 'premios',
                 ],
             ],
-        ], */
+        ],
 
         //-------------------modulo inventario---------------------------------
         [
@@ -458,17 +438,28 @@ return [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
+                //-------------------modulo clientes---------------------------------
                 [
-                    'text' => 'Gestionar venta',
-                    'url'  => '#',
+                    'text'    => 'Clientes',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'clientes/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo cliente',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'clientes/create',
+                        ],
+                        [
+                            'text' => 'Lista de clientes',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'clientes',
+                        ],
+                    ],
                 ],
                 [
-                    'text' => 'Gestionar vehiculo',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Gestionar cliente',
-                    'url'  => '#',
+                    'text'    => 'Vehiculos',
+                    'icon'    => 'fa fa-fw fa-car-side',
+                    'url'  => 'vehiculos',
                 ],
                 [
                     'text' => 'Gestionar premio',
@@ -742,7 +733,7 @@ return [
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
-                
+
             ],
         ],
         'Pace' => [
@@ -807,5 +798,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

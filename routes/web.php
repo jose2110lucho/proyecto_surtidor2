@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\VehiculoController;
+use App\Models\Premio;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,24 +34,25 @@ Route::get('/', function () {
 
 
 Route::resource('empleado',EmpleadoController::class);
-
 Route::resource('producto',ProductoController::class);
 
 //-----------------CLIENTES-----------------//
-
 Route::resource('clientes', ClienteController::class)->middleware('auth');
 Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
-Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
-Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
-
+Route::patch('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
+Route::delete('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
+Route::post('clientes/{cliente}/vehiculos', [ClienteController::class, 'storeVehiculo'])->name('clientes.vehiculos.store');
 //-----------------CLIENTES-----------------//
 
-
+//-----------------TANQUES-----------------//
 Route::resource('tanques', TanqueController::class)->middleware('auth');
-
 Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
-
 Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name('tanques.llenar');
+//-----------------TANQUES-----------------//
 
+
+
+//-----------------PREMIOS-----------------//
 Route::resource('premios', PremioController::class)->middleware('auth');
-
+//-----------------VEHICULOS-----------------//
+Route::resource('vehiculos', VehiculoController::class);

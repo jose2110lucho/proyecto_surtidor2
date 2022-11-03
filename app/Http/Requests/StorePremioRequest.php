@@ -25,7 +25,7 @@ class StorePremioRequest extends FormRequest
     {
         return [
             'nombre' => 'required | max:30 | min:2',
-            'unidades' => 'required',
+            'stock' => 'required',
             'puntos_requeridos' => 'required',
             'estado' => 'required',
         ];

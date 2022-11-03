@@ -4,7 +4,7 @@
 
 @section('content')
     <section class="content">
-        <div class="container-fluid p-4">
+        <div class="container-fluid py-4">
             <div class="card card-cyan card-outline">
                 <div class="card-header">
                     <div class="row justify-content-between">
@@ -28,161 +28,79 @@
                         <p class="my-auto"><small>Ultima modificación: {{ ' ' . $cliente->updated_at . '  ' }}</small></p>
                     </div>
                 </div>
-
             </div>
 
             <div class="card card-cyan card-tabs">
                 <div class="card-header p-0 pt-1">
                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
-                                href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
-                                aria-selected="true">Datos</a>
+                            <a class="nav-link {{ $errors->cliente->any() ? '' : 'active' }}" id="datos_cliente_tab"
+                                data-toggle="pill" href="#datos_cliente" role="tab"
+                                aria-controls="datos_cliente">Datos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill"
-                                href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings"
-                                aria-selected="false">Editar</a>
+                            <a class="nav-link {{ $errors->cliente->any() ? 'active' : '' }}" id="datos_cliente_edit_tab"
+                                data-toggle="pill" href="#datos_cliente_edit" role="tab"
+                                aria-controls="datos_cliente_edit">Editar</a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
-
-                        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
-                            aria-labelledby="custom-tabs-one-home-tab">
-                            <div class="row mb-2">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Nombre</label>
-                                        <p type="text" class="form-control my-colorpicker1">
-                                            {{ $cliente->nombre }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Apellido</label>
-                                        <p type="text" class="form-control my-colorpicker1">
-                                            {{ $cliente->apellido }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Carnet de identidad</label>
-                                        <p type="text" class="form-control my-colorpicker1">{{ $cliente->ci }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Telefono</label>
-                                        <p type="text" class="form-control my-colorpicker1">
-                                            {{ $cliente->telefono }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Puntos acumulados</label>
-                                        <p type="text" class="form-control my-colorpicker1">
-                                            {{ $cliente->puntos }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Estado</label>
-                                        <p type="text" class="form-control my-colorpicker1">
-                                            {{ $cliente->estado ? 'Activo' : 'Inactivo' }}</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="tab-pane fade {{ $errors->cliente->any() ? '' : 'show active' }}" id="datos_cliente"
+                            role="tabpanel" aria-labelledby="datos_cliente_tab">
+                            @include('partials.clientes.show_datos')
                         </div>
 
-                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel"
-                            aria-labelledby="custom-tabs-one-settings-tab">
-                            <form action="{{ route('clientes.update', $cliente) }}" method="post">
-                                @method('put')
-                                @csrf
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="nombre">Nombre</label>
-                                            <input name="nombre" type="text" class="form-control my-colorpicker1"
-                                                value="{{ old('nombre', $cliente->nombre) }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="apellido">Apellido</label>
-                                            <input name="apellido" type="text" class="form-control my-colorpicker1"
-                                                value="{{ old('apellido', $cliente->apellido) }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="ci">Carnet de identidad</label>
-                                            <input name="ci" type="text" class="form-control my-colorpicker1"
-                                                value="{{ old('ci', $cliente->ci) }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="telefono">Telefono</label>
-                                            <input name="telefono" type="text" class="form-control my-colorpicker1"
-                                                value="{{ old('telefono', $cliente->telefono) }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="puntos">Puntos acumulados</label>
-                                            <input name="puntos" type="text" class="form-control my-colorpicker1"
-                                                value="{{ old('puntos', $cliente->puntos) }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="estado">Estado</label>
-                                            <select name="estado" class="form-control select2" style="width: 100%;">
-                                                <option value="1" {{ $cliente->estado ? 'selected' : '' }}>Activo
-                                                </option>
-                                                <option value="0" {{ $cliente->estado ? '' : 'selected' }}>Inactivo
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex flex-row-reverse">
-                                    <button type="submit" class="btn btn-info">Guardar</button>
-                                    <a type="button" class="btn btn-danger mx-2"
-                                        href="{{ url()->previous() }}">Cancelar</a>
-                                </div>
-                            </form>
+                        <div class="tab-pane fade {{ $errors->cliente->any() ? 'show active' : '' }}" id="datos_cliente_edit"
+                            role="tabpanel" aria-labelledby="datos_cliente_edit_tab">
+                            @include('partials.clientes.form_edit')
                         </div>
                     </div>
                 </div>
                 <!-- /.card -->
             </div>
 
-            <div class="card card-success">
-                <div class="card-header">
-                    <h3 class="card-title">Vehiculos</h3>
+            <div class="card card-success card-tabs">
+                <div class="card-header p-0 pt-1">
+                    <div class="d-flex justify-content-between p-0">
+                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+                            <li class="nav-item">
+                                <a class="nav-link {{ $errors->any() ? '' : 'active' }}" id="vehiculos_tab"
+                                    data-toggle="pill" href="#vehiculos_list" role="tab"
+                                    aria-controls="vehiculos_tab">Vehiculos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ $errors->any() ? 'active' : '' }}" id="vehiculos_edit_tab"
+                                    data-toggle="pill" href="#vehiculo_registrar" role="tab"
+                                    aria-controls="vehiculos_edit_tab">Registrar</a>
+                            </li>
+
+                        </ul>
+                        <div class="card-tools my-auto">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="tab-content" id="custom-tabs-one-tabContent">
+                        <div class="tab-pane fade {{ $errors->any() ? '' : 'show active' }}" id="vehiculos_list"
+                            role="tabpanel" aria-labelledby="vehiculos_list">
+                            @include('partials.vehiculos.table_vehiculos')
+                        </div>
+                        <div class="tab-pane fade p-4 {{ $errors->any() ? 'show active' : '' }}" id="vehiculo_registrar"
+                            role="tabpanel" aria-labelledby="vehiculo_registrar">
+                            @include('partials.vehiculos.form_create')
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
 
-                    </div>
-                </div>
             </div>
 
             <div class="card card-purple">
@@ -201,47 +119,7 @@
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    @if ($cliente->premios->count())
-
-                        <table class="table table-hover table-head-fixed">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>CÓDIGO</th>
-                                    <th>NOMBRE</th>
-                                    <th>PUNTOS</th>
-                                    <th>FECHA DE CANJEO</th>
-                                    <th>OPCIONES</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($cliente->premios as $premio)
-                                    <tr>
-                                        <td>{{ $premio->id }}</td>
-                                        <td>{{ $premio->nombre }}</td>
-                                        <td>{{ $premio->puntos_requeridos }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($premio->pivot->created_at)->format('d/m/Y - H:i') }}
-                                        </td>
-                                        <td>
-                                            <form action="{{ route('clientes.destroyPremio',[$cliente, $premio->pivot->id]) }}"
-                                                method="post">
-                                                @method('put')
-                                                @csrf
-                                                <button type="submit" class="btn btn-sm btn-danger"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="d-flex px-3 pt-3 flex-row-reverse">
-                            {{-- {{ $clientes->links() }} --}}
-                        </div>
-                    @else
-                        <p class="text-center my-auto py-2">
-                            No se encontraron premios
-                        </p>
-                    @endif
+                    @include('partials.clientes.table_premios')
                 </div>
             </div>
     </section>
