@@ -6,7 +6,7 @@
 
 @section('content')
     <section class="content">
-        <div class="container-fluid p-4">
+        <div class="container-fluid py-4">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
@@ -32,40 +32,41 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <label>Placa</label>
                             <p class="form-control ">{{ $vehiculo->placa }}</p>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Tipo</label>
                                 <p class="form-control">
                                     {{ $vehiculo->tipo }}</p>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Marca</label>
                                 <p class="form-control">
                                     {{ $vehiculo->marca }}</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label>Color</label>
-                            <p class="form-control">{{ $vehiculo->color }}</p>
-                        </div>
-                        <div class="col-sm-4">
-                            <label>Dueño</label>
-                            <p class="form-control">{{ $vehiculo->placa }}</p>
-                        </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>B-SISA</label>
                                 <p class="form-control ">
                                     {{ $vehiculo->b_sisa ? 'Hábil' : 'Inhábil' }}</p>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label>Dueño</label>
+                            <p class="border rounded p-2">
+                                <a href="{{ route('clientes.show', $vehiculo->cliente) }}">
+                                    <i class="fa fa-user-circle fa-fw pr-4" aria-hidden="true"></i>
+                                    {{ $vehiculo->cliente->nombre . ' ' . $vehiculo->cliente->apellido }}
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>

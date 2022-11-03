@@ -13,7 +13,7 @@ class UpdateVehiculoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class UpdateVehiculoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'placa' => 'alpha_num | unique:vehiculos,placa,' . $this->vehiculo->id,
+            'tipo' => 'required',
+            'marca' => 'nullable',
+            'b_sisa' => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'placa.unique' => 'La placa ingresada ya está registrada',
         ];
     }
 }

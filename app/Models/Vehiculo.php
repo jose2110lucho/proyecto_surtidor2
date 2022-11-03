@@ -14,10 +14,11 @@ class Vehiculo extends Model
         'tipo',
         'marca',
         'b_sisa',
+        'cliente_id',
     ];
 
     public function cliente()
     {
-        return $this->hasOne(Cliente::class);
+        return $this->belongsTo(Cliente::class);
     }
 }

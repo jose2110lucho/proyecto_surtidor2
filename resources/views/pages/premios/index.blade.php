@@ -8,9 +8,13 @@
             <div class="card">
                 <div class="card-header justify-content-between">
                     <div class="row justify-content-between">
-                        <div class="col-sm p-2">
-                            <h3 class="card-title">
+                        <div class="col-xs-4 my-auto">
+                            <h3 class="card-title my-auto">
                                 <strong>LISTA DE PREMIOS</strong>
+                                <a class="btn"
+                                    href="{{ route('premios.index') }}">
+                                    <i class="fas fa-sync fa-md fa-fw"></i>
+                                </a>
                             </h3>
                         </div>
 
@@ -45,19 +49,18 @@
                                 <tr>
                                     <th>NOMBRE</th>
                                     <th>STOCK</th>
-                                    <th style="width: 15%">PUNTOS</th>
-                                    <th style="width: 15%" class="text-center">ESTADO</th>
-                                    {{-- <th style="width: 15%" class="text-center">OPCIONES</th> --}}
+                                    <th>PUNTOS</th>
+                                    <th>ESTADO</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($premios as $premio)
                                     <tr>
                                         <td><a href="{{ route('premios.show', $premio) }}">{{ $premio->nombre }}</a></td>
-                                        <td>{{ $premio->stock }}</td>
+                                        <td class="{{ ($premio->stock == 0) ? 'text-danger' : ''}}">{{ ($premio->stock == 0) ? 'Agotado' : $premio->stock}}</td>
                                         <td>{{ $premio->puntos_requeridos }}</td>
-                                        <td class="text-center"><span
-                                                class="badge {{ $premio->id ? 'bg-success' : 'bg-secondary' }}">{{ $premio->id ? 'ACTIVO' : 'INACTIVO' }}</span>
+                                        <td><span
+                                                class="badge {{ $premio->estado ? 'bg-success' : 'bg-secondary' }}">{{ $premio->estado ? 'ACTIVO' : 'INACTIVO' }}</span>
                                         </td>
                                     </tr>
                                 @endforeach

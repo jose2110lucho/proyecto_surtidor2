@@ -9,20 +9,24 @@
     </div>
     <div class="col-md-3">
         <label>Stock</label>
-        <p class="form-control my-colorpicker1">{{ $premio->stock }}</p>
+        <p class="form-control my-colorpicker1">{{ ($premio->stock == 0) ? 'Agotado' : $premio->stock }}</p>
     </div>
     <div class="col-md-3">
         <label>Estado</label>
-        <p class="form-control">{{ $premio->estado ? 'Activo' : 'Inactivo' }}</p>
+        <p class="form-control text-capitalize">{{ $premio->estado ? 'activo' : 'cerrado' }}</p>
     </div>
 
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <label>Descripción</label>
+    <div class="col-md-3">
+        <label>Fecha de inicio</label>
         <p name="descripcion" class="border rounded p-2">
-            {{ $premio->descripcion }}
+            {{ \Carbon\Carbon::parse($premio->fecha_inicio)->format('d-m-Y H:i')}}
         </p>
+    </div>
+    <div class="col-md-3">
+        <label>Finalización</label>
+        <p class="border rounded p-2">{{ is_null($premio->fecha_fin) ? 'Indefinido' : \Carbon\Carbon::parse($premio->fecha_fin)->format('d-m-Y H:i') }}</p>
     </div>
 
     <div class="col-md-6">
@@ -36,5 +40,13 @@
             </div>
             <p class="form-control">{{ $premio->unidades_producto }}</p>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label>Descripción</label>
+        <p name="descripcion" class="border rounded p-2">
+            {{ $premio->descripcion }}
+        </p>
     </div>
 </div>

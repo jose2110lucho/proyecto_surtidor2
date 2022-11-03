@@ -459,19 +459,7 @@ return [
                 [
                     'text'    => 'Vehiculos',
                     'icon'    => 'fa fa-fw fa-car-side',
-                    'url'  => 'vehiculos/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo vehiculo',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'vehiculos/create',
-                        ],
-                        [
-                            'text' => 'Lista de vehiculos',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'vehiculos',
-                        ],
-                    ],
+                    'url'  => 'vehiculos',
                 ],
                 [
                     'text' => 'Gestionar premio',
@@ -810,5 +798,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

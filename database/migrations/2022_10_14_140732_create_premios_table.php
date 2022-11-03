@@ -19,6 +19,8 @@ class CreatePremiosTable extends Migration
             $table->text('descripcion')->nullable();
             $table->integer('stock');
             $table->integer('puntos_requeridos');
+            $table->dateTime('fecha_inicio');
+            $table->dateTime('fecha_fin')->nullable();
             $table->boolean('estado');
             $table->foreignId('producto_id')->nullable()->constrained('producto');
             $table->integer('unidades_producto')->nullable();

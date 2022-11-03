@@ -47,6 +47,7 @@
                         <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                             aria-labelledby="custom-tabs-one-home-tab">
                             <form action="{{ route('clientes.canjear', $cliente) }}" method="POST">
+                                @method('PATCH')
                                 @csrf
                                 <div class="row mb-2 justify-content-center">
                                     <div class="col-md-4 ">

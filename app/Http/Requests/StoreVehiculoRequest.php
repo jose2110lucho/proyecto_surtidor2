@@ -13,7 +13,7 @@ class StoreVehiculoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreVehiculoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'placa' =>  ' alpha_num | unique:vehiculos,placa| min:6 | max:8',
+            'tipo' => 'required',
+            'marca' => 'nullable',
+            'b_sisa' => 'required',
         ];
     }
 }

@@ -17,6 +17,8 @@ class Premio extends Model
         'estado',
         'producto_id',
         'unidades_producto',
+        'fecha_inicio',
+        'fecha_fin',
     ];
 
     public function clientes()

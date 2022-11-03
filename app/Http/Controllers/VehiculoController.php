@@ -6,6 +6,7 @@ use App\Models\Vehiculo;
 use App\Http\Requests\StoreVehiculoRequest;
 use App\Http\Requests\UpdateVehiculoRequest;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class VehiculoController extends Controller
 {
@@ -16,11 +17,17 @@ class VehiculoController extends Controller
      */
     public function index(Request $request)
     {
-        $vehiculos = Vehiculo::orderby('placa', 'desc')
-            ->where('placa', 'ilike', '%' . $request->buscar . '%')
-            ->orwhere('marca', 'ilike', '%' . $request->buscar . '%')
-            ->paginate(9);
-        return view('pages.vehiculos.index', compact('vehiculos'));
+        if ($request->ajax()) {
+
+            $vehiculos = Vehiculo::select('vehiculos.*');
+
+            return DataTables::of($vehiculos)
+                ->addColumn('actions', 'partials.vehiculos.actions')
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+
+        return view('pages.vehiculos.index');
     }
 
     /**
@@ -63,7 +70,7 @@ class VehiculoController extends Controller
      */
     public function edit(Vehiculo $vehiculo)
     {
-        //
+        return view('pages.vehiculos.edit', compact('vehiculo'));
     }
 
     /**
@@ -75,7 +82,10 @@ class VehiculoController extends Controller
      */
     public function update(UpdateVehiculoRequest $request, Vehiculo $vehiculo)
     {
-        //
+        $request->merge(['placa' => strtoupper($request->placa)]);
+
+        $vehiculo->update($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -86,6 +96,7 @@ class VehiculoController extends Controller
      */
     public function destroy(Vehiculo $vehiculo)
     {
-        //
+        $vehiculo->delete();
+        return redirect()->back();
     }
 }

@@ -6,6 +6,8 @@ use App\Models\Premio;
 use App\Http\Requests\StorePremioRequest;
 use App\Http\Requests\UpdatePremioRequest;
 use App\Models\Producto;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PremioController extends Controller
 {
@@ -16,6 +18,7 @@ class PremioController extends Controller
      */
     public function index()
     {
+        $this->updateEstados();
         $productos = Producto::get();
         $premios = Premio::orderby('id', 'asc')->paginate(9);
         return view('pages.premios.index', compact('premios', 'productos'));
@@ -40,22 +43,12 @@ class PremioController extends Controller
      */
     public function store(StorePremioRequest $request)
     {
-        $unidades_producto = $request->unidades_producto;
+        
         if (is_null($request->producto_id)) {
-            $unidades_producto = null;
+            $request->merge(['unidades_producto' => null]);
         }
 
-        $premio = Premio::create([
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'stock' => $request->stock,
-            'puntos_requeridos' => $request->puntos_requeridos,
-            'estado' => $request->estado,
-            'producto_id' => $request->producto_id,
-            'estado' => $request->estado,
-            'unidades_producto' => $unidades_producto
-        ]);
-
+        $premio = Premio::create($request->all());
         return redirect()->route('premios.show', $premio);
     }
 
@@ -94,6 +87,24 @@ class PremioController extends Controller
     {
         $premio->update($request->all());
         return redirect()->route('premios.show', compact('premio'));
+    }
+
+    /**
+     * Actualiza el campo estado de la tabla premio de acuerdo al stock y la fecha fin  
+     *
+     * @param  \App\Http\Requests\UpdatePremioRequest  $request
+     * @param  \App\Models\Premio  $premio
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEstados()
+    {
+        DB::table('premios')
+            ->whereNotNull('fecha_fin')
+            ->where([
+                ['estado', '!=', 0],
+                ['fecha_fin', '<=', Carbon::now()]
+            ])
+            ->update(['estado' => 0]);
     }
 
     /**

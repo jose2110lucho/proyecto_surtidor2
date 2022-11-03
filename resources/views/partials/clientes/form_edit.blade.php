@@ -8,9 +8,9 @@
                 <input name="nombre" type="text" class="form-control my-colorpicker1"
                     value="{{ old('nombre', $cliente->nombre) }}" required>
 
-                @error('nombre')
-                    <small class="text-danger">*{{ $message }}</small>
-                @enderror
+                @if ($errors->cliente->has('nombre'))
+                    <small class="text-danger">*{{ $errors->cliente->first('nombre') }}</small>
+                @endif
             </div>
         </div>
         <div class="col-sm-4">
@@ -19,9 +19,9 @@
                 <input name="apellido" type="text" class="form-control my-colorpicker1"
                     value="{{ old('apellido', $cliente->apellido) }}" required>
 
-                @error('apellido')
-                    <small class="text-danger">*{{ $message }}</small>
-                @enderror
+                @if ($errors->cliente->has('apellido'))
+                    <small class="text-danger">*{{ $errors->cliente->first('apellido') }}</small>
+                @endif
             </div>
         </div>
         <div class="col-sm-4">
@@ -30,9 +30,9 @@
                 <input name="ci" type="text" class="form-control my-colorpicker1"
                     value="{{ old('ci', $cliente->ci) }}" required>
 
-                @error('ci')
-                    <small class="text-danger">*{{ $message }}</small>
-                @enderror
+                @if ($errors->cliente->has('ci'))
+                    <small class="text-danger">*{{ $errors->cliente->first('ci') }}</small>
+                @endif
             </div>
         </div>
         <div class="col-sm-4">
@@ -41,9 +41,9 @@
                 <input name="telefono" type="text" class="form-control my-colorpicker1"
                     value="{{ old('telefono', $cliente->telefono) }}">
 
-                @error('telefono')
-                    <small class="text-danger">*{{ $message }}</small>
-                @enderror
+                @if ($errors->cliente->has('telefono'))
+                    <small class="text-danger">*{{ $errors->cliente->first('telefono') }}</small>
+                @endif
             </div>
         </div>
         <div class="col-sm-4">
@@ -68,7 +68,6 @@
 
     <div class="d-flex flex-row-reverse">
         <button type="submit" class="btn btn-info">Guardar</button>
-        <a type="button" class="btn btn-danger mx-2"
-            href="{{ url()->previous() }}">Cancelar</a>
+        <a type="button" class="btn btn-danger mx-2" href="{{ url()->previous() }}">Cancelar</a>
     </div>
 </form>

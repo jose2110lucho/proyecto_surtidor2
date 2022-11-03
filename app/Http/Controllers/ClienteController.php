@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CanjearRequest;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
+use App\Http\Requests\StoreVehiculoRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Premio;
+use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
 class ClienteController extends Controller
 {
+    public $search = 'gerald';
+
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +24,19 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = Cliente::orderby('nombre', 'desc')
-            ->where('nombre', 'ilike', '%' . $request->buscar . '%')
-            ->orwhere('apellido', 'ilike', '%' . $request->buscar . '%')
-            ->paginate(9);
-        return view('pages.clientes.index', compact('clientes'));
+        /* $buscar = $request->get('buscar');
+        if ($buscar) {
+            $clientes = Cliente::orderby('nombre', 'desc')
+                ->where('nombre', 'ilike', '%' . $buscar . '%')
+                ->orwhere('apellido', 'ilike', '%' . $buscar . '%')
+                ->paginate(9);
+            return view('pages.clientes.index', compact('clientes', 'buscar'));
+        } else {
+            $clientes = Cliente::orderby('nombre', 'desc')->paginate(9);
+        } */
+
+        //return $clientes = Cliente::where('nombre', 'ilike', '%' . $this->search . '%')->orderby('nombre', 'asc')->paginate();
+        return view('pages.clientes.index');
     }
 
     /**
@@ -50,6 +62,26 @@ class ClienteController extends Controller
     }
 
     /**
+     * Registra un nuevo automovil para el cliente.
+     *
+     * @param  \App\Http\Requests\StoreVehiculoRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeVehiculo(StoreVehiculoRequest $request, Cliente $cliente)
+    {
+        Vehiculo::create(
+            [
+                'cliente_id' => $cliente->id,
+                'placa' => strtoupper($request->placa),
+                'tipo' => $request->tipo,
+                'marca' => $request->placa,
+                'b_sisa' => $request->b_sisa,
+            ]
+        );
+        return redirect()->route('clientes.show', $cliente);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Cliente  $cliente
@@ -57,7 +89,10 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        return view('pages.clientes.show', compact('cliente'));
+        $vehiculos = Vehiculo::where('cliente_id', '=', $cliente->id)
+            ->select('vehiculos.*')
+            ->paginate(9);
+        return view('pages.clientes.show', compact('cliente', 'vehiculos'));
     }
 
     /**
@@ -122,8 +157,8 @@ class ClienteController extends Controller
             }
         } else {
             $errors = new MessageBag();
-                $errors->add('cantidad', 'La cantidad de premios a canjear supera el stock');
-                return redirect()->back()->withInput()->withErrors($errors);
+            $errors->add('cantidad', 'La cantidad de premios a canjear supera el stock');
+            return redirect()->back()->withInput()->withErrors($errors);
         }
     }
 

@@ -4,7 +4,7 @@
 
 @section('content')
     <section class="content">
-        <div class="container-fluid p-4">
+        <div class="container-fluid py-4">
             <div class="card card-cyan card-outline">
                 <div class="card-header">
                     <div class="row justify-content-between">
@@ -28,19 +28,18 @@
                         <p class="my-auto"><small>Ultima modificación: {{ ' ' . $cliente->updated_at . '  ' }}</small></p>
                     </div>
                 </div>
-
             </div>
 
             <div class="card card-cyan card-tabs">
                 <div class="card-header p-0 pt-1">
                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link {{ $errors->any() ? '' : 'active' }}" id="datos_cliente_tab"
+                            <a class="nav-link {{ $errors->cliente->any() ? '' : 'active' }}" id="datos_cliente_tab"
                                 data-toggle="pill" href="#datos_cliente" role="tab"
                                 aria-controls="datos_cliente">Datos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $errors->any() ? 'active' : '' }}" id="datos_cliente_edit_tab"
+                            <a class="nav-link {{ $errors->cliente->any() ? 'active' : '' }}" id="datos_cliente_edit_tab"
                                 data-toggle="pill" href="#datos_cliente_edit" role="tab"
                                 aria-controls="datos_cliente_edit">Editar</a>
                         </li>
@@ -49,12 +48,12 @@
 
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
-                        <div class="tab-pane fade {{ $errors->any() ? '' : 'show active' }}" id="datos_cliente"
+                        <div class="tab-pane fade {{ $errors->cliente->any() ? '' : 'show active' }}" id="datos_cliente"
                             role="tabpanel" aria-labelledby="datos_cliente_tab">
                             @include('partials.clientes.show_datos')
                         </div>
 
-                        <div class="tab-pane fade {{ $errors->any() ? 'show active' : '' }}" id="datos_cliente_edit"
+                        <div class="tab-pane fade {{ $errors->cliente->any() ? 'show active' : '' }}" id="datos_cliente_edit"
                             role="tabpanel" aria-labelledby="datos_cliente_edit_tab">
                             @include('partials.clientes.form_edit')
                         </div>
@@ -63,21 +62,45 @@
                 <!-- /.card -->
             </div>
 
-            <div class="card card-success">
-                <div class="card-header">
-                    <h3 class="card-title">Vehiculos</h3>
+            <div class="card card-success card-tabs">
+                <div class="card-header p-0 pt-1">
+                    <div class="d-flex justify-content-between p-0">
+                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+                            <li class="nav-item">
+                                <a class="nav-link {{ $errors->any() ? '' : 'active' }}" id="vehiculos_tab"
+                                    data-toggle="pill" href="#vehiculos_list" role="tab"
+                                    aria-controls="vehiculos_tab">Vehiculos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ $errors->any() ? 'active' : '' }}" id="vehiculos_edit_tab"
+                                    data-toggle="pill" href="#vehiculo_registrar" role="tab"
+                                    aria-controls="vehiculos_edit_tab">Registrar</a>
+                            </li>
+
+                        </ul>
+                        <div class="card-tools my-auto">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="tab-content" id="custom-tabs-one-tabContent">
+                        <div class="tab-pane fade {{ $errors->any() ? '' : 'show active' }}" id="vehiculos_list"
+                            role="tabpanel" aria-labelledby="vehiculos_list">
+                            @include('partials.vehiculos.table_vehiculos')
+                        </div>
+                        <div class="tab-pane fade p-4 {{ $errors->any() ? 'show active' : '' }}" id="vehiculo_registrar"
+                            role="tabpanel" aria-labelledby="vehiculo_registrar">
+                            @include('partials.vehiculos.form_create')
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        @include('partials.vehiculos.table_list')
-                    </div>
-                </div>
+
             </div>
 
             <div class="card card-purple">

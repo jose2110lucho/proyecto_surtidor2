@@ -1,7 +1,7 @@
 <form action="{{ route('premios.store') }}" method="post">
     @csrf
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" name="nombre" class="form-control my-colorpicker1" value="{{ old('nombre') }}"
@@ -12,7 +12,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="puntos_requeridos">Puntos requeridos</label>
                 <input name="puntos_requeridos" class="form-control my-colorpicker1" type="number"
@@ -23,7 +23,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="stock">Stock</label>
                 <input name="stock" class="form-control my-colorpicker1" value="{{ old('stock') }}" type="number"
@@ -34,7 +34,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="estado">Estado</label>
                 <select name="estado" class="form-control select2" style="width: 100%;">
@@ -44,21 +44,34 @@
                         Inactivo
                     </option>
                 </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea name="descripcion" class="form-control my-colorpicker1" style="height: auto">{{ old('descripcion') }}</textarea>
-
-                @error('descripcion')
+                @error('estado')
                     <small class="text-danger">*{{ $message }}</small>
                 @enderror
             </div>
         </div>
-        <div class="col-lg-6">
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="fecha_inicio">Fecha de inicio</label>
+                <input name="fecha_inicio" type="datetime-local" class="form-control my-colorpicker1"
+                    value="{{ old('fecha_inicio', \Carbon\Carbon::today()) }}">
+
+                @error('fecha_inicio')
+                    <small class="text-danger">*{{ $message }}</small>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="fecha_fin">Finalización</label>
+                <input name="fecha_fin" type="datetime-local" class="form-control" value="{{ old('fecha_fin') }}">
+                @error('fecha_fin')
+                    <small class="text-danger">*{{ $message }}</small>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-6">
             <label for="producto_id">Producto</label>
             <div class="input-group">
                 <select name="producto_id" id="producto_id" class="form-control select2" style="width: 50%">
@@ -81,12 +94,22 @@
             @enderror
         </div>
     </div>
-<hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion" class="form-control my-colorpicker1" style="height: auto">{{ old('descripcion') }}</textarea>
+
+                @error('descripcion')
+                    <small class="text-danger">*{{ $message }}</small>
+                @enderror
+            </div>
+        </div>
+    </div>
+    <hr>
     <div class="d-flex justify-content-end">
         <a type="button" class="btn btn-danger mr-2" href="{{ route('premios.index') }}">Cancelar</a>
         <button type="submit" class="btn btn-info">Guardar</a>
     </div>
 
 </form>
-
-
