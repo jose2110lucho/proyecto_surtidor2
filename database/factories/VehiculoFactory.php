@@ -18,7 +18,7 @@ class VehiculoFactory extends Factory
             'tipo' => $this->faker->randomElement(['vagoneta', 'camioneta', 'motocicleta', 'camion', 'automovil']),
             'marca' => $this->faker->randomElement(['toyota', 'nissan', 'mitsubishi', 'susuki', 'honda']),
             'b_sisa' => (bool)random_int(0, 1),
-            'cliente_id' => random_int(1,20000)
+            'cliente_id' => random_int(1,5000)
         ];
     }
 }
