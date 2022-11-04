@@ -46,4 +46,9 @@ class User extends Authenticatable//, Auditable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function turnos()
+    {
+        return $this->belongsToMany(Turno::class, 'users_turnos', 'user_id', 'turno_id')->withPivot('id')->withTimestamps();
+    }
 }
