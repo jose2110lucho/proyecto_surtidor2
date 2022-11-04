@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Proveedor extends Migration
+class UsersTurnos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class Proveedor extends Migration
      */
     public function up()
     {
-        Schema::create('proveedors', function (Blueprint $table) {
+        Schema::create('users_turnos', function (Blueprint $table) {
             $table->id(); 
-            $table->string('nombre');
-            $table->integer('telefono');
-            $table->string('correo');
-            $table->string('direccion');
-            $table->integer('nit');
-            $table->string('descripcion');
-            $table->boolean('estado')->default(true);
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('turno_id')->unsigned();
+            $table->foreign('turno_id')->references('id')->on('turnos');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class Proveedor extends Migration
      */
     public function down()
     {
-        //
+         Schema::dropIfExists('producto');
     }
 }

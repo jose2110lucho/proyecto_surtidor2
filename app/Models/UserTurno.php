@@ -5,17 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Proveedor extends Model
+class UserTurno extends Model
 {
     use HasFactory;
-
+    protected $table = 'users_turnos';
     protected $fillable = [
-        'nombre',
-        'telefono',
-        'correo',
-        'direccion',
-        'nit',
-        'descripcion',
-        'estado'
+     'user_id',
+     'turno_id', 
     ];
 }

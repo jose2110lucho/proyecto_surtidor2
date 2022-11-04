@@ -54,7 +54,6 @@ class ProductoController extends Controller
         $producto->cantidad = $request->cantidad; 
         $producto->estado = true;
         $producto->descripcion = $request->descripcion;
-       // $producto->nombre_imagen = $request-> hasfile('nombre_imagen');
 
         
 
@@ -96,10 +95,6 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-       // $datosProducto = request()->except(['_token','_method']);
-       // Producto::where('id','=',$id)->update($datosProducto);
-       // return redirect('/producto')->with('status', 'Producto Actualizado Exitosamente!'); 
-        
         $nombre_imagen = "";
         $lista = [];
         if($request->hasfile('nombre_imagen')){
@@ -111,9 +106,7 @@ class ProductoController extends Controller
             $nombre_imagen = $destinationPath . $filename;
 
          }
-
          $lista = [
-
             "nombre" => $request->nombre,
             "precio_compra" => $request->precio_compra,
             "precio_venta"  =>$request->precio_venta,
@@ -121,9 +114,7 @@ class ProductoController extends Controller
             "cantidad" => $request->cantidad, 
             "descripcion" => $request->descripcion,
          ];
-
          if($nombre_imagen != ""){
-
             $lista["nombre_imagen"] = $nombre_imagen;
          }
          Producto::where('id','=',$id)->update($lista);
