@@ -352,7 +352,7 @@ return [
         ],
 
         //-------------------modulo premios---------------------------------
-/*         [
+        /*         [
             'text'    => 'Premios',
             'icon'    => 'fas fa-fw fa-gift',
             'url'  => 'premios/*',
@@ -589,7 +589,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Gestionar empleado',
-                    'url'  => 'empleado/create',
+                    'url'  => 'empleado/',
                 ],
                 [
                     'text' => 'Gestionar turno',
@@ -602,6 +602,11 @@ return [
                 [
                     'text' => 'Gestionar privilegio',
                     'url'  => '#',
+                ],
+                [
+                    'text'    => 'Categoria',
+                    'route' => 'admin.categories.index',
+                    'url'     => 'categories#',
                 ],
                 /* [
                     'text'    => 'level_one',
@@ -742,7 +747,7 @@ return [
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
-                
+
             ],
         ],
         'Pace' => [

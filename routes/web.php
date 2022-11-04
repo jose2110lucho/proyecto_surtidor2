@@ -36,7 +36,7 @@ Route::resource('producto',ProductoController::class);
 
 //-----------------CLIENTES-----------------//
 
-Route::resource('clientes', ClienteController::class)->middleware('auth');
+Route::resource('clientes', ClienteController::class);
 Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
 Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
 Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
