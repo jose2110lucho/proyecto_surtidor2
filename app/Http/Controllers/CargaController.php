@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCargaRequest;
 use App\Http\Requests\UpdateCargaRequest;
+use App\Models\Tanque;
 use App\Models\Carga;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException; 
 
 class CargaController extends Controller
 {
@@ -28,7 +31,8 @@ class CargaController extends Controller
     public function create()
     {
         $cargas= new Carga();
-        return view('pages.cargas.create');
+        $tanques=Tanque::pluck('codigo','id');
+        return view('pages.cargas.create',compact('cargas','tanques'));
     }
 
     /**
@@ -39,9 +43,47 @@ class CargaController extends Controller
      */
     public function store(StoreCargaRequest $request)
     {
-        $Carga = Carga::create($request->all());
-        return redirect()->route('cargas.show', $Carga);
+        $codTanque= $request->cod_tanque;
+        $sql = "SELECT * FROM tanques where codigo='".$codTanque."'";
+        $tanque = DB::select($sql);
+
+
+$cargaDisponible=0;
+foreach($tanque as $item){
+    if($item->cantidad_disponible){
+        $cargaDisponible=$item->cantidad_disponible;
     }
+}
+foreach($tanque as $item){
+  if($item->capacidad_max>=($request->cantidad+$cargaDisponible)){
+    $Carga = Carga::create([
+        'codigo'=>$request->codigo,
+        'fecha'=>$request->fecha,
+        'cantidad'=>$request->cantidad,
+        'precio_unitario'=>$request->precio_unitario,
+        'precio_total'=>$request->precio_total,
+
+     ]);
+     //--TRIGGER->PROCEDIMIENTO ALMACENADO
+     $cantidadRenovada=$cargaDisponible+=$request->cantidad;
+     $sql = "UPDATE tanques  SET cantidad_disponible='".$cantidadRenovada."' where codigo='".$codTanque."' ";
+     DB::select($sql);
+    return redirect()->route('cargas.show', $Carga);
+  }
+  else{
+    //throw new ModelNotFoundException('Se excedio la cantidad');
+    $cargas= new Carga();
+    $tanques=Tanque::pluck('codigo','id');
+    
+    return view('pages.cargas.create',compact('cargas','tanques'));
+    //mensaje de error
+          //  throw new Exception ('Se excedio la cantidad');
+      
+
+    }
+  }
+}
+
 
     /**
      * Display the specified resource.

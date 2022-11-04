@@ -19,21 +19,34 @@
                     @csrf
                     <!-- /.card-header -->
                     <div class="card-body">
+                      
                         <div class="row">
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="codigo">Codigo</label>
-                                    <input name="codigo" class="form-control my-colorpicker1" value="{{ old('codigo') }}">
+                                    {{ Form::label('Tanque') }}
+                                    {{ Form::select('tanque_id',$tanques,$cargas->tanque_id,['class'=>'form-control my-colorpicker1',
+                                    ($errors->has('tanque_id')? 'is-invalid' : ''), 'placeholder'=>'']) }}
+                                     {!! $errors->first('tanque:id','<div class="invalid-feedback">: message</p>') !!}
+                                     </div>
+                                 </div>
+                                
+                            </div>                            --}}
+                          <div class="col-md-4">
+                                <div class="form-group">
+                                      <label for="codigo">Codigo</label>
+                                    <input id="codigo" name="codigo" class="form-control my-colorpicker1" value="{{ old('codigo') }}">
 
                                     @error('codigo')
                                         <small class="text-danger">*{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
+                          
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="fecha">Fecha</label>
-                                    <input name="fecha" class="form-control my-colorpicker1"
+                                    <input id="fecha" name="fecha" class="form-control my-colorpicker1"
                                         value="{{ old('fecha') }}">
 
                                     @error('fecha')
@@ -45,7 +58,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cantidad">Cantidad</label>
-                                    <input name="cantidad" class="form-control my-colorpicker1"
+                                    <input id="cantidad"  name="cantidad" class="form-control my-colorpicker1"
                                         value="{{ old('cantidad') }}">
 
                                     @error('cantidad')
@@ -58,7 +71,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="precio_unitario">Precio Unitario</label>
-                                    <input name="precio_unitario" class="form-control my-colorpicker1"
+                                    <input id="precio_unitario" name="precio_unitario" class="form-control my-colorpicker1"
                                         value="{{ old('precio_unitario') }}">
 
                                     @error('precio_unitario')
@@ -71,8 +84,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="precio_total">Precio Total</label>
-                                    <input name="precio_total" class="form-control my-colorpicker1"
-                                        value="{{ old('precio_total') }}">
+                                    <input id="precio_total" name="precio_total" class="form-control my-colorpicker1"
+                                        value="{{ old('precio_total') }}" >
 
                                     @error('precio_total')
                                         <small class="text-danger">*{{ $message }}</small>
@@ -80,6 +93,18 @@
                                 </div>
 
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tanques">Tanques</label>
+                                    <select name="cod_tanque" id="cod_tanque" class="form-control line-s-2">
+                                    @foreach ($tanques as $tanque)
+                                        <option>{{ $tanque }}</option>
+                                     @endforeach
+                                    </select>
+                                 </div>
+                                
+                            </div>                            
                            
                     </div>
                     @if($errors->any())
