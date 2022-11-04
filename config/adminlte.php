@@ -584,8 +584,8 @@ return [
             'submenu' => [
                 [
                     'text' => 'Gestionar empleado',
+                    'url'  => 'empleado/',
                     'icon'    => 'fas fa-fw fa-hard-hat',
-                    'url'  => 'empleado/create',
                 ],
                 
                 [
@@ -611,14 +611,16 @@ return [
                         
                     ],
                 ],
-               
-
+                [
+                
+                    'text' => 'Gestionar privilegio',
+                    'url'  => '#',
+                ],
                 [
                     'text'    => 'Asistencias & Turnos',
                     'icon'    => 'fas fa-fw fa-calendar-plus',
                     'url'     => '#',
                     'submenu' => [
-                       
                         [
                             'text'    => 'Asistencia',
                             'icon'    => 'fas fa-fw fa-clipboard',

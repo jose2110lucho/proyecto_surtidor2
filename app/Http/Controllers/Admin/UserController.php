@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\HomeController;
 
-class EmpleadoController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $lista_usuarios = User::all();
-        return view('livewire.admin.empleados-index',['lista_usuarios'=>$lista_usuarios]);
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -28,7 +27,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        return view('modulo_administrativo/empleado/create');
+        return view('admin.users.create');
     }
 
     /**
@@ -39,16 +38,16 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User();
-        $user->name = $request->nombre;
-        $user->email = $request->correo;
-        $user->password = Hash::make($request->password);
-        $user->direccion = $request->direccion;
-        $user->telefono = $request->telefono;
-        $user->estado = true;
-        $user->save();
+     
+        $request->validate([
+            'id'=>'required|unique:users',
+            'nombre'=>'required',
+            'email'=>'required'
+        ]);
 
-       return redirect('/empleado');
+        $user = User::create($request->all());
+        return redirect()->route('admin.users.edit', $user);
+
     }
 
     /**
@@ -58,9 +57,8 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
-        $usuario = User::findOrFail($id);
-        return view('modulo_administrativo.empleado.show',compact('usuario'));
+    {
+        //
     }
 
     /**
@@ -69,11 +67,12 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
+        //return view('admin.users.edit');
         $roles = Role::all();
-        $usuario = User::findOrFail($id); 
-        return view('modulo_administrativo.empleado.edit',compact('usuario','roles')); 
+        return view('admin.users.edit', compact('user', 'roles'));
+   
     }
 
     /**
@@ -83,11 +82,11 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user) 
     {
-        $datosUsuario = request()->except(['_token','_method']);
-        User::where('id','=',$id)->update($datosUsuario);
-        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');  
+        $user->roles()->sync($request->roles);
+
+        return redirect()->route('admin.users.edit', $user)->with('info','Se asignó los roles correspondientes');
     }
 
     /**
@@ -98,7 +97,6 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
-        return redirect('empleado');
+        //
     }
 }
