@@ -13,7 +13,7 @@ class StoreCombustibleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,13 +24,7 @@ class StoreCombustibleRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'codigo'=>'required|unique:combustibles',
-            'nombre'=>'required',
-            'precio_compra'=>'required',
-            'precio_venta'=>'',
-            'unidad_medida'=>'required'
-
+            //
         ];
     }
 }
