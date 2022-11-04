@@ -22,9 +22,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserSeeder::class);
 
-        \App\Models\Cliente::factory(30)->create();
+       
+        $this->call(ClienteSeeder::class);
+        $this->call(PremioSeeder::class);
+        $this->call(UserSeeder::class);
+        \App\Models\Cliente::factory(5)->create();
         \App\Models\Tanque::factory(5)->create();
-        \App\Models\Premio::factory(20)->create();
-        //\App\Models\Cliente_Premio::factory(20)->create();
+        \App\Models\Premio::factory(5)->create();
+        \App\Models\Vehiculo::factory(10)->create();
     }
 }

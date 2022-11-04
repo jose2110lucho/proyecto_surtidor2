@@ -20,11 +20,15 @@ class Cliente extends Model implements Auditable
         'estado'
     ];
 
+    public function vehiculos()
+    {
+        return $this->hasMany(Vehiculo::class);
+    }
 
     public function premios()
     {
         return $this->belongsToMany(Premio::class, 'cliente_premio')
-        ->withPivot('id')
+        ->withPivot('id','cantidad','puntos_canjeados')
         ->withTimestamps();
     }
 }

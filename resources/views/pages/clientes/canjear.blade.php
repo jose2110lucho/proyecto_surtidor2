@@ -39,11 +39,6 @@
                                 href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
                                 aria-selected="true">Canjear puntos</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill"
-                                href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings"
-                                aria-selected="false">Editar</a>
-                        </li>
                     </ul>
                 </div>
 
@@ -51,11 +46,12 @@
                     <div class="tab-content" id="custom-tabs-one-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                             aria-labelledby="custom-tabs-one-home-tab">
-                            <form action="{{ route('clientes.canjear', $cliente) }}" method="post">
+                            <form action="{{ route('clientes.canjear', $cliente) }}" method="POST">
+                                @method('PATCH')
                                 @csrf
                                 <div class="row mb-2 justify-content-center">
-                                    <div class="col-sm-4 ">
-                                        <div class="form-group @error('premio_id') is-invalid @enderror" id="form_canjeo">
+                                    <div class="col-md-4 ">
+                                        <div class="form-group @error('premio_id') is-invalid @enderror" id="input_premio">
                                             <label for="premio_id">Premio</label>
                                             <select name="premio_id" id="premio_id"
                                                 class="form-control select2 @error('premio_id') is-invalid @enderror"
@@ -75,48 +71,57 @@
                                         @enderror
                                         <div id="validacionPremio" class="invalid-feedback"></div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="unidades">und.</label>
-                                            <input type="number" class="form-control my-colorpicker1"
-                                                id="unidades" name="unidades" min="1" value="1">
-                                            </input>
+                                            <label for="stock">Stock</label>
+                                            <p type="number" class="form-control my-colorpicker1" id="stock"></p>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="cantidad">Cantidad</label>
+                                            <input type="number" class="form-control my-colorpicker1" id="cantidad"
+                                                name="cantidad" min="1" value="{{ old('cantidad', 1) }}">
+                                        </div>
+                                        @error('cantidad')
+                                            <div class="invalid-feedback">*{{ $message }}
+                                            </div>
+                                        @enderror
+                                        <div id="validacionCantidad" class="text-danger text-sm">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Puntos requeridos</label>
                                             <p class="form-control my-colorpicker1" id="puntos_requeridos">
                                             </p>
                                         </div>
                                         <div class="form-group">
-                                            <label>Puntos acumulados</label>
+                                            <label>Puntos del cliente</label>
                                             <p class="form-control my-colorpicker1" id="puntos_acumulados">
                                                 {{ $cliente->puntos }}</p>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row mb-2 justify-content-center">
+                                    <div class="col-sm-4">
+
+                                    </div>
+                                </div>
+
+
                                 <div class="d-flex flex-row-reverse">
-                                    <button type="submit" class="btn btn-info">Canjear</button>
+                                    <button type="submit" class="btn btn-info" id="canjear_button">Canjear</button>
                                     <a type="button" class="btn btn-danger mx-2"
                                         href="{{ route('clientes.show', $cliente) }}">Cancelar</a>
                                 </div>
                             </form>
-                        </div>
-
-                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel"
-                            aria-labelledby="custom-tabs-one-settings-tab">
-
                         </div>
                     </div>
                 </div>
                 <!-- /.card -->
             </div>
     </section>
-
-    {{--     //var premio = {!! json_encode($premios->find(premioId)->toArray(), JSON_HEX_TAG) !!};
-    //console.log(premio.id);
-    //$('#puntos_requeridos').val(premioId) --}}
 @stop
 
 
@@ -124,35 +129,64 @@
     <script>
         $(document).ready(function() {
             $('#premio_id').on('change', function() {
-                var premio_id = this.value;
+                actualizar();
+            })
+
+            $('#cantidad').on('change', function() {
+                actualizar();
+            })
+
+            function actualizar() {
+                var premio_id = parseInt($('#premio_id').val());
 
                 if (premio_id) {
                     var premios = {!! json_encode($premios->toArray(), JSON_HEX_TAG) !!};
                     var premio = $.grep(premios, function(e) {
                         return e.id == premio_id;
                     });
-                    $('#puntos_requeridos').text(premio[0].puntos_requeridos);
 
-                    var puntos_requeridos_total = premio[0].puntos_requeridos;
-                    if (parseInt($('#puntos_requeridos').text()) > parseInt($('#puntos_acumulados')
-                            .text())) {
-                        $('#validacionPremio').text('Puntos acumulados insuficientes');
+                    var puntos_requeridos_total = parseInt(premio[0].puntos_requeridos) * parseInt($(
+                        '#cantidad').val());
+                    $('#puntos_requeridos').text(puntos_requeridos_total);
+                    $('#stock').text(parseInt(premio[0].stock));
 
-                        $("#form_canjeo").addClass("is-invalid");
-                        $("#premio_id").addClass("is-invalid");
+                    if (parseInt(premio[0].stock) < parseInt($('#cantidad').val())) {
+                        $('#validacionCantidad').text('La cantidad a canjear supera el stock');
+                        $("#cantidad").addClass("is-invalid");
+                        $('#canjear_button').prop("disabled", true);
                     } else {
-                        $("#form_canjeo").removeClass("is-invalid");
-                        $("#premio_id").removeClass("is-invalid");
-                        $("#form_canjeo").addClass("is-valid");
-                        $("#premio_id").addClass("is-valid");
+                        $('#validacionCantidad').text('');
+                        $("#cantidad").removeClass("is-invalid");
+
+                        if (puntos_requeridos_total > parseInt($('#puntos_acumulados').text())) {
+                            $('#validacionPremio').text('Puntos del cliente insuficientes');
+                            premioInvalid();
+                        } else {
+                            premioValid();
+                        }
                     }
 
                 } else {
                     $('#puntos_requeridos').text('');
                     $('#validacionPremio').text('');
+                    $('#stock').text('')
                 }
 
-            })
+            }
+
+            function premioInvalid() {
+                $("#input_premio").addClass("is-invalid");
+                $("#premio_id").addClass("is-invalid");
+                $('#canjear_button').prop("disabled", true);
+            }
+
+            function premioValid() {
+                $("#input_premio").removeClass("is-invalid");
+                $("#premio_id").removeClass("is-invalid");
+                $("#input_premio").addClass("is-valid");
+                $("#premio_id").addClass("is-valid");
+                $('#canjear_button').prop("disabled", false);
+            }
         })
     </script>
 @stop

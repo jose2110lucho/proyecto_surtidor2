@@ -52,9 +52,9 @@ class User extends Authenticatable//, Auditable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    //relacion uno a mucho inveersa
-    public function posts(){ 
-        return $this->hasMany(Post::class);
-    }
 
+    public function turnos()
+    {
+        return $this->belongsToMany(Turno::class, 'users_turnos', 'user_id', 'turno_id')->withPivot('id')->withTimestamps();
+    }
 }
