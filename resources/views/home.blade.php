@@ -6,6 +6,7 @@
 
 @section('content')
 
+    <p>Welcome to this beautiful admin panel.</p>
 
 @stop
 
@@ -14,7 +15,7 @@
 @stop
 
 @section('js')
-   
+
 @stop
 
 @section('plugins.Sweetalert2', true);

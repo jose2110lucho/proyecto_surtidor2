@@ -27,7 +27,7 @@ class StoreClienteRequest extends FormRequest
             'nombre' => 'required | max:30 | min:2',
             'apellido' => 'required | max:30 | min:2',
             'ci' => 'required | max:9 | min:6',
-            'telefono' => 'min:6 | max:12'
+            'telefono' => 'min:6 | max:12 | nullable'
         ];
     }
 }

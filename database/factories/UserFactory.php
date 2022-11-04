@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -23,8 +24,6 @@ class UserFactory extends Factory
             'direccion' => $this->faker->address(),
             'telefono' => $this->faker->phoneNumber(),
             'estado' => (bool)random_int(0, 1),
-            
-            
         ];
     }
 
