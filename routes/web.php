@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
+use App\Http\Controllers\BombaController;
+use App\Http\Controllers\CombustibleController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CargaController;
+use App\Http\Controllers\PedidoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
@@ -51,8 +56,16 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 //-----------------TANQUES-----------------//
 
 
+///////BOMBA////
+Route::resource('bombas', BombaController::class);
+Route::resource('combustibles', CombustibleController::class);
+Route::resource('categorias', CategoriaController::class);
+Route::resource('cargas', CargaController::class);
+Route::resource('pedidos', PedidoController::class);
+
 
 //-----------------PREMIOS-----------------//
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
+

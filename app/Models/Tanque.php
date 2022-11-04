@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Tanque extends Model //implements Auditable
 {
     use HasFactory;
+
+    protected $fillable = ['codigo','combustible','descripcion', 'capacidad_max', 'cantidad_disponible',
+    'cantidad_min','estado'];
+
+    public function bombas(){
+        return $this->hasMany(Bomba::class,'id'); // 1 tanque  tiene muchas bombas
+    }
+
    // use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'codigo',
@@ -19,4 +27,5 @@ class Tanque extends Model //implements Auditable
         'estado',
         'fecha_carga'
     ];
+
 }
