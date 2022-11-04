@@ -14,7 +14,7 @@
                         </h4>
                     </div>
                 </div>
-                <form action="{{ route('tanques.store') }}" method="POST">
+                <form action="{{ route('tanques.store') }}" method="post">
                     @csrf
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -22,8 +22,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="codigo">Codigo</label>
-                                    <input type="text" name="codigo" class="form-control my-colorpicker1"
-                                        value="{{ old('codigo') }}">
+                                    <input name="codigo" class="form-control my-colorpicker1" value="{{ old('codigo') }}">
 
                                     @error('codigo')
                                         <small class="text-danger">*{{ $message }}</small>
@@ -65,43 +64,43 @@
                             <div class="py-3">
                                 <hr />
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="cantidad_disponible">Cantidad disponible (lts)</label>
+                                        <input name="cantidad_disponible" class="form-control my-colorpicker1"
+                                            type="number" value="{{ old('cantidad_disponible') }}">
+
+                                        @error('cantidad_disponible')
+                                            <small class="text-danger">*{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="cantidad_min">Cantidad mínima (lts)</label>
+                                        <input name="cantidad_min" class="form-control my-colorpicker1" type="number"
+                                            value="{{ old('cantidad_min') }}">
+
+                                        @error('cantidad_min')
+                                            <small class="text-danger">*{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="capacidad_max">Capacidad (lts)</label>
+                                        <input name="capacidad_max" class="form-control my-colorpicker1" type="number"
+                                            value="{{ old('capacidad_max') }}">
+
+                                        @error('capacidad_max')
+                                            <small class="text-danger">*{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="cantidad_disponible">Cantidad disponible (lts)</label>
-                                    <input name="cantidad_disponible" class="form-control my-colorpicker1" type="number"
-                                        value="{{ old('cantidad_disponible') }}" step=".01" min="0">
-
-                                    @error('cantidad_disponible')
-                                        <small class="text-danger">*{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="cantidad_min">Cantidad mínima (lts)</label>
-                                    <input name="cantidad_min" class="form-control my-colorpicker1" type="number"
-                                        value="{{ old('cantidad_min') }}" step=".01" min="0">
-
-                                    @error('cantidad_min')
-                                        <small class="text-danger">*{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="capacidad">Capacidad (lts)</label>
-                                    <input name="capacidad" class="form-control my-colorpicker1" type="number"
-                                        value="{{ old('capacidad') }}" step=".01" min="0" required>
-
-                                    @error('capacidad')
-                                        <small class="text-danger">*{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
 
                     </div>
 

@@ -13,12 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ClienteSeeder::class);
-        $this->call(PremioSeeder::class);
-        $this->call(UserSeeder::class);
-        \App\Models\Cliente::factory(5000)->create();
+        \App\Models\User::factory(30)->create();
+        \App\Models\Cliente::factory(30)->create();
         \App\Models\Tanque::factory(5)->create();
-        \App\Models\Premio::factory(5)->create();
-        \App\Models\Vehiculo::factory(10000)->create();
     }
 }

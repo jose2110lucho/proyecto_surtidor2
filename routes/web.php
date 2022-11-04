@@ -8,11 +8,6 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CargaController;
 use App\Http\Controllers\PedidoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmpleadoController;
-use App\Http\Controllers\PremioController;
-use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\VehiculoController;
-use App\Models\Premio;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,35 +20,18 @@ use App\Models\Premio;
 |
 */
 
-
-/*Route::get('/', function () {
+Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
-
 Auth::routes();
-Route::get('/', function () {
-    return view('layouts/master');
-})->middleware('auth');
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('empleado',EmpleadoController::class);
-Route::resource('producto',ProductoController::class);
+Route::resource('clientes', ClienteController::class);
 
-//-----------------CLIENTES-----------------//
-Route::resource('clientes', ClienteController::class)->middleware('auth');
-Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
-Route::patch('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
-Route::delete('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
-Route::post('clientes/{cliente}/vehiculos', [ClienteController::class, 'storeVehiculo'])->name('clientes.vehiculos.store');
-//-----------------CLIENTES-----------------//
+Route::resource('tanques', TanqueController::class);
 
-//-----------------TANQUES-----------------//
-Route::resource('tanques', TanqueController::class)->middleware('auth');
-Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
-Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name('tanques.llenar');
-//-----------------TANQUES-----------------//
 
 
 ///////BOMBA////
@@ -63,9 +41,13 @@ Route::resource('categorias', CategoriaController::class);
 Route::resource('cargas', CargaController::class);
 Route::resource('pedidos', PedidoController::class);
 
+//Route::get('bombas/index', [App\Http\Controllers\BombaController::class, 'index'])->name('pages.bombas.index');
+//Route::get('pages/bombas/index', [App\Http\Controllers\BombaController::class, 'index'])->name('pages.bombas.index');
+//Route::get('bombas/create', [App\Http\Controllers\BombaController::class, 'create'])->name('pages.bombas.create');
+//x|Route::post('bombas/create', [BombaController::class, 'store'])->name('bombas.create');
+//Route::get('bombas/edit/{id}',[App\Http\Controllers\BombaController::class, 'edit'])->name('pages.bombas.edit');
 
-//-----------------PREMIOS-----------------//
-Route::resource('premios', PremioController::class)->middleware('auth');
-//-----------------VEHICULOS-----------------//
-Route::resource('vehiculos', VehiculoController::class);
+//Route::patch('pages/bombas/edit/{id}',[App\Http\Controllers\BombaController::class, 'edit'])->name('pages.bombas.edit' );
+
+
 
