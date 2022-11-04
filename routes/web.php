@@ -41,13 +41,7 @@ Route::resource('categorias', CategoriaController::class);
 Route::resource('cargas', CargaController::class);
 Route::resource('pedidos', PedidoController::class);
 
-//Route::get('bombas/index', [App\Http\Controllers\BombaController::class, 'index'])->name('pages.bombas.index');
-//Route::get('pages/bombas/index', [App\Http\Controllers\BombaController::class, 'index'])->name('pages.bombas.index');
-//Route::get('bombas/create', [App\Http\Controllers\BombaController::class, 'create'])->name('pages.bombas.create');
-//x|Route::post('bombas/create', [BombaController::class, 'store'])->name('bombas.create');
-//Route::get('bombas/edit/{id}',[App\Http\Controllers\BombaController::class, 'edit'])->name('pages.bombas.edit');
 
-//Route::patch('pages/bombas/edit/{id}',[App\Http\Controllers\BombaController::class, 'edit'])->name('pages.bombas.edit' );
 
 
 
