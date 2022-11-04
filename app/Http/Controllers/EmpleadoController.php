@@ -69,11 +69,10 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
         $roles = Role::all();
-        $usuario = User::findOrFail($id); 
-        return view('modulo_administrativo.empleado.edit',compact('usuario','roles')); 
+        return view('modulo_administrativo.empleado.edit',compact('user','roles')); 
     }
 
     /**
@@ -83,11 +82,14 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $datosUsuario = request()->except(['_token','_method']);
+        $user->roles()->sync($request->roles);
+        return redirect()->route('modulo_administrativo.empleado.edit', $user)->with('info','Roles asignados');
+
+        /* $datosUsuario = request()->except(['_token','_method']);
         User::where('id','=',$id)->update($datosUsuario);
-        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');  
+        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!'); */
     }
 
     /**

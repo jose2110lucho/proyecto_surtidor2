@@ -3,14 +3,21 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1>Editar empleado:{{$usuario->name}}</h1>
+<h1>Editar empleado:{{$user->name}}</h1>
 @stop
 
 @section('content')
+@if(session('info'))
+<div class="alert alert-success">
+     <strong>{{session('info')}}</strong>
+</div>
+
+@endif
+
 
 <div class="card">
     <div class="card-body">
-        {!! Form::model($usuario, ['route' => ['modulo_administrativo.empleado.update', $usuario], 'method' => 'put']) !!}
+        {!! Form::model($user, ['route' => ['modulo_administrativo.empleado.update', $user], 'method' => 'put']) !!}
         @csrf
         {{ method_field('PUT') }}
         <!--inicio campo nombre-->
