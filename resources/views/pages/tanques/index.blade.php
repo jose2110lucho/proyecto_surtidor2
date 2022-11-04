@@ -5,7 +5,7 @@
 @section('content')
     <section class="content">
         <div class="container-fluid p-4">
-            <!-- SELECT2 EXAMPLE -->
+
             <div class="card">
                 <div class="d-flex justify-content-between">
                     <div>
@@ -16,12 +16,13 @@
                             LISTA DE TANQUES REGISTRADOS
                         </p>
                     </div>
-                    <div class="p-3">
-                        <span class="fa fa-battery-quarter fa-4x"></span>
+                    <div>
+                        {{-- <span class="fa fa-battery-quarter fa-4x"></span> --}}
+                        <a href="{{ route('tanques.create') }}" class="btn btn-primary my-4 mx-3">Nuevo</a>
                     </div>
                 </div>
             </div>
-            <!-- SELECT2 EXAMPLE -->
+
             @foreach ($tanques as $tanque)
                 <div class="card my-4">
                     <div class="card-header">
@@ -41,7 +42,6 @@
                                 <a class="btn btn-tool" href="{{ route('tanques.show', $tanque) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
-
                                 <a class="btn btn-tool" href="{{ route('tanques.edit', $tanque) }}">
                                     <i class="fa fa-pen"></i>
                                 </a>
@@ -53,21 +53,25 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <label>Capacidad máxima: </label>
-                                <p type="text" class="">{{ $tanque->capacidad_max . ' litros' }}</p>
+                        <div class="row align-items-center">
+                            <div class="col-sm-4">
+                                <label>Capacidad: </label>
+                                <p>{{ $tanque->capacidad . ' litros' }}</p>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
+                            <div class="col-sm-4">
+                                <div class="form-group text-center">
                                     <label>Ultima carga</label>
-                                    <p type="text" class="">---</p>
+                                    <p>
+                                        {{ is_null($tanque->fecha_carga) ? '- - -' : \Carbon\Carbon::parse($tanque->fecha_carga)->format('d/m/Y - h:i') }}
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
+                            <div class="col-sm-4">
+                                <div class="form-group text-right">
                                     <label>Estado</label>
-                                    <p type="text" class="">{{ $tanque->estado ? 'Activo' : 'Inactivo' }}</p>
+                                    <p>
+                                        {{ $tanque->estado ? 'Activo' : 'Inactivo' }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -75,14 +79,14 @@
                             <div class="col">
                                 <div class="progress my-1" style="height: 2px;">
                                     <div class="progress-bar bg-cyan "
-                                        style="width:{{ ($tanque->cantidad_min * 100) / $tanque->capacidad_max }}%;"></div>
+                                        style="width:{{ ($tanque->cantidad_min * 100) / $tanque->capacidad }}%;"></div>
                                 </div>
                                 <div class="progress" style="height: 30px;">
                                     <div class="progress-bar text-left p-2 progress-bar-animated 
                                     @if ($tanque->cantidad_disponible > $tanque->cantidad_min) bg-cyan
                                     @else bg-red @endif"
-                                        style="width: {{ ($tanque->cantidad_disponible / $tanque->capacidad_max) * 100 }}%">
-                                        {{ 'Cantidad disponible: ' . $tanque->cantidad_disponible . ' lts' }}
+                                        style="width:{{ ($tanque->cantidad_disponible * 100) / $tanque->capacidad }}%">
+                                        {{ 'Quedan: ' . $tanque->cantidad_disponible . ' lts' }}
 
                                     </div>
                                 </div>
@@ -92,6 +96,6 @@
                 </div>
             @endforeach
         </div>
-        <!-- /.container-fluid -->
+
     </section>
 @stop

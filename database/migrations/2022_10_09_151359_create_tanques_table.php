@@ -19,10 +19,11 @@ class CreateTanquesTable extends Migration
             $table->string('codigo');
             $table->string('combustible');
             $table->text('descripcion')->nullable();
-            $table->integer('capacidad_max');
-            $table->integer('cantidad_disponible');
-            $table->integer('cantidad_min')->nullable();
+            $table->double('capacidad', 8, 2);
+            $table->double('cantidad_disponible', 8, 2);
+            $table->double('cantidad_min', 8, 2)->nullable();
             $table->boolean('estado');
+            $table->datetime('fecha_carga')->nullable();
             $table->timestamps();
         });
     }
