@@ -74,10 +74,7 @@
                 </div>
             </div>
         </nav>
-            <main>
-                <x-message/>
-                {{ $slot }}
-            </main>
+
         <main class="py-4">
             @yield('content')
         </main>
