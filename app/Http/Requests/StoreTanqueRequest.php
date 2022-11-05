@@ -26,18 +26,9 @@ class StoreTanqueRequest extends FormRequest
         return [
             'codigo' => 'required | max:30 | min:1',
             'combustible' => 'required | max:30 | min:1',
+            'capacidad_max' => 'required',
             'estado' => 'required',
-            'capacidad' => 'required | gt:0',
-            'cantidad_min' => 'required | lte:capacidad',
-            'cantidad_disponible' => 'required | lte:capacidad'
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'cantidad_min.lte' => 'La cantidad minima debe ser menor o igual a la capacidad del tanque',
-            'cantidad_disponible.lte' => 'La cantidad disponible debe ser menor a la capacidad del tanque',
+            'cantidad_disponible' => 'required'
         ];
     }
 }

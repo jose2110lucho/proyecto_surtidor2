@@ -4,123 +4,100 @@
 
 @section('content')
     <section class="content">
-        <div class="container-fluid py-4">
-            <div class="card card-cyan card-outline">
-                <div class="card-header">
-                    <div class="row justify-content-between">
-                        <div class="col-xs-4 my-auto">
-                            <h4 class="my-auto ">
-                                <strong>{{ $cliente->nombre . ' ' . $cliente->apellido }}</strong>
-                            </h4>
-                            <p class="my-auto text-muted">
-                                Cliente
-                            </p>
-                        </div>
-                        <div class="col-xs-2 text-right">
-                            <span class="fa fa-address-card fa-4x"></span>
-                        </div>
+        <div class="container-fluid p-4">
+            <!-- SELECT2 EXAMPLE -->
+            <div class="card">
+                <div class="d-flex justify-content-between">
+                    <div >
+                        <h4 class="px-3 pt-3">
+                            <strong>{{ $cliente->nombre . ' ' . $cliente->apellido }}</strong>
+                        </h4>
+                        <p class="px-3">
+                            CLIENTE
+                        </p>
                     </div>
-                </div>
-
-                <div class="card-footer text-muted text-sm">
-                    <div class="d-flex justify-content-between my-n2">
-                        <p class="my-auto"><small>Registrado: {{ $cliente->created_at }}</small></p>
-                        <p class="my-auto"><small>Ultima modificación: {{ ' ' . $cliente->updated_at . '  ' }}</small></p>
+                    <div class="p-3">
+                        <span class="fa fa-address-card fa-4x"></span>
                     </div>
                 </div>
             </div>
+            <!-- SELECT2 EXAMPLE -->
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title card-success">Datos</h3>
 
-            <div class="card card-cyan card-tabs">
-                <div class="card-header p-0 pt-1">
-                    <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link {{ $errors->cliente->any() ? '' : 'active' }}" id="datos_cliente_tab"
-                                data-toggle="pill" href="#datos_cliente" role="tab"
-                                aria-controls="datos_cliente">Datos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ $errors->cliente->any() ? 'active' : '' }}" id="datos_cliente_edit_tab"
-                                data-toggle="pill" href="#datos_cliente_edit" role="tab"
-                                aria-controls="datos_cliente_edit">Editar</a>
-                        </li>
-                    </ul>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
                 </div>
-
+                <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="tab-content" id="custom-tabs-one-tabContent">
-                        <div class="tab-pane fade {{ $errors->cliente->any() ? '' : 'show active' }}" id="datos_cliente"
-                            role="tabpanel" aria-labelledby="datos_cliente_tab">
-                            @include('partials.clientes.show_datos')
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->nombre }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Carnet de identidad</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->ci }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Puntos acumulados</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->puntos }}</p>
+                            </div>
                         </div>
-
-                        <div class="tab-pane fade {{ $errors->cliente->any() ? 'show active' : '' }}" id="datos_cliente_edit"
-                            role="tabpanel" aria-labelledby="datos_cliente_edit_tab">
-                            @include('partials.clientes.form_edit')
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->apellido }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefono</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->telefono }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Estado</label>
+                                <p type="text" class="form-control my-colorpicker1">{{ $cliente->estado ? 'Activo' : 'Inactivo' }}</p>
+                            </div>
                         </div>
                     </div>
+                    <div class="d-flex flex-row-reverse">
+                        <a type="button" class="btn btn-info" href="{{route('clientes.edit',$cliente)}}">Editar</a>
+                    </div>
                 </div>
-                <!-- /.card -->
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between ">
+                        <p><small>Creado: {{ $cliente->created_at }}</small></p>
+                        <p><small>Ultima modificación: {{ ' ' . $cliente->updated_at . '  ' }}</small></p>
+                    </div>
+                </div>
             </div>
+            <!-- /.card -->
 
-            <div class="card card-success card-tabs">
-                <div class="card-header p-0 pt-1">
-                    <div class="d-flex justify-content-between p-0">
-                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-
-                            <li class="nav-item">
-                                <a class="nav-link {{ $errors->any() ? '' : 'active' }}" id="vehiculos_tab"
-                                    data-toggle="pill" href="#vehiculos_list" role="tab"
-                                    aria-controls="vehiculos_tab">Vehiculos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ $errors->any() ? 'active' : '' }}" id="vehiculos_edit_tab"
-                                    data-toggle="pill" href="#vehiculo_registrar" role="tab"
-                                    aria-controls="vehiculos_edit_tab">Registrar</a>
-                            </li>
-
-                        </ul>
-                        <div class="card-tools my-auto">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="card-body p-0">
-                    <div class="tab-content" id="custom-tabs-one-tabContent">
-                        <div class="tab-pane fade {{ $errors->any() ? '' : 'show active' }}" id="vehiculos_list"
-                            role="tabpanel" aria-labelledby="vehiculos_list">
-                            @include('partials.vehiculos.table_vehiculos')
-                        </div>
-                        <div class="tab-pane fade p-4 {{ $errors->any() ? 'show active' : '' }}" id="vehiculo_registrar"
-                            role="tabpanel" aria-labelledby="vehiculo_registrar">
-                            @include('partials.vehiculos.form_create')
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="card card-purple">
+            <!-- SELECT2 EXAMPLE -->
+            <div class="card card-success">
                 <div class="card-header">
-                    <div class="row justify-content-between">
-                        <div class="col-xs-4">
-                            <h3 class="card-title mt-1">Premios</h3>
-                            <a class="btn bg-gradient-danger btn-sm mx-4"
-                                href="{{ route('clientes.canjeo', $cliente) }}">Canjear</a>
-                        </div>
-                        <div class="card-tools my-auto mx-n1">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
+                    <h3 class="card-title">Vehiculos</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="card-body p-0">
-                    @include('partials.clientes.table_premios')
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+
+                    </div>
+                    <!-- /.row -->
                 </div>
             </div>
+        </div>
+        <!-- /.container-fluid -->
     </section>
 @stop

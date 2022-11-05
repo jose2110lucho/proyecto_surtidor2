@@ -2,17 +2,19 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
+use App\Http\Controllers\BombaController;
+use App\Http\Controllers\CombustibleController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CargaController;
+use App\Http\Controllers\PedidoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
-
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserTurnoController;
-
-
 use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
 
@@ -27,13 +29,6 @@ use App\Models\Premio;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-/*Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
 
 Auth::routes();
 Route::get('/', function () {
@@ -61,20 +56,32 @@ Route::get('/proveedor/{id}/activar', [ProveedorController::class, 'activar']);
 //-----------------CLIENTES-----------------//
 Route::resource('clientes', ClienteController::class)->middleware('auth');
 Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
-Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
-Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
+Route::patch('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
+Route::delete('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
 Route::post('clientes/{cliente}/vehiculos', [ClienteController::class, 'storeVehiculo'])->name('clientes.vehiculos.store');
 //-----------------ASISTENCIA-----------------//
 Route::get('asistencia', [AsistenciaController::class,'index'])->name('asistencia.index'); 
 Route::get('asistencia/{turno}/create', [AsistenciaController::class,'create'])->name('asistencia.create'); 
 Route::post('asistencia/{turno_id}/{user_id}/entrada', [AsistenciaController::class,'entrada'])->name('asistencia.entrada');
 Route::put('asistencia/{turno_id}/{user_id}/salida', [AsistenciaController::class,'salida'])->name('asistencia.salida');
+
 //-----------------TANQUES-----------------//
 Route::resource('tanques', TanqueController::class)->middleware('auth');
 Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
 Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name('tanques.llenar');
 //-----------------PREMIOS-----------------//
 Route::resource('premios', PremioController::class)->middleware('auth');
+
+
+///////BOMBA////
+Route::resource('bombas', BombaController::class);
+Route::resource('combustibles', CombustibleController::class);
+Route::resource('categorias', CategoriaController::class);
+Route::resource('cargas', CargaController::class);
+Route::resource('pedidos', PedidoController::class);
+
+
+
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
 

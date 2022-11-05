@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>SurtidorBicentenario</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/SurtidorLogo.jpg',
+    'logo' => '<b>Admin</b>LTE',
+    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -150,7 +150,7 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => true,
+    'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
@@ -311,13 +311,13 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        /*    [
+        [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ], 
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -328,28 +328,25 @@ return [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-
-        ], */
-
-        //-------------------modulo premios---------------------------------
+        ],
+        //-------------------modulo clientes---------------------------------
         [
-            'text'    => 'Premios',
-            'icon'    => 'fas fa-fw fa-gift',
-            'url'  => 'premios/*',
+            'text'    => 'Clientes',
+            'icon'    => 'fas fa-fw fa-users',
+            'url'  => 'clientes/*',
             'submenu' => [
                 [
-                    'text' => 'Nuevo premio',
+                    'text' => 'Registrar',
                     'icon'    => 'fas fa-fw fa-plus',
-                    'url'  => 'premios/create',
+                    'url'  => 'clientes/create',
                 ],
                 [
-                    'text' => 'Lista de premios',
+                    'text' => 'Lista de clientes',
                     'icon'    => 'fas fa-fw fa-list-ul',
-                    'url'  => 'premios',
+                    'url'  => 'clientes',
                 ],
             ],
         ],
-
         //-------------------modulo inventario---------------------------------
         [
             'text'    => 'Inventario',
@@ -363,7 +360,7 @@ return [
                 ],
             ],
         ],
-
+        //------------------------------------------------------------------
         //-------------------modulo infraestructura---------------------------------
         [
             'text'    => 'Infraestructura',
@@ -462,9 +459,8 @@ return [
                     ],
                 ],
                 [
-                    'text'    => 'Vehiculos',
-                    'icon'    => 'fa fa-fw fa-car-side',
-                    'url'  => 'vehiculos',
+                    'text' => 'Gestionar cliente',
+                    'url'  => '#',
                 ],
                 [
                     'text' => 'Gestionar premio',
@@ -476,7 +472,8 @@ return [
                     'icon'    => 'fas fa-fw fa-sync-alt',
                     'url'  => '#',
                 ],
-                /*    [
+                /*
+                [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -499,7 +496,6 @@ return [
                             ],
                         ],
                     ],
-
                 ],*/
             ],
         ],
@@ -518,11 +514,11 @@ return [
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'Reporte de Inventario',
+                            'text' => 'level_two',
                             'url'  => '#',
                         ],
                         [
-                            'text'    => 'Reporte de Ventas',
+                            'text'    => 'level_two',
                             'url'     => '#',
                             'submenu' => [
                                 [
@@ -537,6 +533,10 @@ return [
                         ],
                     ],
                 ],
+                [
+                    'text' => 'level_one',
+                    'url'  => '#',
+                ],
             ],
         ],
         //------------------------------------------------------------------
@@ -549,7 +549,7 @@ return [
                     'text' => 'Gestionar factura',
                     'url'  => '#',
                 ],
-                /*   [
+                [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -573,7 +573,10 @@ return [
                         ],
                     ],
                 ],
-                */
+                [
+                    'text' => 'level_one',
+                    'url'  => '#',
+                ],
             ],
         ],
         //------------------------------------------------------------------
@@ -657,14 +660,10 @@ return [
                         ],
                     ],
                 ],
-            
-
-
-
             ],
         ],
         //------------------------------------------------------------------
-        /* ['header' => 'labels'],
+        ['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',
@@ -679,7 +678,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ], */
+        ],
     ],
 
     /*
@@ -768,9 +767,8 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
-
             ],
         ],
         'Pace' => [
@@ -835,5 +833,5 @@ return [
     |
     */
 
-    'livewire' => true,
+    'livewire' => false,
 ];
