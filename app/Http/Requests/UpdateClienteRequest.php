@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateClienteRequest extends FormRequest
 {
+    protected $errorBag = 'cliente';
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,7 +29,7 @@ class UpdateClienteRequest extends FormRequest
             'nombre' => 'required | max:30 | min:2',
             'apellido' => 'required | max:30 | min:2',
             'ci' => 'required | max:9 | min:6',
-            'telefono' => 'min:6 | max:12' 
+            'telefono' => 'min:6 | max:12 | nullable'
         ];
     }
 }

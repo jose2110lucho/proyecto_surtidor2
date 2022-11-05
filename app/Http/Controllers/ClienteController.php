@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CanjearRequest;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
+use App\Http\Requests\StoreVehiculoRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use App\Models\Premio;
+use App\Models\Vehiculo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 
 class ClienteController extends Controller
 {
+    public $search = 'gerald';
+
     /**
      * Display a listing of the resource.
      *
@@ -16,11 +24,19 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = Cliente::orderby('nombre', 'desc')
-            ->where('nombre', 'ilike', '%' . $request->buscar . '%')
-            ->orwhere('apellido', 'ilike', '%' . $request->buscar . '%')
-            ->paginate(10);
-        return view('pages.clientes.index', compact('clientes'));
+        /* $buscar = $request->get('buscar');
+        if ($buscar) {
+            $clientes = Cliente::orderby('nombre', 'desc')
+                ->where('nombre', 'ilike', '%' . $buscar . '%')
+                ->orwhere('apellido', 'ilike', '%' . $buscar . '%')
+                ->paginate(9);
+            return view('pages.clientes.index', compact('clientes', 'buscar'));
+        } else {
+            $clientes = Cliente::orderby('nombre', 'desc')->paginate(9);
+        } */
+
+        //return $clientes = Cliente::where('nombre', 'ilike', '%' . $this->search . '%')->orderby('nombre', 'asc')->paginate();
+        return view('pages.clientes.index');
     }
 
     /**
@@ -42,7 +58,26 @@ class ClienteController extends Controller
     public function store(StoreClienteRequest $request)
     {
         $cliente = Cliente::create($request->all());
+        return redirect()->route('clientes.show', $cliente);
+    }
 
+    /**
+     * Registra un nuevo automovil para el cliente.
+     *
+     * @param  \App\Http\Requests\StoreVehiculoRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeVehiculo(StoreVehiculoRequest $request, Cliente $cliente)
+    {
+        Vehiculo::create(
+            [
+                'cliente_id' => $cliente->id,
+                'placa' => strtoupper($request->placa),
+                'tipo' => $request->tipo,
+                'marca' => $request->placa,
+                'b_sisa' => $request->b_sisa,
+            ]
+        );
         return redirect()->route('clientes.show', $cliente);
     }
 
@@ -54,7 +89,10 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        return view('pages.clientes.show', compact('cliente'));
+        $vehiculos = Vehiculo::where('cliente_id', '=', $cliente->id)
+            ->select('vehiculos.*')
+            ->paginate(9);
+        return view('pages.clientes.show', compact('cliente', 'vehiculos'));
     }
 
     /**
@@ -69,6 +107,74 @@ class ClienteController extends Controller
     }
 
     /**
+     * Muestra el formulario para canjear los puntos acumulados del cliente por premios.
+     *
+     * @param  \App\Models\Cliente  $cliente
+     * @return \Illuminate\Http\Response
+     */
+    public function canjeo(Cliente $cliente)
+    {
+        $premios = Premio::all();
+        return view('pages.clientes.canjear', compact('cliente', 'premios'));
+    }
+
+    /**
+     * Almacena el nuevo registro de la tabla cliente_premio.
+     *
+     * @param  \App\Models\Cliente  $cliente
+     * @return \Illuminate\Http\Response
+     */
+    public function canjear(Cliente $cliente, CanjearRequest $request)
+    {
+        $premio = Premio::find($request->premio_id);
+
+        $validator = Validator::make($request->all(), [
+            'premio_id' => 'required',
+        ], $messages = [
+            'premio_id.required' => 'Seleccione el premio para canjear',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $total_puntos_req = $premio->puntos_requeridos * $request->cantidad;
+
+        if ($request->cantidad <= $premio->stock) {
+            if ($total_puntos_req <= $cliente->puntos) {
+                $cliente->premios()->attach($request->premio_id, ['cantidad' => $request->cantidad, 'puntos_canjeados' => $total_puntos_req]);
+                $sobrante = $cliente->puntos - $total_puntos_req;
+
+                $cliente->update(['puntos' => $sobrante]);
+                $premio->update(['stock' => $premio->stock - $request->cantidad]);
+                return redirect()->route('clientes.show', compact('cliente'));
+            } else {
+                $errors = new MessageBag();
+                $errors->add('premio_id', 'Puntos insuficientes!');
+                return redirect()->back()->withInput()->withErrors($errors);
+            }
+        } else {
+            $errors = new MessageBag();
+            $errors->add('cantidad', 'La cantidad de premios a canjear supera el stock');
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+
+    /**
+     * Almacena el nuevo registro de la tabla cliente_premio.
+     *
+     * @param  \App\Models\Cliente  $cliente
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPremio(Cliente $cliente, $cliente_premio_id)
+    {
+        $cliente->premios()->wherePivot('id', '=', $cliente_premio_id)->detach();
+        return redirect()->back();
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateClienteRequest  $request
@@ -78,7 +184,7 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         $cliente->update($request->all());
-        return redirect()->route('clientes.show', $cliente);
+        return redirect()->route('clientes.show', [$cliente]);
     }
 
     /**
