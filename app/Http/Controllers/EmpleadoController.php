@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\HomeController;
 
 class EmpleadoController extends Controller
 {
@@ -16,7 +18,7 @@ class EmpleadoController extends Controller
     public function index()
     {
         $lista_usuarios = User::all();
-        return view('modulo_administrativo/empleado/index',['lista_usuarios'=>$lista_usuarios]);
+        return view('livewire.admin.empleados-index',['lista_usuarios'=>$lista_usuarios]);
     }
 
     /**
@@ -67,10 +69,10 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $usuario = User::findOrFail($id); 
-        return view('modulo_administrativo.empleado.edit',compact('usuario')); 
+        $roles = Role::all();
+        return view('modulo_administrativo.empleado.edit',compact('user','roles')); 
     }
 
     /**
@@ -80,11 +82,14 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $datosUsuario = request()->except(['_token','_method']);
+        $user->roles()->sync($request->roles);
+        return redirect()->route('modulo_administrativo.empleado.edit', $user)->with('info','Roles asignados');
+
+        /* $datosUsuario = request()->except(['_token','_method']);
         User::where('id','=',$id)->update($datosUsuario);
-        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');  
+        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!'); */
     }
 
     /**
