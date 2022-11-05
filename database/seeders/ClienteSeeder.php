@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cliente;
 use Illuminate\Database\Seeder;
 
 class ClienteSeeder extends Seeder
@@ -13,6 +14,15 @@ class ClienteSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $cliente = new Cliente();
+
+        $cliente->nombre = 'Gerald José';
+        $cliente->apellido = 'Avalos Severiche';
+        $cliente->ci = '14495734';
+        $cliente->telefono = '70480741';
+        $cliente->puntos = 5000;
+        $cliente->estado = true;
+
+        $cliente->save();
     }
 }

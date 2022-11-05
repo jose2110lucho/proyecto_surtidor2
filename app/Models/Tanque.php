@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Tanque extends Model
+//use OwenIt\Auditing\Contracts\Auditable;
+class Tanque extends Model //implements Auditable
 {
     use HasFactory;
    // use \OwenIt\Auditing\Auditable;
@@ -19,9 +19,4 @@ class Tanque extends Model
         'estado',
         'fecha_carga'
     ];
-
-    public function bombas(){
-        return $this->hasMany(Bomba::class,'id'); // 1 tanque  tiene muchas bombas
-
-    }
 }
