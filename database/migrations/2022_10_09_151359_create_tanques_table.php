@@ -14,8 +14,7 @@ class CreateTanquesTable extends Migration
     public function up()
     {
         Schema::create('tanques', function (Blueprint $table) {
-           // $table->id();
-           $table->bigIncrements('id');
+            $table->id();
             $table->string('codigo');
             $table->string('combustible');
             $table->text('descripcion')->nullable();

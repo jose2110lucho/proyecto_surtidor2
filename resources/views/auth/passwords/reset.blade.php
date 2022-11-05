@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('adminlte::auth.password.reset')
 
 @section('content')
 <div class="container">

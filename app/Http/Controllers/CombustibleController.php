@@ -7,7 +7,6 @@ use App\Models\Combustible;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 
-
 class CombustibleController extends Controller
 {
     /**
@@ -31,11 +30,8 @@ class CombustibleController extends Controller
     public function create()
     {
         $combustibles= new Combustible();
-       
         $categorias=Categoria::pluck('codigo','id'); 
-        
-        return view('pages.combustibles.create',compact('combustibles','categorias'));
-        
+        return view('pages.combustibles.create',compact('combustibles','categorias')); 
     }
 
     /**
@@ -46,9 +42,6 @@ class CombustibleController extends Controller
      */
     public function store(StoreCombustibleRequest $request)
     {
-       
-        
-
         $Combustible = Combustible::create($request->all());
         return redirect()->route('combustibles.show', $Combustible);
     }
@@ -61,7 +54,6 @@ class CombustibleController extends Controller
      */
     public function show(Combustible $combustible)
     {
-        
         return view('pages.combustibles.show', compact('combustible'));
     }
 
@@ -73,7 +65,7 @@ class CombustibleController extends Controller
      */
     public function edit(Combustible $combustible)
     {
-        return view('pages.combustibles.edit', compact('combustible'));
+        //
     }
 
     /**
@@ -85,9 +77,7 @@ class CombustibleController extends Controller
      */
     public function update(UpdateCombustibleRequest $request, Combustible $combustible)
     {
-        
-        $combustible->update($request->all());
-        return redirect()->route('combustibles.show', $combustible);
+        //
     }
 
     /**
@@ -96,9 +86,8 @@ class CombustibleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Combustible $combustible)
     {
-        $combustible->delete();
-        return redirect()->route('combustibles.index');
+        //
     }
 }

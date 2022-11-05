@@ -8,13 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Tanque extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['codigo','combustible','descripcion', 'capacidad_max', 'cantidad_disponible',
-    'cantidad_min','estado'];
+   // use \OwenIt\Auditing\Auditable;
+    protected $fillable = [
+        'codigo',
+        'combustible',
+        'descripcion',
+        'capacidad',
+        'cantidad_disponible',
+        'cantidad_min',
+        'estado',
+        'fecha_carga'
+    ];
 
     public function bombas(){
         return $this->hasMany(Bomba::class,'id'); // 1 tanque  tiene muchas bombas
 
     }
-
 }
