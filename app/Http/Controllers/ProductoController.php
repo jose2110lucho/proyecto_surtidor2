@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
-use Illuminate\View\ViewServiceProvider;
+
 
 class ProductoController extends Controller
 {
@@ -26,7 +26,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-      return view('modulo_inventario/producto/create');
+        return view('modulo_inventario/producto/create');
     }
 
     /**
@@ -51,15 +51,12 @@ class ProductoController extends Controller
         $producto->nombre = $request->nombre;
         $producto->precio_compra = $request->precio_compra;
         $producto->precio_venta = $request->precio_venta;
-        $producto->cantidad = $request->cantidad; 
+        $producto->cantidad = $request->cantidad;
         $producto->estado = true;
         $producto->descripcion = $request->descripcion;
-
-        
-
         $producto->save();
 
-       return redirect('/producto');
+        return redirect('/producto');
     }
 
     /**
@@ -111,14 +108,13 @@ class ProductoController extends Controller
             "precio_compra" => $request->precio_compra,
             "precio_venta"  =>$request->precio_venta,
             "estado" => $request->estado,
-            "cantidad" => $request->cantidad, 
             "descripcion" => $request->descripcion,
          ];
          if($nombre_imagen != ""){
             $lista["nombre_imagen"] = $nombre_imagen;
          }
          Producto::where('id','=',$id)->update($lista);
-         return redirect('/producto')->with('status', 'Producto Actualizado Exitosamente!'); 
+         return redirect('/producto'); 
     }
 
     /**
