@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCombustiblesTable extends Migration
+class CreateCategoriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateCombustiblesTable extends Migration
      */
     public function up()
     {
-        Schema::create('combustibles', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->string('und_medida');
-            $table->float('precio_venta', 6, 2);
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('codigo')->unique();
+            $table->string('nombre')->nulleable(false);
+            $table->string('descripcion')->nulleable(false);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateCombustiblesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('combustibles');
+        Schema::dropIfExists('categorias');
     }
 }

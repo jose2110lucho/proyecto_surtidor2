@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCombustibleRequest extends FormRequest
+class StoreBombaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class StoreCombustibleRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'codigo'=>'required|unique:combustibles',
+            
+            'codigo'=>'required|unique:bombas',
             'nombre'=>'required',
-            'precio_compra'=>'required',
-            'precio_venta'=>'',
-            'unidad_medida'=>'required'
-
+            'descripcion'=>'required'
+            
+        
         ];
     }
 }
