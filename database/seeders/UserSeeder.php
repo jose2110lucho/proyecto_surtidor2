@@ -33,6 +33,6 @@ class UserSeeder extends Seeder
         ])->assignRole('Administrador');
 
         //creando usuarios generados
-        //User::factory(3)->create();
+        User::factory(2)->create();
     }
 }

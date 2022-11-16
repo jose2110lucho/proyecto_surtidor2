@@ -11,10 +11,12 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserTurnoController;
+use App\Http\Controllers\Admin\RoleController;
 
 
 use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -41,7 +43,9 @@ Route::get('/', function () {
 })->middleware('auth');
 
 //-----------------EMPLEADO-----------------//
-Route::resource('empleado',EmpleadoController::class);
+Route::resource('empleados',EmpleadoController::class);
+
+Route::resource('roles',RoleController::class)->names('admin.roles');
 //-----------------TURNO-----------------//
 Route::resource('turno',TurnoController::class);
 Route::get('turno/{turno}/add-user', [TurnoController::class, 'addUser'])->name('turno.addUser');

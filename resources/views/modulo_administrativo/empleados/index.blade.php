@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="d-grid gap-2">
-    <a class="btn btn-success" href="{{ route('empleado.create') }}"> crear </a>
+    <a class="btn btn-success" href="{{ route('empleados.create') }}"> crear </a>
 </div>
 
 <!-- buscador-->
@@ -33,7 +33,7 @@
               </tr>
             </thead>
             <tbody>
-                @foreach ($lista_usuarios as $usuario)
+                @foreach ($user as $usuario)
                   <tr>
                     <th scope="row">{{$usuario->id}}</th>
                     <td>{{$usuario->name}}</td>
@@ -44,17 +44,17 @@
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
 
-                          <a href="{{ url('/empleado/' . $usuario->id . '/') }}"
+                          <a href="{{ url('/empleados/' . $usuario->id . '/') }}"
                             class="btn btn-success">
-                              VER
+                            <i class="fas fa-eye"></i>
                           </a>
 
-                            <a href="{{ url('/empleado/' . $usuario->id . '/edit') }}"
+                            <a href="{{ url('/empleados/' . $usuario->id . '/edit') }}"
                                  class="btn btn-warning">
-                                 EDITAR
+                                 <i class="fas fa-pen"></i>
                             </a>
               
-                             <form action="{{ url('/empleado/' . $usuario->id) }}"
+                             <form action="{{ url('/empleados/' . $usuario->id) }}"
                                      method="post">
                                      @csrf
                                  {{ method_field('DELETE') }}
