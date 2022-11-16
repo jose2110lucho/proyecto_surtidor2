@@ -355,13 +355,21 @@ return [
             'text'    => 'Inventario',
             'icon'    => 'fas fa-fw fa-clipboard-list',
             'submenu' => [
-               
+              
                 [
-                    'text' => 'Gestionar Producto',
-                    'icon'    => 'fas fa-fw fa-box',
+                    'text' => 'Nuevo Producto',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'url'  => 'producto/create',
+                ],
+                [
+                    'text' => 'Almacen',
+                    'icon'    => 'fas fa-fw fa-warehouse',
                     'url'  => '/producto',
                 ],
+                
             ],
+            
+            
         ],
 
         //-------------------modulo infraestructura---------------------------------
@@ -493,7 +501,23 @@ return [
                     
                     ],
                 ],
-    
+                [
+                    'text'    => 'Comprar productos',
+                    'icon'    => 'fas fa-clipboard-check',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Nueva Nota de Compra',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_producto/create',
+                        ],
+                        [
+                            'text' => 'Lista de Notas de Compra',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_producto',
+                        ],
+                    ],
+                ],
                 [
                     'text'    => 'Gestionar proveedor',
                     'icon'    => 'fas fa-fw fa-truck',
