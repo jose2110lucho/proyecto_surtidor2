@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ClienteSeeder::class);
-        $this->call(PremioSeeder::class);
+      //  $this->call(PremioSeeder::class);
         \App\Models\Cliente::factory(5)->create();
         \App\Models\Tanque::factory(5)->create();
-        \App\Models\Premio::factory(5)->create();
+     //   \App\Models\Premio::factory(5)->create();
         \App\Models\Vehiculo::factory(10)->create();
     }
 }
