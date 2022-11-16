@@ -12,7 +12,11 @@ use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserTurnoController;
 
-
+use App\Http\Controllers\BombaController;
+use App\Http\Controllers\CombustibleController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CargaController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
 
@@ -77,4 +81,21 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
+
+//---------------BOMBAS------------//
+Route::resource('bombas', BombaController::class);
+Route::resource('cargas', CargaController::class);
+Route::resource('categorias', CategoriaController::class);
+Route::resource('combustibles', CombustibleController::class);
+Route::resource('pedidos', PedidoController::class);
+
+//Bombas Reportes//
+Route::get('/pages/bombas/export',[BombaController::class, 'exportBomba'])->name('bombas.export');
+Route::get('/pages/bombas/download', [BombaController::class, 'downloadPDF'])->name('download-pdf');
+Route::get('/bombas-html',[BombaController::class, 'bombaHtml'])->name('bombas-html');
+//Categorias Reportes//
+Route::get('/pages/categorias/export',[CategoriaController::class, 'exportCategoria'])->name('categorias.export');
+Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
+Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
+
 
