@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\ClienteController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
-use Illuminate\Http\Request;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +20,10 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
+
+Route::middleware('auth:sanctum')->group(function () {
+    
+    Route::delete('logout', [AuthController::class, 'logout']);
+});
 Route::apiResource('users', UserController::class);
+Route::post('login', [AuthController::class, 'login']);
