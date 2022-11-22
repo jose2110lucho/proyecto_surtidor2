@@ -15,8 +15,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $lista_productos = Producto::all();
-       return view('modulo_inventario/producto/index',['lista_productos'=>$lista_productos]); 
+        return $lista_productos = Producto::all();
+        return view('modulo_inventario/producto/index', ['lista_productos' => $lista_productos]);
     }
 
     /**
@@ -39,14 +39,14 @@ class ProductoController extends Controller
     {
         $producto = new Producto();
 
-        if($request->hasfile('nombre_imagen')){
+        if ($request->hasfile('nombre_imagen')) {
 
             $file = $request->file('nombre_imagen');
             $destinationPath = 'img/nombre_imagen/';
             $filename = time() . '-' . $file->getClientOriginalName();
             $uploadSuccess = $request->file('nombre_imagen')->move($destinationPath, $filename);
             $producto->nombre_imagen = $destinationPath . $filename;
-         }
+        }
 
         $producto->nombre = $request->nombre;
         $producto->precio_compra = $request->precio_compra;
@@ -67,8 +67,8 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto = Producto::findOrFail($id); 
-        return view('modulo_inventario.producto.show',compact('producto'));
+        $producto = Producto::findOrFail($id);
+        return view('modulo_inventario.producto.show', compact('producto'));
     }
 
     /**
@@ -79,8 +79,8 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        $producto = Producto::findOrFail($id); 
-        return view('modulo_inventario.producto.edit',compact('producto')); 
+        $producto = Producto::findOrFail($id);
+        return view('modulo_inventario.producto.edit', compact('producto'));
     }
 
     /**
@@ -94,27 +94,26 @@ class ProductoController extends Controller
     {
         $nombre_imagen = "";
         $lista = [];
-        if($request->hasfile('nombre_imagen')){
+        if ($request->hasfile('nombre_imagen')) {
 
             $file = $request->file('nombre_imagen');
             $destinationPath = 'img/nombre_imagen/';
             $filename = time() . '-' . $file->getClientOriginalName();
             $uploadSuccess = $request->file('nombre_imagen')->move($destinationPath, $filename);
             $nombre_imagen = $destinationPath . $filename;
-
-         }
-         $lista = [
+        }
+        $lista = [
             "nombre" => $request->nombre,
             "precio_compra" => $request->precio_compra,
-            "precio_venta"  =>$request->precio_venta,
+            "precio_venta"  => $request->precio_venta,
             "estado" => $request->estado,
             "descripcion" => $request->descripcion,
-         ];
-         if($nombre_imagen != ""){
+        ];
+        if ($nombre_imagen != "") {
             $lista["nombre_imagen"] = $nombre_imagen;
-         }
-         Producto::where('id','=',$id)->update($lista);
-         return redirect('/producto'); 
+        }
+        Producto::where('id', '=', $id)->update($lista);
+        return redirect('/producto');
     }
 
     /**

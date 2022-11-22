@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as AuditingAuditable;
 use OwenIt\Auditing\Contracts\Auditable;
-class Producto extends Model implements Auditable
+class Producto extends Model //implements Auditable
 {
-    use AuditingAuditable;
+    //use AuditingAuditable;
     use HasFactory;
 
     protected $table = 'producto';
