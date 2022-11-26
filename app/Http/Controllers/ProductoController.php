@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
-use Illuminate\View\ViewServiceProvider;
+use Carbon\Carbon;
 
 class ProductoController extends Controller
 {
+    public $imageDefault = 'https://png.pngtree.com/png-vector/20190927/ourlarge/pngtree-cancel-cart-product-icon-png-image_1736147.jpg';
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,7 @@ class ProductoController extends Controller
     public function index()
     {
         $lista_productos = Producto::all();
-       return view('modulo_inventario/producto/index',['lista_productos'=>$lista_productos]); 
+        return view('modulo_inventario/producto/index', ['lista_productos' => $lista_productos]);
     }
 
     /**
@@ -26,7 +28,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-      return view('modulo_inventario/producto/create');
+        return view('modulo_inventario/producto/create');
     }
 
     /**
@@ -37,29 +39,23 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $producto = new Producto();
+        $producto = Producto::create($request->except('imagen'));
 
-        if($request->hasfile('nombre_imagen')){
+        if ($request->hasfile('imagen')) {
+            $image = $request->file('imagen');
+            $firebase_storage_path = 'Productos/';
+            $localfolder = public_path('firebase-temp-uploads') . '/';
+            $extension = $image->getClientOriginalExtension();
+            $file      = $producto->id . '.' . $extension;
+            if ($image->move($localfolder, $file)) {
+                $uploadedfile = fopen($localfolder . $file, 'r');
+                app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
 
-            $file = $request->file('nombre_imagen');
-            $destinationPath = 'img/nombre_imagen/';
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $uploadSuccess = $request->file('nombre_imagen')->move($destinationPath, $filename);
-            $producto->nombre_imagen = $destinationPath . $filename;
-         }
-
-        $producto->nombre = $request->nombre;
-        $producto->precio_compra = $request->precio_compra;
-        $producto->precio_venta = $request->precio_venta;
-        $producto->cantidad = $request->cantidad; 
-        $producto->estado = true;
-        $producto->descripcion = $request->descripcion;
-
-        
-
-        $producto->save();
-
-       return redirect('/producto');
+                $producto->update(['imagen' => $firebase_storage_path . $file]);
+                unlink($localfolder . $file);
+            }
+        }
+        return redirect('/producto');
     }
 
     /**
@@ -70,8 +66,17 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto = Producto::findOrFail($id); 
-        return view('modulo_inventario.producto.show',compact('producto'));
+        $producto = Producto::findOrFail($id);
+        $image = $this->imageDefault;
+
+        if ($producto->imagen) {
+            $expiresAt = Carbon::now()->addSeconds(5);
+            $imageReference = app('firebase.storage')->getBucket()->object($producto->imagen);
+            if ($imageReference->exists()) {
+                $image = $imageReference->signedUrl($expiresAt);
+            };
+        }
+        return view('modulo_inventario.producto.show', compact('producto', 'image'));
     }
 
     /**
@@ -82,8 +87,8 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        $producto = Producto::findOrFail($id); 
-        return view('modulo_inventario.producto.edit',compact('producto')); 
+        $producto = Producto::findOrFail($id);
+        return view('modulo_inventario.producto.edit', compact('producto'));
     }
 
     /**
@@ -95,30 +100,31 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nombre_imagen = "";
-        $lista = [];
-        if($request->hasfile('nombre_imagen')){
+        $producto = Producto::find($id);
+        if ($request->hasfile('imagen')) {
 
-            $file = $request->file('nombre_imagen');
-            $destinationPath = 'img/nombre_imagen/';
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $uploadSuccess = $request->file('nombre_imagen')->move($destinationPath, $filename);
-            $nombre_imagen = $destinationPath . $filename;
+            if ($producto->imagen) {
+                if (app('firebase.storage')->getBucket()->object($producto->imagen)->exists()) {
+                    app('firebase.storage')->getBucket()->object($producto->imagen)->delete();
+                }
+                $producto->update(['imagen' => null]);
+            }
+            $image = $request->file('imagen');
+            $firebase_storage_path = 'Productos/';
+            $extension = $image->getClientOriginalExtension();
+            $file = $producto->id . '.' . $extension;
+            $localfolder = public_path('firebase-temp-uploads') . '/';
 
-         }
-         $lista = [
-            "nombre" => $request->nombre,
-            "precio_compra" => $request->precio_compra,
-            "precio_venta"  =>$request->precio_venta,
-            "estado" => $request->estado,
-            "cantidad" => $request->cantidad, 
-            "descripcion" => $request->descripcion,
-         ];
-         if($nombre_imagen != ""){
-            $lista["nombre_imagen"] = $nombre_imagen;
-         }
-         Producto::where('id','=',$id)->update($lista);
-         return redirect('/producto')->with('status', 'Producto Actualizado Exitosamente!'); 
+            if ($image->move($localfolder, $file)) {
+                $uploadedfile = fopen($localfolder . $file, 'r');
+                app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
+                $producto->update((['imagen' => $firebase_storage_path . $file]));
+                unlink($localfolder . $file);
+            }
+        }
+
+        $producto->update($request->except(['imagen']));
+        return redirect('/producto');
     }
 
     /**
@@ -129,6 +135,10 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
+        $producto = Producto::find($id);
+        if ($producto->imagen) {
+            app('firebase.storage')->getBucket()->object($producto->imagen)->delete();
+        }
         Producto::destroy($id);
         return redirect('producto');
     }

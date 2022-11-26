@@ -14,7 +14,12 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserTurnoController;
 use App\Http\Controllers\Admin\RoleController;
 
-
+use App\Http\Controllers\BombaController;
+use App\Http\Controllers\CombustibleController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CargaController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\NotaProductoController;
 use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
 use Illuminate\Support\Facades\Auth;
@@ -31,17 +36,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-
-/*Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
-
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
 })->middleware('auth');
+
 Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
 
 //-----------------EMPLEADO-----------------//
@@ -58,19 +57,25 @@ Route::get('/user_turno/{id_turno}', [UserTurnoController::class, 'index'])->nam
 Route::get('/user_turno/create/{id_turno}', [UserTurnoController::class, 'create'])->name('user_turno.create');
 Route::post('/user_turno/create/{id_turno}', [UserTurnoController::class, 'store'])->name('user_turno.store');
 Route::delete('/user_turno/{id_turno}/delete/{id_empleadoturno}', [UserTurnoController::class, 'destroy'])->name('user_turno.destroy');
-//-----------------PRODUCTO-----------------//
+//-----------------PRODUCTO----------------------//
 Route::resource('producto',ProductoController::class);
-//-----------------PROVEEDORES-----------------//
+//-----------------NOTAPRODUCTO----------------------//
+Route::get('nota_producto',[NotaProductoController::class,'index'])->name('nota_producto.index');
+Route::get('nota_producto/create',[NotaProductoController::class,'create'])->name('nota_producto.create');
+Route::post('nota_producto',[NotaProductoController::class,'store'])->name('nota_producto.store');
+//-----------------DETALLEPRODUCTO----------------------//
+Route::get('detalle_producto/{nota_producto_id}',[NotaProductoController::class,'show'])->name('detalle_producto.show');
+//-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/desactivar', [ProveedorController::class, 'desactivar']);
 Route::get('/proveedor/{id}/activar', [ProveedorController::class, 'activar']);
-//-----------------CLIENTES-----------------//
+//-----------------CLIENTES--------------------//
 Route::resource('clientes', ClienteController::class)->middleware('auth');
 Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
-Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
+Route::patch('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
 Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
 Route::post('clientes/{cliente}/vehiculos', [ClienteController::class, 'storeVehiculo'])->name('clientes.vehiculos.store');
-//-----------------ASISTENCIA-----------------//
+//-----------------ASISTENCIA------------------//
 Route::get('asistencia', [AsistenciaController::class,'index'])->name('asistencia.index'); 
 Route::get('asistencia/{turno}/create', [AsistenciaController::class,'create'])->name('asistencia.create'); 
 Route::post('asistencia/{turno_id}/{user_id}/entrada', [AsistenciaController::class,'entrada'])->name('asistencia.entrada');
@@ -83,4 +88,21 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
+
+//---------------BOMBAS------------//
+Route::resource('bombas', BombaController::class);
+Route::resource('cargas', CargaController::class);
+Route::resource('categorias', CategoriaController::class);
+Route::resource('combustibles', CombustibleController::class);
+Route::resource('pedidos', PedidoController::class);
+
+//Bombas Reportes//
+Route::get('/pages/bombas/export',[BombaController::class, 'exportBomba'])->name('bombas.export');
+Route::get('/pages/bombas/download', [BombaController::class, 'downloadPDF'])->name('download-pdf');
+Route::get('/bombas-html',[BombaController::class, 'bombaHtml'])->name('bombas-html');
+//Categorias Reportes//
+Route::get('/pages/categorias/export',[CategoriaController::class, 'exportCategoria'])->name('categorias.export');
+Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
+Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
+
 
