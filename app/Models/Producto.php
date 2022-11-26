@@ -21,7 +21,7 @@ class Producto extends Model //implements Auditable
         'cantidad',
         'estado',
         'descripcion',
-        'nombre_imagen',
+        'imagen',
     ];
 
     public function premio()

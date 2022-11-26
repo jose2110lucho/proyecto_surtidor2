@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $userArray = $user->toArray();
+        /*         $userArray = $user->toArray();
 
         $image = 'https://secure.gravatar.com/avatar/522d3a85411971750df06ad25246c8a0?s=128&d=mm&r=g';
         if ($user->foto_perfil) {
@@ -50,7 +50,8 @@ class UserController extends Controller
             };
         }
         $userArray['foto_perfil'] = $image;
-        return $userArray;
+        return $userArray; */
+        return $user;
     }
 
     /**
@@ -72,7 +73,7 @@ class UserController extends Controller
 
             $image_bin = base64_decode($request->input('foto_perfil'));
             if ($image_bin) {
-                $file = $user->id . $request->foto_extension;
+                $file = $user->id . '.jpg';
                 $image = Storage::disk('public_upload')->put('firebase-temp-uploads' . '/' . $file, $image_bin);
                 $localfolder = public_path('firebase-temp-uploads') . '/';
                 $firebase_storage_path = 'Users/';
@@ -87,7 +88,6 @@ class UserController extends Controller
             }
         }
         $user->update($request->except(['foto_perfil', 'extension']));
-        error_log('terminado');
     }
 
     /**

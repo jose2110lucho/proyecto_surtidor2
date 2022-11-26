@@ -12,10 +12,12 @@
                 @csrf
                 {{ method_field('PUT') }}
                 <!--inicio campo nombre-->
+
                 <div class="col-sm-4 mx-auto">
                     <div class="d-flex">
                         <div class="card border-1 shadow">
-                            <img src="https://png.pngtree.com/png-vector/20190927/ourlarge/pngtree-cancel-cart-product-icon-png-image_1736147.jpg" alt="foto de perfil del usuario" width="160" height="160">
+                            <img src="{{$image}}"
+                                alt="foto de perfil del usuario" height="160">
                         </div>
                     </div>
                 </div>
@@ -57,7 +59,7 @@
                 <!--fin campo descripcion-->
                 <!--inicio campo imagen-->
                 <div>
-                    <img src="{{ asset($producto->nombre_imagen) }}" alt="" class="img-fluid img-thumbnail"
+                    <img src="{{ asset($producto->imagen) }}" alt="" class="img-fluid img-thumbnail"
                         width="80px">
                 </div>
                 <!--fin campo imagen-->
