@@ -25,8 +25,8 @@
                     <tr>
                         <th scope="col">Foto</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Correo</th>
                         <th scope="col">Telefono</th>
+                        <th scope="col">Rol</th>
                         <th scope="col">Última vez</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Accion</th>
@@ -37,8 +37,8 @@
                         <tr>
                             <th scope="row"> <img src="{{ $usuario->foto_perfil ? app('firebase.storage')->getBucket()->object($usuario->foto_perfil)->signedUrl(Carbon\Carbon::now()->addSeconds(5)) : asset('/img/user-default.jpeg') }}" alt="" height="80px"></th>
                             <td>{{ $usuario->name }}</td>
-                            <td>{{ $usuario->email }}</td>
                             <td>{{ $usuario->telefono }}</td>
+                            <td>{{$usuario->role_name()}}</td>
                             <td>
                                 @if (Cache::has('user-is-online-' . $usuario->id))
                                     <span class="text-success">Online</span>

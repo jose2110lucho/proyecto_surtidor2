@@ -17,10 +17,10 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $user = User::all();
+            $user = User::all();
+
         return view('modulo_administrativo/empleados/index', ['user' => $user]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +38,7 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
         $request->merge(['password' => Hash::make($request->password)]);
         $user = User::create($request->all());
 
@@ -76,8 +76,6 @@ class EmpleadoController extends Controller
                 $image = $imageReference->signedUrl($expiresAt);
             };
         }
-
-
         return view('modulo_administrativo.empleados.show', compact('usuario', 'image'));
     }
 
@@ -91,8 +89,6 @@ class EmpleadoController extends Controller
     {
         $roles = Role::all();
         $user = User::find($id);
-
-
         return view('modulo_administrativo.empleados.edit', compact('user', 'roles'));
     }
 
@@ -119,6 +115,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, int $id)
     {
+
         /* $user = request()->except(['_token','_method']); */
         $user = User::find($id);
         if ($request->hasfile('foto_perfil')) {
@@ -144,6 +141,7 @@ class EmpleadoController extends Controller
             }
         }
         $user->update($request->except(['foto_perfil']));
+        $user->roles()->sync($request->role);
         return redirect()->route('empleados.index');
     }
 

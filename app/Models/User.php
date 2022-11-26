@@ -8,9 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
+
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable//, Auditable
+class User extends Authenticatable //, Auditable
 {
     use HasRoles;
     use HasApiTokens, HasFactory, Notifiable;
@@ -30,6 +31,7 @@ class User extends Authenticatable//, Auditable
         'telefono',
         'estado',
         'foto_perfil',
+
     ];
 
     /**
@@ -56,4 +58,15 @@ class User extends Authenticatable//, Auditable
         return $this->belongsToMany(Turno::class, 'users_turnos', 'user_id', 'turno_id')->withPivot('id')->withTimestamps();
     }
 
+    public function role_name()
+    {
+        $role = DB::table('model_has_roles')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->where('model_has_roles.model_id', '=', $this->id)
+            ->select('roles.*')
+            ->get()
+            ->first();
+            
+            return $role? $role->name:"";
+    }
 }
