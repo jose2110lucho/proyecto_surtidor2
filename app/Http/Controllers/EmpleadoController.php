@@ -68,7 +68,7 @@ class EmpleadoController extends Controller
     {
         $usuario = User::find($id);
 
-        $image = 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png';
+        $image = asset('/img/user-default.jpeg');
         if ($usuario->foto_perfil) {
             $expiresAt = Carbon::now()->addSeconds(5);
             $imageReference = app('firebase.storage')->getBucket()->object($usuario->foto_perfil);
@@ -76,6 +76,7 @@ class EmpleadoController extends Controller
                 $image = $imageReference->signedUrl($expiresAt);
             };
         }
+
 
         return view('modulo_administrativo.empleados.show', compact('usuario', 'image'));
     }
@@ -120,7 +121,7 @@ class EmpleadoController extends Controller
     {
         /* $user = request()->except(['_token','_method']); */
         $user = User::find($id);
-        if ($request->foto_perfil) {
+        if ($request->hasfile('foto_perfil')) {
 
             if ($user->foto_perfil) {
                 if (app('firebase.storage')->getBucket()->object($user->foto_perfil)->exists()) {

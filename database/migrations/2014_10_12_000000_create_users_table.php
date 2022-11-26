@@ -28,8 +28,8 @@ class CreateUsersTable extends Migration
             $table->string('foto_perfil')->nullable();
 
             $table->rememberToken();
+            $table->timestamp('last_seen')->nullable();
             $table->timestamps();
-
         });
     }
 
