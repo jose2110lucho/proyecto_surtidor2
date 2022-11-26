@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\Admin\HomeControllerAdmin;
 
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AsistenciaController;
@@ -41,6 +42,7 @@ Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
 })->middleware('auth');
+Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
 
 //-----------------EMPLEADO-----------------//
 Route::resource('empleados',EmpleadoController::class);

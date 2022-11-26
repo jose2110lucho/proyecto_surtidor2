@@ -28,6 +28,7 @@
                 <th scope="col">Correo</th>
                 <th scope="col">Direccion</th>
                 <th scope="col">Telefono</th>
+                <th scope="col">Rol</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Accion</th>
               </tr>
@@ -40,6 +41,7 @@
                     <td>{{$usuario->email}}</td>
                     <td>{{$usuario->direccion}}</td>
                     <td>{{$usuario->telefono}}</td>
+                    <td>{{$usuario->role_name()}}</td>
                     <td class="text-center" style="display: inline-block"><span class="badge {{$usuario->estado ? 'bg-success' : 'bg-secondary'}}">{{$usuario->estado ? 'ACTIVO' : 'INACTIVO'}}</span></td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">

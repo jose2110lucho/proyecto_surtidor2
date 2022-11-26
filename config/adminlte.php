@@ -506,6 +506,7 @@ return [
                     'text'    => 'Roles & Privilegios',
                     'route'   => 'admin.roles.index',
                     'icon'    => 'fas fa-fw fa-handshake',
+                    'can'     => 'admin.roles.index',
                 ],
 
                 [

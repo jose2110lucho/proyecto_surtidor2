@@ -16,8 +16,12 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return view('modulo_administrativo/empleados/index',['user'=>$user]);
+        /* $user = User::select('users.id','users.email','users.name','users.direccion','users.telefono','roles.name as role_name')
+            ->join('model_has_roles', 'model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->get(); */
+            $user = User::all();
+        return view('modulo_administrativo/empleados/index', ['user' => $user]);
     }
 
     /**
@@ -47,7 +51,7 @@ class EmpleadoController extends Controller
         $user->estado = true;
         $user->save();
 
-       return redirect('/empleados');
+        return redirect('/empleados');
     }
 
     /**
@@ -57,9 +61,9 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
+    {
         $usuario = User::findOrFail($id);
-        return view('modulo_administrativo.empleados.show',compact('usuario'));
+        return view('modulo_administrativo.empleados.show', compact('usuario'));
     }
 
     /**
@@ -70,9 +74,9 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::all();       
-        $user = User::find($id); 
-        return view('modulo_administrativo.empleados.edit',compact('user','roles')); 
+        $roles = Role::all();
+        $user = User::find($id);
+        return view('modulo_administrativo.empleados.edit', compact('user', 'roles'));
     }
 
     /**
@@ -98,11 +102,13 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, int $id)
     {
+
         /* $user = request()->except(['_token','_method']); */
-        $user=User::find($id);
+        $user = User::find($id);
         $user->update($request->all());
-        
+        $user->roles()->sync($request->role);
         /* $user->roles()->attach($request->all()); */
+
         return redirect()->route('empleados.index');
     }
 
