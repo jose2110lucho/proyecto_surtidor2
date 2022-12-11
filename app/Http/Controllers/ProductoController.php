@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
-
+use Yajra\DataTables\DataTables;
 
 class ProductoController extends Controller
 {
@@ -13,10 +13,20 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request)
     {
-        $lista_productos = Producto::all();
-       return view('modulo_inventario/producto/index',['lista_productos'=>$lista_productos]); 
+        
+
+        if ($request->ajax()) {
+
+        $lista_productos = Producto::all();   
+
+            return DataTables::of($lista_productos)
+                ->make(true);
+        }
+
+        return view('modulo_inventario/producto/index');
+
     }
 
     /**

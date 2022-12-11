@@ -15,10 +15,11 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.10",
-        "yajra/laravel-datatables-oracle": "9.21.2",
         "laravel/ui": "*",
-        "owen-it/laravel-auditing": "^13.0"
+        "laraveldaily/laravel-invoices": "3.0",
+        "livewire/livewire": "^2.10",
+        "owen-it/laravel-auditing": "^13.0",
+        "yajra/laravel-datatables-oracle": "9.21.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

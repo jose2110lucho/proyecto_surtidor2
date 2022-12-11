@@ -465,10 +465,6 @@ return [
             'icon'    => 'fas fa-fw fa-tag',
             'submenu' => [
                 [
-                    'text' => 'Gestionar venta',
-                    'url'  => '#',
-                ],
-                [
                     'text'    => 'Clientes',
                     'icon'    => 'fas fa-fw fa-users',
                     'url'  => 'clientes/*',
@@ -482,6 +478,23 @@ return [
                             'text' => 'Lista de clientes',
                             'icon'    => 'fas fa-fw fa-list-ul',
                             'url'  => 'clientes',
+                        ],
+                    ],
+                ],
+                [
+                    'text'    => 'Vender productos',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'nota_venta_producto',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo nota de venta',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_venta_producto/create',
+                        ],
+                        [
+                            'text' => 'Lista de notas de venta',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_venta_producto',
                         ],
                     ],
                 ],
