@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bomba;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserBomba;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -18,8 +20,14 @@ class EmpleadoController extends Controller
     public function index()
     {
             $user = User::all();
-
         return view('modulo_administrativo/empleados/index', ['user' => $user]);
+    }
+
+    public function bombas(User $user)
+    {
+        $user_bombas=UserBomba::where('user_id',$user->id)->get();
+        $bombas=Bomba::all();
+        return view('modulo_administrativo/empleados/bombas', compact('user_bombas','bombas','user'));
     }
     /**
      * Show the form for creating a new resource.
@@ -28,7 +36,22 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
+
         return view('modulo_administrativo/empleados/create');
+    }
+
+    public function asignarbombas(Request $request ,User $user)
+    {
+        $request->validate([
+            'bomba_id'=>'required'
+        ]);
+        UserBomba::create([
+            'user_id'=>$user->id,
+            'bomba_id'=>$request->bomba_id
+        ]);
+        return redirect(
+            route('empleadobombas.index',$user)
+        );
     }
 
     /**
@@ -159,5 +182,13 @@ class EmpleadoController extends Controller
         }
         User::destroy($id);
         return redirect('empleados');
+    }
+    public function eliminarbombas(UserBomba $user_bomba)
+    {
+        $user=User::find($user_bomba->user_id);
+        $user_bomba->delete();
+        return redirect(
+            route('empleadobombas.index',$user)
+        );
     }
 }

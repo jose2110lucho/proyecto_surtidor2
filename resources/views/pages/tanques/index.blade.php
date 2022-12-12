@@ -35,7 +35,7 @@
                                     class="badge px-1  @if ($tanque->combustible == 'gasolina') bg-orange
                                     @else bg-yellow @endif"
                                     style="width: 60px;">
-                                    {{ $tanque->combustible }}
+                                    {{ $tanque->combustible->nombre }}
                                 </span>
                             </div>
                             <div class="card-tools">
