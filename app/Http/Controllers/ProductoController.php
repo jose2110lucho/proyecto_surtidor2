@@ -16,16 +16,19 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( Request $request)
+    public function index(Request $request)
     {
         if ($request->ajax()) {
 
-        $lista_productos = Producto::all();   
+            $productos = Producto::all();
 
-            return DataTables::of($lista_productos)
-                ->make(true);
+            return DataTables::of($productos)->addColumn('urlImage', function ($producto) {
+                $expiresAt = Carbon::now()->addSeconds(5);
+                $imageReference = app('firebase.storage')->getBucket()->object($producto->imagen);
+                $urlImage = $imageReference->signedUrl($expiresAt);
+                return $urlImage;
+            })->rawColumns(['urlImage'])->make(true);
         }
-
         return view('modulo_inventario/producto/index');
     }
 

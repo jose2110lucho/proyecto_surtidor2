@@ -10,51 +10,51 @@
         <a class="btn btn-success" href="{{ route('producto.create') }}"> crear </a>
     </div>
 
-<div class="table-responsive">
+    <div class="table-responsive">
 
-    <table class="table caption-top" id="table_productos">
-        <caption></caption>
-        <thead>
-            <tr>
+        <table class="table caption-top" id="table_productos">
+            <caption></caption>
+            <thead>
+                <tr>
 
-                <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Precio de compra</th>
-                <th scope="col">Precio de venta</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Imagen</th>
-                <th scope="col">Accion</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio de compra</th>
+                    <th scope="col">Precio de venta</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Accion</th>
 
-            </tr>
-        </thead>
-        <tbody>
+                </tr>
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-</div>
+    </div>
 
 @stop
 
 @section('css')
-<link rel="stylesheet" type="text/css"
-    href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/r-2.3.0/datatables.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/r-2.3.0/datatables.min.css" />
 @stop
 
 @section('js')
-<script>
-    $(window).on('load', function() {
+    <script>
+        $(window).on('load', function() {
             let a = 'hola'
             if ('{{ $errors->any() }}') {
                 $('#formCreateModal').modal('show');
             }
         });
-</script>
+    </script>
 
 
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
             $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
                 className: 'btn btn-sm'
             })
@@ -140,13 +140,12 @@
                     },
 
                     {
-
-                        data: 'nombre_imagen',
-                        name: 'nombre_imagen',
+                        data: 'urlImage',
+                        name: 'imagen',
                         searchable: false,
                         orderable: false,
-                        render: function(nombre_imagen, type, row) {
-                            return `<img src="{{asset('${nombre_imagen}')}}" alt="" class="img-fluid img-thumbnail" width="80px">`;
+                        render: function(data, type, row) {
+                            return `<img src="${data}"  height="80px">`
                         }
 
                     },
@@ -157,103 +156,39 @@
                         searchable: false,
                         orderable: false,
                         render: function(data, type, row) {
-                            let actions = '<div class="btn-group" role="group" aria-label="Basic example">'+
-                                `<a style="text-align: right" href="{{ url('/producto/${row.id}/') }}" class="btn btn-success">`+
-                                    '<i class="fa fa-eye"></i>'+
-                                '</a>'+       
+                            let actions =
+                                '<div class="btn-group" role="group" aria-label="Basic example">' +
+                                `<a style="text-align: right" href="{{ url('/producto/${row.id}/') }}" class="btn btn-success">` +
+                                '<i class="fa fa-eye"></i>' +
+                                '</a>' +
                                 `<a style="text-align: right" href="{{ url('/producto/${row.id}/edit') }}"
-                                   class="btn btn-warning">`+        
-                                   '<i class="fa fa-pen"></i>'+
-                                '</a>'+
-                                `<form action="{{ url('/producto/${row.id}')}}"
-                                       method="post">`+
-                                      ' @csrf'+
-                                      `{{ method_field('DELETE') }}`+
-                                      `<button type="submit" onclick="return confirm('¿Estas Seguro de Eliminarlo?')" class="btn btn-danger">`+
-                                        '<i class="fa fa-trash"></i>'+
-                                   '</button>'+
-                               '</form>'+ 
-                           '</div>';
+                                   class="btn btn-warning">` +
+                                '<i class="fa fa-pen"></i>' +
+                                '</a>' +
+                                `<form action="{{ url('/producto/${row.id}') }}"
+                                       method="post">` +
+                                ' @csrf' +
+                                `{{ method_field('DELETE') }}` +
+                                `<button type="submit" onclick="return confirm('¿Estas Seguro de Eliminarlo?')" class="btn btn-danger">` +
+                                '<i class="fa fa-trash"></i>' +
+                                '</button>' +
+                                '</form>' +
+                                '</div>';
                             return actions;
                         }
                     }
                 ],
-               
+
             })
 
             table.buttons().container()
                 .appendTo($('.col-sm-6:eq(0)', table.table().container()));
         })
-</script>
+    </script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript"
-    src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/r-2.3.0/datatables.min.js">
-</script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/r-2.3.0/datatables.min.js">
+    </script>
 @stop
-/*
-    <div class="table-responsive">
-        <table class="table">
-            <table class="table caption-top">
-                <caption></caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Precio de compra</th>
-                        <th scope="col">Precio de venta</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Accion</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($lista_productos as $producto)
-                        <tr>
-                            <td>
-                                <img src="{{ $producto->imagen? app('firebase.storage')->getBucket()->object($producto->imagen)->signedUrl(Carbon\Carbon::now()->addSeconds(5)): asset('/img/producto-default.jpg') }}"
-                                    height="80px">
-                            </td>
-                            <td>{{ $producto->nombre }}</td>
-                            <td>{{ $producto->precio_compra }}</td>
-                            <td>{{ $producto->precio_venta }}</td>
-
-                            <td class="text-center" style="display: inline-block"><span
-                                    class="badge {{ $producto->estado ? 'bg-success' : 'bg-secondary' }}">{{ $producto->estado ? 'DISPONIBLE' : 'NO DISPONIBLE' }}</span>
-                            </td>
-
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-
-                                    <a style="text-align: right" href="{{ url('/producto/' . $producto->id . '/') }}"
-                                        class="btn btn-success">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-
-                                    <a style="text-align: right" href="{{ url('/producto/' . $producto->id . '/edit') }}"
-                                        class="btn btn-warning">
-                                        <i class="fa fa-pen"></i>
-                                    </a>
-
-
-                                    <form action="{{ url('/producto/' . $producto->id) }}" method="post">
-                                        @csrf
-                                        {{ method_field('DELETE') }}
-                                        <button type="submit" onclick="return confirm('¿Estas Seguro de Eliminarlo?')"
-                                            class="btn btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </table>
-    </div>
-
-@stop
-
-*/
