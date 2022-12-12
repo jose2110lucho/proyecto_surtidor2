@@ -15,13 +15,27 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive">
+                    <div class="row mb-3">
+                        <div class="input-group input-group-sm">
+                            <div class="col-sm-3">
+                                <select class="form-control form-control-sm  tipo" name="tipo">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($tipos as $tipo)
+                                        <option value="{{ $tipo }}">{{ $tipo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <button id="filtrar" class="btn-sm btn-danger">Filtrar</button>
+                            </div>
+                        </div>
+                    </div>
                     @include('partials.vehiculos.table_vehiculos')
                 </div>
             </div>
         </div>
     </section>
 @stop
-
 
 @section('css')
     <link rel="stylesheet" type="text/css"
@@ -49,7 +63,12 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: "{{ route('vehiculos.index') }}",
+                ajax: {
+                    url: "{{ route('vehiculos.index') }}",
+                    data: function(d) {
+                        d.tipo = $('.tipo').val()
+                    },
+                },
                 dataType: 'json',
                 type: "POST",
                 language: {
@@ -58,6 +77,22 @@
                 },
                 dom: 'lBfrtip',
                 buttons: [{
+                        extend: 'collection',
+                        text: 'Opciones',
+                        className: 'bg-navy',
+                        buttons: [{
+                                extend: 'copy',
+                                className: 'btn-secondary',
+                            },
+                            {
+                                extend: 'print',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                        ]
+                    },
+                    {
                         extend: 'collection',
                         text: 'Exportar',
                         className: 'bg-navy',
@@ -76,17 +111,13 @@
                                 }
                             },
                             {
-                                extend: 'copy',
-                                className: 'btn-secondary',
-                            },
-                            {
-                                extend: 'print',
+                                extend: 'csv',
+                                className: 'btn btn-secondary',
                                 exportOptions: {
                                     columns: ':visible'
                                 }
                             },
                         ]
-
                     },
                     {
                         extend: 'colvis',
@@ -134,8 +165,9 @@
                 ],
             })
 
-            table.buttons().container()
-                .appendTo($('.col-sm-6:eq(0)', table.table().container()));
+            $('#filtrar').click(function() {
+                table.draw()
+            })
         })
     </script>
 

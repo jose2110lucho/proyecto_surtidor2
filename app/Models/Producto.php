@@ -18,8 +18,8 @@ class Producto extends Model implements Auditable
         'nombre',
         'precio_compra',
         'precio_venta',
-        'estado',
         'cantidad',
+        'estado',
         'descripcion',
         'nombre_imagen',
     ];
@@ -28,4 +28,5 @@ class Producto extends Model implements Auditable
     {
         return $this->belongsTo(Premio::class, 'producto_id', 'id');
     }
+
 }

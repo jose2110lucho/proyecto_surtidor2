@@ -32,13 +32,6 @@
                 required value="{{ $producto->precio_venta }}">
             </div>
             <!--fin campo precio_venta-->
-             <!--inicio campo cantidad-->
-             <div class="mb-3">
-                <label for="cantidad" class="form-label">cantidad</label>
-                <input name="cantidad" type="number" class="form-control" id="cantidad" 
-                required value="{{ $producto->cantidad }}">
-            </div>
-            <!--fin campo cantidad-->
             <!--inicio campo estado-->
             <div class="form-group">
                 <label for="estado">estado</label>
