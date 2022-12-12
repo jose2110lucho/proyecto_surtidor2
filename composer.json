@@ -9,9 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-dompdf": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.8",
+        "kreait/laravel-firebase": "*",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
@@ -19,6 +21,9 @@
         "laraveldaily/laravel-invoices": "3.0",
         "livewire/livewire": "^2.10",
         "owen-it/laravel-auditing": "^13.0",
+        "laravelcollective/html": "^6.3",
+        "maatwebsite/excel": "^3.1",
+        "spatie/laravel-permission": "^5.5",
         "yajra/laravel-datatables-oracle": "9.21.2"
     },
     "require-dev": {

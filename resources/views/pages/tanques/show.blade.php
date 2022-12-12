@@ -192,7 +192,6 @@
                     timer: 3000
                 });
 
-
                 Toast.fire({
                     icon: 'success',
                     title: '{{ session('mensaje') }}'

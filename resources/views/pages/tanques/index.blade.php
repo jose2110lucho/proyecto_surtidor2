@@ -47,7 +47,7 @@
                                 </a>
 
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
+                                    <i class="-minus"></i>
                                 </button>
                             </div>
                         </div>

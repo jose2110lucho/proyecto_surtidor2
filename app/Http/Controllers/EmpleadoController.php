@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class EmpleadoController extends Controller
 {
@@ -15,10 +17,10 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $lista_usuarios = User::all();
-        return view('modulo_administrativo/empleado/index',['lista_usuarios'=>$lista_usuarios]);
-    }
+            $user = User::all();
 
+        return view('modulo_administrativo/empleados/index', ['user' => $user]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -26,7 +28,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        return view('modulo_administrativo/empleado/create');
+        return view('modulo_administrativo/empleados/create');
     }
 
     /**
@@ -36,17 +38,24 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $user = new User();
-        $user->name = $request->nombre;
-        $user->email = $request->correo;
-        $user->password = Hash::make($request->password);
-        $user->direccion = $request->direccion;
-        $user->telefono = $request->telefono;
-        $user->estado = true;
-        $user->save();
+    {        
+        $request->merge(['password' => Hash::make($request->password)]);
+        $user = User::create($request->all());
 
-       return redirect('/empleado');
+        $image = $request->file('foto_perfil'); //image file from frontend  
+        $firebase_storage_path = 'Users/';
+        $localfolder = public_path('firebase-temp-uploads') . '/';
+        $extension = $request->file('foto_perfil')->getClientOriginalExtension();
+        $file      = $user->id . '.' . $extension;
+
+        if ($image->move($localfolder, $file)) {
+            $uploadedfile = fopen($localfolder . $file, 'r');
+            app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
+
+            $user->update(['foto_perfil' => $firebase_storage_path . $file]);
+            unlink($localfolder . $file);
+        }
+        return redirect('/empleados');
     }
 
     /**
@@ -56,9 +65,18 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
-        $usuario = User::findOrFail($id);
-        return view('modulo_administrativo.empleado.show',compact('usuario'));
+    {
+        $usuario = User::find($id);
+
+        $image = asset('/img/user-default.jpeg');
+        if ($usuario->foto_perfil) {
+            $expiresAt = Carbon::now()->addSeconds(5);
+            $imageReference = app('firebase.storage')->getBucket()->object($usuario->foto_perfil);
+            if ($imageReference->exists()) {
+                $image = $imageReference->signedUrl($expiresAt);
+            };
+        }
+        return view('modulo_administrativo.empleados.show', compact('usuario', 'image'));
     }
 
     /**
@@ -69,8 +87,9 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::findOrFail($id); 
-        return view('modulo_administrativo.empleado.edit',compact('usuario')); 
+        $roles = Role::all();
+        $user = User::find($id);
+        return view('modulo_administrativo.empleados.edit', compact('user', 'roles'));
     }
 
     /**
@@ -80,11 +99,50 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    /* user=User::find($id);
+    user->update([
+    'Name'=>$request->name
+    .
+    .
+    .
+    .
+    ]);
+    $user = request()->except(['_token','_method']);
+        $user=User::find($id);
+        $user->roles()->attach($request->rol);
+        return redirect()->route('admin.users.edit', $user);
+     */
+    public function update(Request $request, int $id)
     {
-        $datosUsuario = request()->except(['_token','_method']);
-        User::where('id','=',$id)->update($datosUsuario);
-        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');  
+
+        /* $user = request()->except(['_token','_method']); */
+        $user = User::find($id);
+        if ($request->hasfile('foto_perfil')) {
+
+            if ($user->foto_perfil) {
+                if (app('firebase.storage')->getBucket()->object($user->foto_perfil)->exists()) {
+                    app('firebase.storage')->getBucket()->object($user->foto_perfil)->delete();
+                }
+                $user->update(['foto_perfil' => null]);
+            }
+
+            $image = $request->file('foto_perfil');
+            $firebase_storage_path = 'Users/';
+            $extension = $image->getClientOriginalExtension();
+            $file = $user->id . '.' . $extension;
+            $localfolder = public_path('firebase-temp-uploads') . '/';
+
+            if ($image->move($localfolder, $file)) {
+                $uploadedfile = fopen($localfolder . $file, 'r');
+                app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
+                $user->update((['foto_perfil' => $firebase_storage_path . $file]));
+                unlink($localfolder . $file);
+            }
+        }
+        $user->update($request->except(['foto_perfil']));
+        $user->roles()->sync($request->role);
+        return redirect()->route('empleados.index');
     }
 
     /**
@@ -95,7 +153,11 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::find($id);
+        if ($user->foto_perfil) {
+            app('firebase.storage')->getBucket()->object($user->foto_perfil)->delete();
+        }
         User::destroy($id);
-        return redirect('empleado');
+        return redirect('empleados');
     }
 }

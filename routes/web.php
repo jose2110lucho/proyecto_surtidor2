@@ -6,14 +6,23 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\Admin\HomeControllerAdmin;
 
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserTurnoController;
+use App\Http\Controllers\Admin\RoleController;
+
+use App\Http\Controllers\BombaController;
+use App\Http\Controllers\CombustibleController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CargaController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\NotaProductoController;
 use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\NotaVentaProductoController;
 
@@ -30,19 +39,17 @@ use App\Http\Controllers\NotaVentaProductoController;
 |
 */
 
-
-/*Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
-
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
 })->middleware('auth');
+
+Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
+
 //-----------------EMPLEADO-----------------//
-Route::resource('empleado',EmpleadoController::class);
+Route::resource('empleados',EmpleadoController::class);
+
+Route::resource('roles',RoleController::class)->names('admin.roles');
 //-----------------TURNO-----------------//
 Route::resource('turno',TurnoController::class);
 Route::get('turno/{turno}/add-user', [TurnoController::class, 'addUser'])->name('turno.addUser');
@@ -92,7 +99,7 @@ Route::get('/proveedor/{id}/activar', [ProveedorController::class, 'activar']);
 //-----------------CLIENTES--------------------//
 Route::resource('clientes', ClienteController::class)->middleware('auth');
 Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
-Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
+Route::patch('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
 Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
 Route::post('clientes/{cliente}/vehiculos', [ClienteController::class, 'storeVehiculo'])->name('clientes.vehiculos.store');
 //-----------------ASISTENCIA------------------//
@@ -109,4 +116,21 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
+
+//---------------BOMBAS------------//
+Route::resource('bombas', BombaController::class);
+Route::resource('cargas', CargaController::class);
+Route::resource('categorias', CategoriaController::class);
+Route::resource('combustibles', CombustibleController::class);
+Route::resource('pedidos', PedidoController::class);
+
+//Bombas Reportes//
+Route::get('/pages/bombas/export',[BombaController::class, 'exportBomba'])->name('bombas.export');
+Route::get('/pages/bombas/download', [BombaController::class, 'downloadPDF'])->name('download-pdf');
+Route::get('/bombas-html',[BombaController::class, 'bombaHtml'])->name('bombas-html');
+//Categorias Reportes//
+Route::get('/pages/categorias/export',[CategoriaController::class, 'exportCategoria'])->name('categorias.export');
+Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
+Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
+
 

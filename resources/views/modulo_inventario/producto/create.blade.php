@@ -42,8 +42,8 @@
             <!--fin campo descripcion-->
             <!--inicio campo imagen-->
             <div class="mb-3">
-                <label for="nombre_imagen" class="form-label">subir archivo de imagen</label>
-                <input class="form-control"  name ="nombre_imagen" type="file" id="nombre_imagen">
+                <label for="imagen" class="form-label">subir archivo de imagen</label>
+                <input class="form-control"  name ="imagen" type="file" id="imagen">
             </div>
             <!--fin campo imagen-->
             <!--inicio campo botones-->

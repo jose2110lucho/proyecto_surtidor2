@@ -17,6 +17,7 @@ class VehiculoController extends Controller
      */
     public function index(Request $request)
     {
+        $tipos = ['automovil', 'camioneta', 'camion', 'minibus', 'bus'];
         if ($request->ajax()) {
 
             $vehiculos = Vehiculo::select('vehiculos.*');
@@ -24,10 +25,14 @@ class VehiculoController extends Controller
             return DataTables::of($vehiculos)
                 ->addColumn('actions', 'partials.vehiculos.actions')
                 ->rawColumns(['actions'])
-                ->make(true);
+                ->filter(function ($query) use ($request) {
+                    if ($request->has('tipo') && !empty($request->get('tipo'))) {
+                        $query->where('tipo', $request->get('tipo'));
+                    }
+                })->make(true);
         }
 
-        return view('pages.vehiculos.index');
+        return view('pages.vehiculos.index', compact('tipos'));
     }
 
     /**
