@@ -56,7 +56,7 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
+    {
         $usuario = User::findOrFail($id);
         return view('modulo_administrativo.empleado.show',compact('usuario'));
     }
@@ -69,8 +69,8 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::findOrFail($id); 
-        return view('modulo_administrativo.empleado.edit',compact('usuario')); 
+        $usuario = User::findOrFail($id);
+        return view('modulo_administrativo.empleado.edit',compact('usuario'));
     }
 
     /**
@@ -83,8 +83,8 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         $datosUsuario = request()->except(['_token','_method']);
-        User::where('id','=',$id)->update($datosUsuario);
-        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');  
+        User::find($id)->update($datosUsuario);
+        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');
     }
 
     /**

@@ -317,7 +317,7 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ], 
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -516,7 +516,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Gestionar bitacora',
-                    'url'  => '#',
+                    'url'  => 'bitacora',
+                ],
+                [
+                    'text' => 'Backup',
+                    'url'  => 'backups',
                 ],
                 [
                     'text'    => 'Gestionar reporte',
@@ -742,7 +746,7 @@ return [
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
-                
+
             ],
         ],
         'Pace' => [

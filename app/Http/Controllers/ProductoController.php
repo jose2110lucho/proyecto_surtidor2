@@ -16,7 +16,7 @@ class ProductoController extends Controller
     public function index()
     {
         $lista_productos = Producto::all();
-       return view('modulo_inventario/producto/index',['lista_productos'=>$lista_productos]); 
+       return view('modulo_inventario/producto/index',['lista_productos'=>$lista_productos]);
     }
 
     /**
@@ -51,12 +51,12 @@ class ProductoController extends Controller
         $producto->nombre = $request->nombre;
         $producto->precio_compra = $request->precio_compra;
         $producto->precio_venta = $request->precio_venta;
-        $producto->cantidad = $request->cantidad; 
+        $producto->cantidad = $request->cantidad;
         $producto->estado = true;
         $producto->descripcion = $request->descripcion;
        // $producto->nombre_imagen = $request-> hasfile('nombre_imagen');
 
-        
+
 
         $producto->save();
 
@@ -71,7 +71,7 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto = Producto::findOrFail($id); 
+        $producto = Producto::findOrFail($id);
         return view('modulo_inventario.producto.show',compact('producto'));
     }
 
@@ -83,8 +83,8 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        $producto = Producto::findOrFail($id); 
-        return view('modulo_inventario.producto.edit',compact('producto')); 
+        $producto = Producto::findOrFail($id);
+        return view('modulo_inventario.producto.edit',compact('producto'));
     }
 
     /**
@@ -98,8 +98,8 @@ class ProductoController extends Controller
     {
        // $datosProducto = request()->except(['_token','_method']);
        // Producto::where('id','=',$id)->update($datosProducto);
-       // return redirect('/producto')->with('status', 'Producto Actualizado Exitosamente!'); 
-        
+       // return redirect('/producto')->with('status', 'Producto Actualizado Exitosamente!');
+
         $nombre_imagen = "";
         $lista = [];
         if($request->hasfile('nombre_imagen')){
@@ -118,7 +118,7 @@ class ProductoController extends Controller
             "precio_compra" => $request->precio_compra,
             "precio_venta"  =>$request->precio_venta,
             "estado" => $request->estado,
-            "cantidad" => $request->cantidad, 
+            "cantidad" => $request->cantidad,
             "descripcion" => $request->descripcion,
          ];
 
@@ -126,8 +126,9 @@ class ProductoController extends Controller
 
             $lista["nombre_imagen"] = $nombre_imagen;
          }
-         Producto::where('id','=',$id)->update($lista);
-         return redirect('/producto')->with('status', 'Producto Actualizado Exitosamente!'); 
+         //$producto = Producto::find($id);
+         Producto::find($id)->update($lista);
+         return redirect('/producto')->with('status', 'Producto Actualizado Exitosamente!');
     }
 
     /**

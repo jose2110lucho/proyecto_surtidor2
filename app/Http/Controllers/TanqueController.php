@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTanqueRequest;
 use App\Http\Requests\UpdateTanqueRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,6 +23,19 @@ class TanqueController extends Controller
     public function index()
     {
         $tanques = Tanque::orderby('codigo', 'desc')->get();
+       // $tanques = Tanque::orderby('id', 'asc')->get();
+        //return response($tanques, 200);
+        //return $tanques;
+        return view('pages.tanques.index', compact('tanques'));
+    }
+
+    /***********API-Controller********************************/
+    public function indexApi()
+    {
+        //$tanques = Tanque::orderby('codigo', 'desc')->get();
+        $tanques = Tanque::orderby('id', 'asc')->get();
+        return response($tanques, 200);
+        //return $tanques;
         return view('pages.tanques.index', compact('tanques'));
     }
 
@@ -32,6 +46,7 @@ class TanqueController extends Controller
      */
     public function create()
     {
+
         return view('pages.tanques.create');
     }
 
@@ -54,7 +69,8 @@ class TanqueController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Tanque $tanque)
-    { 
+    {
+
         return view('pages.tanques.show', compact('tanque'));
     }
 

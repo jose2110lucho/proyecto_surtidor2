@@ -12,9 +12,10 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-
         "laravel/ui": "*",
-        "owen-it/laravel-auditing": "^13.0"
+        "owen-it/laravel-auditing": "^13.0",
+        "pavel-mironchik/laravel-backup-panel": "^2.2",
+        "spatie/laravel-backup": "7.*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

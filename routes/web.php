@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BackupsController;
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
 use Illuminate\Support\Facades\Route;
@@ -22,37 +24,31 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
-});
+})->middleware('auth');
 
-Auth::routes();
+Route::resource('empleado',EmpleadoController::class)->middleware('auth');
 
-
-
-
-Route::resource('empleado',EmpleadoController::class);
-
-Route::resource('producto',ProductoController::class);
+Route::resource('producto',ProductoController::class)->middleware('auth');
 
 //-----------------CLIENTES-----------------//
-
-
-
 Route::resource('clientes', ClienteController::class)->middleware('auth');
-Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
-Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
-Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
-
+Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo')->middleware('auth');
+Route::post('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear')->middleware('auth');
+Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio')->middleware('auth');
 //-----------------CLIENTES-----------------//
 
 
 Route::resource('tanques', TanqueController::class)->middleware('auth');
 
-Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
+Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar')->middleware('auth');
 
-Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name('tanques.llenar');
-
-
+Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name('tanques.llenar')->middleware('auth');
 
 Route::resource('premios', PremioController::class)->middleware('auth');
+
+//Bitacora
+Route::resource('bitacora', BitacoraController::class)->middleware('auth');
+Route::get('backups/{name}/downloadFile',[BackupsController::class,'downloadFile'])->middleware('auth');
+Route::resource('backups', BackupsController::class)->middleware('auth');
 
 

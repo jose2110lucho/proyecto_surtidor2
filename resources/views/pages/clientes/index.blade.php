@@ -61,7 +61,7 @@
                                             </div>
                                         </td>
 
-                                        
+
                                         <td class="text-center"><span class="badge {{$cliente->estado ? 'bg-success' : 'bg-secondary'}}">{{$cliente->estado ? 'ACTIVO' : 'INACTIVO'}}</span></td>
 
 
