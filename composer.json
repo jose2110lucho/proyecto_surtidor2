@@ -18,10 +18,11 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "*",
-        "laravelcollective/html": "^6.3",
+        "laraveldaily/laravel-invoices": "3.0",
         "livewire/livewire": "^2.10",
-        "maatwebsite/excel": "^3.1",
         "owen-it/laravel-auditing": "^13.0",
+        "laravelcollective/html": "^6.3",
+        "maatwebsite/excel": "^3.1",
         "spatie/laravel-permission": "^5.5",
         "yajra/laravel-datatables-oracle": "9.21.2"
     },

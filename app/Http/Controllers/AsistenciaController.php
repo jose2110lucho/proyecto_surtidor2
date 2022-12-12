@@ -6,9 +6,12 @@ use App\Models\Asistencia;
 use Illuminate\Http\Request;
 use App\Models\Turno;
 use App\Models\UserTurno;
+
+use Asistencias;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class AsistenciaController extends Controller
 {
@@ -19,10 +22,17 @@ class AsistenciaController extends Controller
      */
     public function index(Request $request)
     {
-        $turno_id = $request->turno_id;
-        $asistencias = DB::select('select * from listaAsistencia(?)',[$turno_id]);     
+        if ($request->ajax()) {
+            
+            $turno_id = $request->turno_id;
+            $fecha_inicio = $request->fecha_inicio;
+            $fecha_fin = $request->fecha_fin;
+            $usuario = $request->usuario;
+            $asistencias = DB::select('select * from listaAsistencia(?,?,?,?)', [$turno_id, $fecha_inicio, $fecha_fin, $usuario]);
+            return DataTables::of($asistencias)->make(true);
+        }
         $turnos_list = Turno::all();
-        return view('modulo_administrativo/asistencia/index',['turnos_list'=>$turnos_list,'asistencias'=> $asistencias]);  
+        return view('modulo_administrativo/asistencia/index', ['turnos_list' => $turnos_list]);
     }
 
     /**
@@ -32,8 +42,8 @@ class AsistenciaController extends Controller
      */
     public function create(Turno $turno)
     {
-    
-       return view('modulo_administrativo.asistencia.create',compact('turno'));
+
+        return view('modulo_administrativo.asistencia.create', compact('turno'));
     }
 
     /**
@@ -93,12 +103,12 @@ class AsistenciaController extends Controller
     }
 
     public function entrada($turno_id, $user_id)
-    { 
-       $intermedia_id = UserTurno::where('turno_id','=', $turno_id )->where('user_id',"=", $user_id)->select('id')->first()->id;
+    {
+        $intermedia_id = UserTurno::where('turno_id', '=', $turno_id)->where('user_id', "=", $user_id)->select('id')->first()->id;
         $asistencia = new Asistencia();
-        $fecha_hora = new DateTime();  
+        $fecha_hora = new DateTime();
         $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
-        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s"); 
+        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s");
         $asistencia->fecha_entrada = $DateAndTime;
         $asistencia->user_turno_id = $intermedia_id;
         $asistencia->save();
@@ -108,14 +118,22 @@ class AsistenciaController extends Controller
 
     public function salida($turno_id, $user_id)
     {
-        $intermedia_id = UserTurno::where('turno_id','=', $turno_id )->where('user_id',"=", $user_id)->select('id')->first()->id;
-        $fecha_hora = new DateTime();  
+        $intermedia_id = UserTurno::where('turno_id', '=', $turno_id)->where('user_id', "=", $user_id)->select('id')->first()->id;
+        $fecha_hora = new DateTime();
         $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
-        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s"); 
-        $asistencia = Asistencia::where('user_turno_id','=',$intermedia_id)->select('*')->first();
+        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s");
+        $asistencia = Asistencia::where('user_turno_id', '=', $intermedia_id)->select('*')->first();
         $asistencia->fecha_salida = $DateAndTime;
         $asistencia->save();
         $turno = Turno::find($turno_id);
         return redirect()->route('asistencia.create', ['turno' => $turno]);
     }
+
+    public function getUserByTurno($turno_id)
+    {
+        $turno = Turno::find($turno_id);
+        $users = $turno->users;
+        return $users;
+    }
+
 }
