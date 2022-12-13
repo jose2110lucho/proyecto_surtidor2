@@ -110,9 +110,8 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::all();
-        $user = User::find($id);
-        return view('modulo_administrativo.empleados.edit', compact('user', 'roles'));
+        $usuario = User::findOrFail($id); 
+        return view('modulo_administrativo.empleado.edit',compact('usuario')); 
     }
 
     /**
@@ -138,34 +137,9 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, int $id)
     {
-
-        /* $user = request()->except(['_token','_method']); */
-        $user = User::find($id);
-        if ($request->hasfile('foto_perfil')) {
-
-            if ($user->foto_perfil) {
-                if (app('firebase.storage')->getBucket()->object($user->foto_perfil)->exists()) {
-                    app('firebase.storage')->getBucket()->object($user->foto_perfil)->delete();
-                }
-                $user->update(['foto_perfil' => null]);
-            }
-
-            $image = $request->file('foto_perfil');
-            $firebase_storage_path = 'Users/';
-            $extension = $image->getClientOriginalExtension();
-            $file = $user->id . '.' . $extension;
-            $localfolder = public_path('firebase-temp-uploads') . '/';
-
-            if ($image->move($localfolder, $file)) {
-                $uploadedfile = fopen($localfolder . $file, 'r');
-                app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
-                $user->update((['foto_perfil' => $firebase_storage_path . $file]));
-                unlink($localfolder . $file);
-            }
-        }
-        $user->update($request->except(['foto_perfil']));
-        $user->roles()->sync($request->role);
-        return redirect()->route('empleados.index');
+        $datosUsuario = request()->except(['_token','_method']);
+        User::where('id','=',$id)->update($datosUsuario);
+        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');  
     }
 
     /**

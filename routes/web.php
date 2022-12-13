@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BackupsController;
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
 use Illuminate\Support\Facades\Route;
@@ -143,6 +145,7 @@ Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadP
 Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
 
 
+
 //USER_BOMBA
 Route::get('user-bombas/index',[UserBombaController::class, 'index'])->name('userbombas.index');
 
@@ -150,3 +153,8 @@ Route::get('user-bombas/index',[UserBombaController::class, 'index'])->name('use
 Route::get('venta/combustible/create/{bomba}',[VentaCombustibleController::class, 'create'])->name('venta.combustible.create');
 Route::get('venta/combustible/bomba',[VentaCombustibleController::class, 'bombasList'])->name('venta.combustible.bombasList');
 Route::post('venta/combustible/bomba_v/{bomba}',[VentaCombustibleController::class, 'vendido'])->name('venta.combustible.bomba_v');
+
+//Bitacora
+Route::resource('bitacora', BitacoraController::class)->middleware('auth');
+Route::get('backups/{name}/downloadFile',[BackupsController::class,'downloadFile'])->middleware('auth');
+Route::resource('backups', BackupsController::class)->middleware('auth');

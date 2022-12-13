@@ -23,7 +23,9 @@
         "maatwebsite/excel": "^3.1",
         "owen-it/laravel-auditing": "^13.0",
         "spatie/laravel-permission": "^5.5",
-        "yajra/laravel-datatables-oracle": "9.21.2"
+        "yajra/laravel-datatables-oracle": "9.21.2",
+        "pavel-mironchik/laravel-backup-panel": "^2.2",
+        "spatie/laravel-backup": "7.*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
