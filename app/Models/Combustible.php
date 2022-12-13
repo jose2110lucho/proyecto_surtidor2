@@ -15,6 +15,10 @@ class Combustible extends Model implements Auditable
 
     public function categorias(){
         return $this->belongsToMany(Categoria::class,'id','codigo'); 
-
     }
+    public function tanques()
+        {
+            return $this->hasMany(Tanque::class);
+        }
+
 }

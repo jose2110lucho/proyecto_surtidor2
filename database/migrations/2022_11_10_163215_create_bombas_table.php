@@ -17,9 +17,9 @@ class CreateBombasTable extends Migration
             //$table->id();
             $table->bigIncrements('id');
             $table->string('codigo');
-            $table->string('nombre')->nulleable(false);
-            $table->string('combustible');
-            $table->string('descripcion')->nulleable(false);
+            $table->string('nombre')->nullable();
+            $table->string('combustible')->nullable();
+            $table->string('descripcion')->nullable();
             $table->boolean('estado');
             $table->foreignId('tanque_id','id')
             ->nulleable()

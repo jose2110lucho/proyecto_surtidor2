@@ -26,6 +26,10 @@ use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\UserBombaController;
+use App\Http\Controllers\VentaCombustibleController;
+
+
 use App\Http\Controllers\NotaVentaProductoController;
 
 
@@ -50,6 +54,11 @@ Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
 
 //-----------------EMPLEADO-----------------//
 Route::resource('empleados',EmpleadoController::class);
+Route::get('empleados-bombas/{user}',[EmpleadoController::class, 'bombas'])->name('empleadobombas.index');
+Route::post('empleados-bombas/{user}',[EmpleadoController::class, 'asignarbombas'])->name('empleadobombas.create');
+Route::delete('empleados-bombas/{user_bomba}',[EmpleadoController::class, 'eliminarbombas'])->name('empleadobombas.destroy');
+
+
 
 Route::resource('roles',RoleController::class)->names('admin.roles');
 //-----------------TURNO-----------------//
@@ -136,9 +145,16 @@ Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadP
 Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
 
 
+
+//USER_BOMBA
+Route::get('user-bombas/index',[UserBombaController::class, 'index'])->name('userbombas.index');
+
+//VENTA COMBUSTIBLE
+Route::get('venta/combustible/create/{bomba}',[VentaCombustibleController::class, 'create'])->name('venta.combustible.create');
+Route::get('venta/combustible/bomba',[VentaCombustibleController::class, 'bombasList'])->name('venta.combustible.bombasList');
+Route::post('venta/combustible/bomba_v/{bomba}',[VentaCombustibleController::class, 'vendido'])->name('venta.combustible.bomba_v');
+
 //Bitacora
 Route::resource('bitacora', BitacoraController::class)->middleware('auth');
 Route::get('backups/{name}/downloadFile',[BackupsController::class,'downloadFile'])->middleware('auth');
 Route::resource('backups', BackupsController::class)->middleware('auth');
-
-
