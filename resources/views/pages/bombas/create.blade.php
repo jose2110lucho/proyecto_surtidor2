@@ -43,7 +43,7 @@
                                 </div>
                                
                             </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="combustible">Combustible</label>
                                     <input name="combustible" class="form-control my-colorpicker1"
@@ -52,7 +52,7 @@
                                     @error('combustible')
                                         <small class="text-danger">*{{ $message }}</small>
                                     @enderror
-                                </div>
+                                </div> -->
 
                             </div>
                             <div class="col-md-4">

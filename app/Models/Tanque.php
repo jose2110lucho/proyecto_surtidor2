@@ -11,7 +11,7 @@ class Tanque extends Model //implements Auditable
    // use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'codigo',
-        'combustible',
+        'combustible_id',
         'descripcion',
         'capacidad',
         'cantidad_disponible',
@@ -19,4 +19,8 @@ class Tanque extends Model //implements Auditable
         'estado',
         'fecha_carga'
     ];
+    public function combustible()
+    {
+        return $this->belongsTo(Combustible::class);
+    }
 }

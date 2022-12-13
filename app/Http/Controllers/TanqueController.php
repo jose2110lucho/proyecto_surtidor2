@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tanque;
 use App\Http\Requests\StoreTanqueRequest;
 use App\Http\Requests\UpdateTanqueRequest;
+use App\Models\Combustible;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -32,8 +33,11 @@ class TanqueController extends Controller
      */
     public function create()
     {
-        return view('pages.tanques.create');
+        $combustibles= Combustible::all();
+        return view('pages.tanques.create', compact('combustibles'));
     }
+
+    
 
     /**
      * Store a newly created resource in storage.
