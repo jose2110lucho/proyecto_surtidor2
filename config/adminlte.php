@@ -544,6 +544,23 @@ return [
                     ],
                 ],
                 [
+                    'text'    => 'Vender productos',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'nota_venta_producto',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo nota de venta',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_venta_producto/create',
+                        ],
+                        [
+                            'text' => 'Lista de notas de venta',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_venta_producto',
+                        ],
+                    ],
+                ],
+                [
                     'text'    => 'Vehiculos',
                     'icon'    => 'fa fa-fw fa-car-side',
                     'url'  => 'vehiculos',

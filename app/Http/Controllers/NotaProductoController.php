@@ -71,6 +71,7 @@ class NotaProductoController extends Controller
 
             $refill = Producto::find($producto['producto_id']);
             $refill->cantidad = $refill->cantidad + $producto['cantidad'];
+            $refill->estado = true;
             $refill->save();
         }
 

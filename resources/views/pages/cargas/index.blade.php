@@ -86,3 +86,5 @@
         <!-- /.container-fluid -->
     </section>
 @stop
+<!--- en el index solo va a mostrar los datos de ID Fecha cantidad(pedida) total     accion el show y muestra los detalles
+    del pedido que será detalle_tanque--->

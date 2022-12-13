@@ -70,10 +70,11 @@ class TanqueController extends Controller
      */
     public function recargar(Request $request, Tanque $tanque)
     {
+        $aux=$tanque->capacidad - $tanque->cantidad_disponible;
         $validator = Validator::make($request->all(), [
-            'cantidad_recarga' => 'required | gt:0 | lte:' . $tanque->capacidad - $tanque->cantidad_disponible,
+        'cantidad_recarga' => 'required | lte:'.$aux,
         ], $messages = [
-            'lte' => 'Se excedió la capacidad del tanque. La cantidad a recargar debe ser menor o igual a ' . $tanque->capacidad - $tanque->cantidad_disponible . ' lts',
+            'lte' => 'Se excedió la capacidad del tanque. La cantidad a recargar debe ser menor o igual a ' . $aux . ' lts',
         ]);
 
         if ($validator->fails()) {
