@@ -21,7 +21,7 @@ class Producto extends Migration
             $table->integer('cantidad');
             $table->boolean('estado')->default(true);
             $table->string('descripcion');
-            $table->string('nombre_imagen');
+            $table->string('imagen')->nullable();
             $table->timestamps();
         });
     }

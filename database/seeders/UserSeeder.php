@@ -30,9 +30,9 @@ class UserSeeder extends Seeder
             'name'=>'Veronica Antezana',
             'email'=> 'ruth.veronica.9906@gmail.com',
             'password'=>bcrypt('123456789')
-        ])->assignRole('Administrador');
+        ])->assignRole('Empleado');
 
         //creando usuarios generados
-        //User::factory(3)->create();
+        User::factory(2)->create();
     }
 }

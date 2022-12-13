@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\HomeControllerAdmin;
 use App\Http\Controllers\EmpleadoController;
 
 Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
-Route::resource('lista_usuarios',EmpleadoController::class)->names('modulo_administrativo.empleado');
+Route::resource('user',EmpleadoController::class)->names('modulo_administrativo.empleado');
 
 Route::resource('roles', RoleController::class)->names('admin.roles');
 

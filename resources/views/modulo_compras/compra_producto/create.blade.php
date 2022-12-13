@@ -101,47 +101,46 @@
 
             $('#addRow').on('click', function() {
                 let producto_value = document.getElementById("producto_id").value.split('`');
-                let cantidad = document.getElementById("cantidad").value;
-                let producto_id = producto_value[0];
-                let producto = producto_value[1];
-                let precio = document.getElementById("precio_compra").value;;
-                t.row.add([producto_id, producto, cantidad, precio, cantidad * precio]).draw(false);
-                productoList.push({
-                    "producto_id": producto_id,
-                    "cantidad": cantidad,
-                    "precio": precio
-                });
-                total = total + cantidad * precio;
+            let cantidad = document.getElementById("cantidad").value;
+            let producto_id = producto_value[0];
+            let producto = producto_value[1];
+            let precio = document.getElementById("precio_compra").value;;
+            t.row.add([producto_id, producto, cantidad, precio, cantidad * precio]).draw(false);
+            productoList.push({
+                "producto_id": producto_id,
+                "cantidad": cantidad,
+                "precio": precio
             });
+            total = total + cantidad * precio;
+        });
 
-            //-------------------------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------------------------
 
-            $('#example').on('click', 'tbody tr', function() {
+        $('#example tbody').on('click', 'button', function() {
+            let data_fila = t.row($(this).parents('tr')).data();
+            total = total - data_fila[2] * data_fila[3];
+            t.row($(this).parents('tr')).remove().draw();
+            productoList = productoList.filter(data => data.producto_id != data_fila[0]);
+        });
 
-                let data_fila = t.row(this).data();
-                total = total - data_fila[2] * data_fila[3];
-                t.row(this).remove().draw();
-                productoList = productoList.filter(data => data.producto_id != data_fila[0]);
+        //-------------------------------------------------------------------------------------------------------------------------
 
-            });
-
-            //-------------------------------------------------------------------------------------------------------------------------
-
-            $("#guardar").click(function(e) {
-                var token = '{{ csrf_token() }}';
-                let proveedorId = document.getElementById("proveedor_id").value;
-                var data = {
-                    proveedor_id: proveedorId,
-                    _token: token,
-                    producto_list: productoList,
-                    total: total
-                };
-                $.ajax({
-                    type: "post",
-                    url: "{{ route('nota_producto.store') }}",
-                    data: data,
-                    success: function(nota_producto_id) {
-                        window.location.href=`{{ url('/detalle_producto/${nota_producto_id}/') }}`;   
+        $("#guardar").click(function(e) {
+            var token = '{{ csrf_token() }}';
+            let proveedorId = document.getElementById("proveedor_id").value;
+            var data = {
+                proveedor_id: proveedorId,
+                _token: token,
+                producto_list: productoList,
+                total: total
+            };
+            $.ajax({
+                type: "post",
+                url: "{{ route('nota_producto.store') }}",
+                data: data,
+                success: function(nota_producto_id) {
+                    window.location.href =
+                        `{{ url('/detalle_producto/${nota_producto_id}/') }}`;
                     }
                 });
             });

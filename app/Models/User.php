@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
-use OwenIt\Auditing\Contracts\Auditable;
 
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable//, Auditable
+class User extends Authenticatable //, Auditable
 {
     use HasRoles;
     use HasApiTokens, HasFactory, Notifiable;
@@ -26,12 +24,14 @@ class User extends Authenticatable//, Auditable
      */
     protected $fillable = [
         'name',
+        'apellido',
         'email',
         'password',
         'direccion',
         'telefono',
         'estado',
-        
+        'foto_perfil',
+
     ];
 
     /**
@@ -56,5 +56,17 @@ class User extends Authenticatable//, Auditable
     public function turnos()
     {
         return $this->belongsToMany(Turno::class, 'users_turnos', 'user_id', 'turno_id')->withPivot('id')->withTimestamps();
+    }
+
+    public function role_name()
+    {
+        $role = DB::table('model_has_roles')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->where('model_has_roles.model_id', '=', $this->id)
+            ->select('roles.*')
+            ->get()
+            ->first();
+            
+            return $role? $role->name:"";
     }
 }

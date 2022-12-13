@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\Admin\HomeControllerAdmin;
 
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserTurnoController;
+use App\Http\Controllers\Admin\RoleController;
 
 use App\Http\Controllers\BombaController;
 use App\Http\Controllers\CombustibleController;
@@ -20,6 +22,10 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\NotaProductoController;
 use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\NotaVentaProductoController;
+
 
 
 /*
@@ -33,19 +39,17 @@ use App\Models\Premio;
 |
 */
 
-
-/*Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
-
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
 })->middleware('auth');
+
+Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
+
 //-----------------EMPLEADO-----------------//
-Route::resource('empleado',EmpleadoController::class);
+Route::resource('empleados',EmpleadoController::class);
+
+Route::resource('roles',RoleController::class)->names('admin.roles');
 //-----------------TURNO-----------------//
 Route::resource('turno',TurnoController::class);
 Route::get('turno/{turno}/add-user', [TurnoController::class, 'addUser'])->name('turno.addUser');
@@ -64,6 +68,30 @@ Route::get('nota_producto/create',[NotaProductoController::class,'create'])->nam
 Route::post('nota_producto',[NotaProductoController::class,'store'])->name('nota_producto.store');
 //-----------------DETALLEPRODUCTO----------------------//
 Route::get('detalle_producto/{nota_producto_id}',[NotaProductoController::class,'show'])->name('detalle_producto.show');
+
+
+
+
+
+
+//-----------------NOTAVENTAPRODUCTO-----------------//
+Route::get('nota_venta_producto',[NotaVentaProductoController::class,'index'])->name('nota_venta_producto.index');
+Route::get('nota_venta_producto/create',[NotaVentaProductoController::class,'create'])->name('nota_venta_producto.create');
+Route::post('nota_venta_producto',[NotaVentaProductoController::class,'store'])->name('nota_venta_producto.store');
+
+
+//-----------------DETALLENOTAVENTAPRODUCTO-----------------//
+Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProductoController::class,'show'])->name('detalle_nota_venta_producto.show');
+
+
+//------------------Generar Factura--------------------------
+
+Route::get('nota_venta_producto/{nota_venta_producto_id}/generateInvoice',[NotaVentaProductoController::class,'generateInvoice'])->name('nota_venta_producto.generateInvoice');
+
+
+
+
+
 //-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/desactivar', [ProveedorController::class, 'desactivar']);
@@ -79,6 +107,7 @@ Route::get('asistencia', [AsistenciaController::class,'index'])->name('asistenci
 Route::get('asistencia/{turno}/create', [AsistenciaController::class,'create'])->name('asistencia.create'); 
 Route::post('asistencia/{turno_id}/{user_id}/entrada', [AsistenciaController::class,'entrada'])->name('asistencia.entrada');
 Route::put('asistencia/{turno_id}/{user_id}/salida', [AsistenciaController::class,'salida'])->name('asistencia.salida');
+Route::get('asistencia/user_turno/{turno_id}', [AsistenciaController::class,'getUserByTurno'])->name('asistencia.user_turno');
 //-----------------TANQUES-----------------//
 Route::resource('tanques', TanqueController::class)->middleware('auth');
 Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
