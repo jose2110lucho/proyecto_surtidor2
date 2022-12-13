@@ -140,12 +140,16 @@
                     },
 
                     {
-                        data: 'urlImage',
+                        data: 'imagen',
                         name: 'imagen',
                         searchable: false,
                         orderable: false,
                         render: function(data, type, row) {
-                            return `<img src="${data}"  height="80px">`
+                            url = data;
+                            if (data === null) {
+                                url = "{{ asset('img/producto-default.jpg') }}"
+                            }
+                            return `<img src="${url}"  height="80px">`
                         }
 
                     },

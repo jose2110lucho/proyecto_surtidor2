@@ -18,19 +18,34 @@ class ProductoController extends Controller
      */
     public function index(Request $request)
     {
+        function existImg($img): bool
+        {
+            if (app('firebase.storage')->getBucket()->object($img)->exists()) {
+                return true;
+            }
+            return false;
+        }
         if ($request->ajax()) {
 
             $productos = Producto::all();
 
-            return DataTables::of($productos)->addColumn('urlImage', function ($producto) {
-                $expiresAt = Carbon::now()->addSeconds(5);
-                $imageReference = app('firebase.storage')->getBucket()->object($producto->imagen);
-                $urlImage = $imageReference->signedUrl($expiresAt);
-                return $urlImage;
-            })->rawColumns(['urlImage'])->make(true);
+            return DataTables::of($productos)->editColumn('imagen', function (Producto $producto) {
+
+                if ($producto->imagen) {
+                    $imageReference = app('firebase.storage')->getBucket()->object($producto->imagen);
+                    if ($imageReference->exists()) {
+                        $expiresAt = Carbon::now()->addSeconds(5);
+                        $urlImage =  $imageReference->signedUrl($expiresAt);
+                    }
+                    return $urlImage;
+                }
+                return null;
+            })->make(true);
         }
         return view('modulo_inventario/producto/index');
     }
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -110,8 +110,8 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::findOrFail($id); 
-        return view('modulo_administrativo.empleado.edit',compact('usuario')); 
+        $user = User::findOrFail($id); 
+        return view('modulo_administrativo.empleados.edit',compact('user')); 
     }
 
     /**
