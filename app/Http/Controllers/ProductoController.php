@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 
 class ProductoController extends Controller
@@ -15,10 +16,20 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lista_productos = Producto::all();
-        return view('modulo_inventario/producto/index', ['lista_productos' => $lista_productos]);
+        if ($request->ajax()) {
+
+            $productos = Producto::all();
+
+            return DataTables::of($productos)->addColumn('urlImage', function ($producto) {
+                $expiresAt = Carbon::now()->addSeconds(5);
+                $imageReference = app('firebase.storage')->getBucket()->object($producto->imagen);
+                $urlImage = $imageReference->signedUrl($expiresAt);
+                return $urlImage;
+            })->rawColumns(['urlImage'])->make(true);
+        }
+        return view('modulo_inventario/producto/index');
     }
 
     /**

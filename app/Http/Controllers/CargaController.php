@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCargaRequest;
 use App\Http\Requests\UpdateCargaRequest;
 use App\Models\Tanque;
 use App\Models\Carga;
+use App\Models\Combustible;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException; 
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +33,8 @@ class CargaController extends Controller
     {
         $cargas= new Carga();
         $tanques=Tanque::pluck('codigo','id');
-        return view('pages.cargas.create',compact('cargas','tanques'));
+        $combustibles=Combustible::pluck('codigo','id');
+        return view('pages.cargas.create',compact('cargas','tanques','combustibles'));
     }
 
     /**
@@ -120,5 +122,11 @@ class CargaController extends Controller
     {
         $carga->delete();
         return redirect()->route('cargas.index');
+    }
+
+    //Para la tabla dinamica
+    public function tabla(){
+        
+
     }
 }
