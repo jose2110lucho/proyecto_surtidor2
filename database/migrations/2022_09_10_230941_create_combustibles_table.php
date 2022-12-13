@@ -14,14 +14,13 @@ class CreateCombustiblesTable extends Migration
     public function up()
     {
         Schema::create('combustibles', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('codigo')->unique();
             $table->string('nombre')->nulleable(false);
             $table->decimal('precio_compra')->nulleable(false);
             $table->decimal('precio_venta');
             $table->string('unidad_medida')->nulleable(false);
-            $table->foreignId('categoria_id','id')
-            ->nulleable()
+            $table->foreignId('categoria_id','id')->nulleable()
             ->constrained('categorias')
             ->on('categorias')
             ->onDelete('cascade');
