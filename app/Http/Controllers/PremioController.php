@@ -6,6 +6,8 @@ use App\Models\Premio;
 use App\Http\Requests\StorePremioRequest;
 use App\Http\Requests\UpdatePremioRequest;
 use App\Models\Producto;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PremioController extends Controller
 {
@@ -16,8 +18,10 @@ class PremioController extends Controller
      */
     public function index()
     {
-        $premios = Premio::orderby('id','asc')->paginate(9);
-        return view('pages.premios.index', compact('premios'));
+        $this->updateEstados();
+        $productos = Producto::get();
+        $premios = Premio::orderby('id', 'asc')->paginate(9);
+        return view('pages.premios.index', compact('premios', 'productos'));
     }
 
     /**
@@ -39,6 +43,11 @@ class PremioController extends Controller
      */
     public function store(StorePremioRequest $request)
     {
+        
+        if (is_null($request->producto_id)) {
+            $request->merge(['unidades_producto' => null]);
+        }
+
         $premio = Premio::create($request->all());
         return redirect()->route('premios.show', $premio);
     }
@@ -51,7 +60,8 @@ class PremioController extends Controller
      */
     public function show(Premio $premio)
     {
-        return view('pages.premios.show', compact('premio'));
+        $productos = Producto::get();
+        return view('pages.premios.show', compact('premio', 'productos'));
     }
 
     /**
@@ -63,7 +73,7 @@ class PremioController extends Controller
     public function edit(Premio $premio)
     {
         $productos = Producto::get();
-        return view('pages.premios.edit', compact('premio','productos'));
+        return view('pages.premios.edit', compact('premio', 'productos'));
     }
 
     /**
@@ -77,6 +87,24 @@ class PremioController extends Controller
     {
         $premio->update($request->all());
         return redirect()->route('premios.show', compact('premio'));
+    }
+
+    /**
+     * Actualiza el campo estado de la tabla premio de acuerdo al stock y la fecha fin  
+     *
+     * @param  \App\Http\Requests\UpdatePremioRequest  $request
+     * @param  \App\Models\Premio  $premio
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEstados()
+    {
+        DB::table('premios')
+            ->whereNotNull('fecha_fin')
+            ->where([
+                ['estado', '!=', 0],
+                ['fecha_fin', '<=', Carbon::now()]
+            ])
+            ->update(['estado' => 0]);
     }
 
     /**

@@ -11,4 +11,14 @@ class Proveedor extends Model implements Auditable
 {
     use HasFactory;
     use AuditingAuditable;
+
+    protected $fillable = [
+        'nombre',
+        'telefono',
+        'correo',
+        'direccion',
+        'nit',
+        'descripcion',
+        'estado'
+    ];
 }

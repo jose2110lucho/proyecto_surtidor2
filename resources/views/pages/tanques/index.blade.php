@@ -17,8 +17,8 @@
                         </p>
                     </div>
                     <div>
-                       {{-- <span class="fa fa-battery-quarter fa-4x"></span> --}}
-                        <a href="{{route('tanques.create')}}" class="btn btn-primary my-4 mx-3" >Nuevo</a>
+                        {{-- <span class="fa fa-battery-quarter fa-4x"></span> --}}
+                        <a href="{{ route('tanques.create') }}" class="btn btn-primary my-4 mx-3">Nuevo</a>
                     </div>
                 </div>
             </div>
@@ -42,13 +42,12 @@
                                 <a class="btn btn-tool" href="{{ route('tanques.show', $tanque) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
-
-                                {{--                                 <a class="btn btn-tool" href="{{ route('tanques.edit', $tanque) }}">
+                                <a class="btn btn-tool" href="{{ route('tanques.edit', $tanque) }}">
                                     <i class="fa fa-pen"></i>
-                                </a> --}}
+                                </a>
 
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
+                                    <i class="-minus"></i>
                                 </button>
                             </div>
                         </div>

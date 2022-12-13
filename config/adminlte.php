@@ -311,48 +311,9 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        /*    [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-
-        ], */
-
-
-        //-------------------modulo clientes---------------------------------
-        [
-            'text'    => 'Clientes',
-            'icon'    => 'fas fa-fw fa-users',
-            'url'  => 'clientes/*',
-            'submenu' => [
-                [
-                    'text' => 'Nuevo cliente',
-                    'icon'    => 'fas fa-fw fa-plus',
-                    'url'  => 'clientes/create',
-                ],
-                [
-                    'text' => 'Lista de clientes',
-                    'icon'    => 'fas fa-fw fa-list-ul',
-                    'url'  => 'clientes',
-                ],
-            ],
-        ],
 
         //-------------------modulo premios---------------------------------
-/*         [
+        [
             'text'    => 'Premios',
             'icon'    => 'fas fa-fw fa-gift',
             'url'  => 'premios/*',
@@ -368,22 +329,28 @@ return [
                     'url'  => 'premios',
                 ],
             ],
-        ], */
+        ],
 
         //-------------------modulo inventario---------------------------------
         [
             'text'    => 'Inventario',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-clipboard-list',
             'submenu' => [
+              
                 [
-                    'text' => 'Gestionar Proveedor',
-                    'url'  => '#',
+                    'text' => 'Nuevo Producto',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'url'  => 'producto/create',
                 ],
                 [
-                    'text' => 'Gestionar Producto',
+                    'text' => 'Almacen',
+                    'icon'    => 'fas fa-fw fa-warehouse',
                     'url'  => '/producto',
                 ],
+                
             ],
+            
+            
         ],
 
         //-------------------modulo infraestructura---------------------------------
@@ -393,7 +360,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Tanques',
-                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
+                    'icon'    => 'fas fa-fw fa-tint',
                     'url'  => 'tanques/*',
                     'submenu' => [
                         [
@@ -456,63 +423,63 @@ return [
         //-------------------modulo ventas---------------------------------
         [
             'text'    => 'Ventas',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-tag',
             'submenu' => [
                 [
-                    'text' => 'Gestionar venta',
-                    'url'  => '#',
+                    'text'    => 'Clientes',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'clientes/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo cliente',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'clientes/create',
+                        ],
+                        [
+                            'text' => 'Lista de clientes',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'clientes',
+                        ],
+                    ],
                 ],
                 [
-                    'text' => 'Gestionar vehiculo',
-                    'url'  => '#',
+                    'text'    => 'Vender productos',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'nota_venta_producto',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo nota de venta',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_venta_producto/create',
+                        ],
+                        [
+                            'text' => 'Lista de notas de venta',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_venta_producto',
+                        ],
+                    ],
                 ],
                 [
-                    'text' => 'Gestionar cliente',
-                    'url'  => '#',
+                    'text'    => 'Vehiculos',
+                    'icon'    => 'fa fa-fw fa-car-side',
+                    'url'  => 'vehiculos',
                 ],
                 [
                     'text' => 'Gestionar premio',
+                    'icon'    => 'fas fa-fw fa-gift',
                     'url'  => '#',
                 ],
                 [
                     'text' => 'Gestionar canjeo',
+                    'icon'    => 'fas fa-fw fa-sync-alt',
                     'url'  => '#',
                 ],
-                /*    [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-
-                ],*/
-
-
-
             ],
         ],
-        //------------------------------------------------------------------
         //-------------------modulo herramientas---------------------------------
         [
             'text'    => 'Herramientas',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-wrench',
             'submenu' => [
                 [
                     'text' => 'Gestionar bitacora',
@@ -558,104 +525,74 @@ return [
                     'text' => 'Gestionar factura',
                     'url'  => '#',
                 ],
-                /*   [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                */
             ],
         ],
-        //------------------------------------------------------------------
         //-------------------modulo administrativo---------------------------------
         [
             'text'    => 'Administrativo',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-graduation-cap',
+            'can'     => 'admin.home',
             'submenu' => [
                 [
                     'text' => 'Gestionar empleado',
-                    'url'  => 'empleado/create',
+                    'url'  => 'empleados/',
+                    'icon'    => 'fas fa-fw fa-hard-hat',
                 ],
+                
                 [
-                    'text' => 'Gestionar turno',
-                    'url'  => '#',
+                    'text'    => 'Roles & Privilegios',
+                    'route'   => 'admin.roles.index',
+                    'icon'    => 'fas fa-fw fa-handshake',
+                    'can'     => 'admin.roles.index',
                 ],
+
                 [
-                    'text' => 'Gestionar rol',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Gestionar privilegio',
-                    'url'  => '#',
-                ],
-                /* [
-                    'text'    => 'level_one',
+                    'text'    => 'Asistencias & Turnos',
+                    'icon'    => 'fas fa-fw fa-calendar-plus',
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
-                            'url'  => '#',
+                            'text'    => 'Asistencia',
+                            'icon'    => 'fas fa-fw fa-clipboard',
+                            'url'     => '#',
+                            'submenu' => [
+                                /*[
+                                    'text' => 'nueva asistencia',
+                                    'icon'    => 'fas fa-fw fa-plus',
+                                    'url'  => '#',
+                                ], */
+                                [
+                                    'text' => 'lista de asistencias',
+                                    'icon'    => 'fas fa-fw fa-list-ul',
+                                    'url'  => 'asistencia',
+                                ], 
+                            ],
                         ],
                         [
-                            'text'    => 'level_two',
+                            'text'    => 'Turnos',
+                            'icon'    => 'fas fa-fw fa-stopwatch',
                             'url'     => '#',
                             'submenu' => [
                                 [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
+                                    'text' => 'nuevo turno',
+                                    'icon'    => 'fas fa-fw fa-plus',
+                                    'url'  => 'turno/create',
                                 ],
                                 [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
+                                    'text' => 'lista de turnos',
+                                    'icon'    => 'fas fa-fw fa-list-ul',
+                                    'url'  => 'turno',
                                 ],
                             ],
                         ],
                     ],
-
-                ],*/
-
-
+                ],
+            
 
 
 
             ],
         ],
-        //------------------------------------------------------------------
-        /* ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ], */
     ],
 
     /*
@@ -811,5 +748,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

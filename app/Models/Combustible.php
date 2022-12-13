@@ -11,4 +11,10 @@ class Combustible extends Model implements Auditable
 {
     use HasFactory;
     use AuditingAuditable;
+    protected $fillable = ['codigo','nombre','precio_compra', 'precio_venta', 'unidad_medida','categoria_id'];
+
+    public function categorias(){
+        return $this->belongsToMany(Categoria::class,'id','codigo'); 
+
+    }
 }

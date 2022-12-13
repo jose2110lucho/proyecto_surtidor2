@@ -15,8 +15,10 @@ class CreateClientePremioTable extends Migration
     {
         Schema::create('cliente_premio', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained();
-            $table->foreignId('premio_id')->constrained();
+            $table->foreignId('cliente_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('premio_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('cantidad');
+            $table->integer('puntos_canjeados');
             $table->timestamps();
         });
     }

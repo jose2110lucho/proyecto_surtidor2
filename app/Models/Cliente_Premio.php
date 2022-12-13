@@ -16,5 +16,6 @@ class Cliente_Premio extends Model implements Auditable
     protected $fillable = [
         'cliente_id',
         'premio_id',
+        'puntos_canjeados',
     ];
 }

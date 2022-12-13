@@ -14,7 +14,7 @@
                         </h4>
                     </div>
                 </div>
-                <form action="{{ route('tanques.update', $tanque) }}" method="post">
+                <form action="{{ route('tanques.update', $tanque) }}" method="POST">
                     @method('put')
                     @csrf
                     <!-- /.card-header -->
@@ -94,7 +94,7 @@
                                     <div class="form-group">
                                         <label for="capacidad">Capacidad (lts)</label>
                                         <input name="capacidad" class="form-control my-colorpicker1" type="number"
-                                            value="{{ old('capacidad', $tanque->capacidad) }}" step=".01" min="0" required>
+                                            value="{{ old('capacidad', $tanque->capacidad) }}" step=".01" min="1" required>
 
                                         @error('capacidad')
                                             <small class="text-danger">*{{ $message }}</small>
@@ -133,7 +133,7 @@
                         <div class="card-tools">
                             <div class="d-flex justify-content-end">
                                 <a type="button" class="btn btn-danger mr-2"
-                                    href="{{ route('tanques.show', $tanque) }}">Cancelar</a>
+                                    href="{{ url()->previous() }}">Cancelar</a>
 
                                 <button type="submit" class="btn btn-info">Guardar</button>
 

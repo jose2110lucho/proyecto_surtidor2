@@ -14,7 +14,6 @@
                             <strong>TANQUE: {{ ' ' . $tanque->codigo }}</strong>
                         </h4>
 
-
                         <div class="card-tools">
                             <div class="d-flex">
                                 <form action="{{ route('tanques.destroy', $tanque) }}" method="POST">
@@ -192,7 +191,6 @@
                     showConfirmButton: false,
                     timer: 3000
                 });
-
 
                 Toast.fire({
                     icon: 'success',
