@@ -147,15 +147,14 @@ class ClienteController extends Controller
                 $cliente->premios()->attach($request->premio_id, ['cantidad' => $request->cantidad, 'puntos_canjeados' => $total_puntos_req]);
                 $sobrante = $cliente->puntos - $total_puntos_req;
 
-            $cliente->update(['puntos' => $sobrante]);
-            return redirect()->route('clientes.show', compact('cliente'));
-        } else {
-            $errors = new MessageBag();
-            $errors->add('premio_id', 'Puntos insuficientes!');
-            return redirect()->back()->withErrors($errors);
+                $cliente->update(['puntos' => $sobrante]);
+                return redirect()->route('clientes.show', compact('cliente'));
+            } else {
+                $errors = new MessageBag();
+                $errors->add('premio_id', 'Puntos insuficientes!');
+                return redirect()->back()->withErrors($errors);
+            }
         }
-
-        
     }
 
     /**
