@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\Admin\HomeControllerAdmin;
 
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AsistenciaController;
@@ -23,6 +24,13 @@ use App\Http\Controllers\VehiculoController;
 use App\Models\Premio;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\UserBombaController;
+use App\Http\Controllers\VentaCombustibleController;
+
+
+use App\Http\Controllers\NotaVentaProductoController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,19 +43,20 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-
-/*Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
-
 Auth::routes();
 Route::get('/', function () {
     return view('layouts/master');
 })->middleware('auth');
+
+Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
+
 //-----------------EMPLEADO-----------------//
 Route::resource('empleados',EmpleadoController::class);
+Route::get('empleados-bombas/{user}',[EmpleadoController::class, 'bombas'])->name('empleadobombas.index');
+Route::post('empleados-bombas/{user}',[EmpleadoController::class, 'asignarbombas'])->name('empleadobombas.create');
+Route::delete('empleados-bombas/{user_bomba}',[EmpleadoController::class, 'eliminarbombas'])->name('empleadobombas.destroy');
+
+
 
 Route::resource('roles',RoleController::class)->names('admin.roles');
 //-----------------TURNO-----------------//
@@ -68,6 +77,30 @@ Route::get('nota_producto/create',[NotaProductoController::class,'create'])->nam
 Route::post('nota_producto',[NotaProductoController::class,'store'])->name('nota_producto.store');
 //-----------------DETALLEPRODUCTO----------------------//
 Route::get('detalle_producto/{nota_producto_id}',[NotaProductoController::class,'show'])->name('detalle_producto.show');
+
+
+
+
+
+
+//-----------------NOTAVENTAPRODUCTO-----------------//
+Route::get('nota_venta_producto',[NotaVentaProductoController::class,'index'])->name('nota_venta_producto.index');
+Route::get('nota_venta_producto/create',[NotaVentaProductoController::class,'create'])->name('nota_venta_producto.create');
+Route::post('nota_venta_producto',[NotaVentaProductoController::class,'store'])->name('nota_venta_producto.store');
+
+
+//-----------------DETALLENOTAVENTAPRODUCTO-----------------//
+Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProductoController::class,'show'])->name('detalle_nota_venta_producto.show');
+
+
+//------------------Generar Factura--------------------------
+
+Route::get('nota_venta_producto/{nota_venta_producto_id}/generateInvoice',[NotaVentaProductoController::class,'generateInvoice'])->name('nota_venta_producto.generateInvoice');
+
+
+
+
+
 //-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/desactivar', [ProveedorController::class, 'desactivar']);
@@ -83,6 +116,7 @@ Route::get('asistencia', [AsistenciaController::class,'index'])->name('asistenci
 Route::get('asistencia/{turno}/create', [AsistenciaController::class,'create'])->name('asistencia.create'); 
 Route::post('asistencia/{turno_id}/{user_id}/entrada', [AsistenciaController::class,'entrada'])->name('asistencia.entrada');
 Route::put('asistencia/{turno_id}/{user_id}/salida', [AsistenciaController::class,'salida'])->name('asistencia.salida');
+Route::get('asistencia/user_turno/{turno_id}', [AsistenciaController::class,'getUserByTurno'])->name('asistencia.user_turno');
 //-----------------TANQUES-----------------//
 Route::resource('tanques', TanqueController::class)->middleware('auth');
 Route::put('tanques/{tanque}/recargar', [TanqueController::class, 'recargar'])->name('tanques.recargar');
@@ -109,3 +143,10 @@ Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadP
 Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
 
 
+//USER_BOMBA
+Route::get('user-bombas/index',[UserBombaController::class, 'index'])->name('userbombas.index');
+
+//VENTA COMBUSTIBLE
+Route::get('venta/combustible/create/{bomba}',[VentaCombustibleController::class, 'create'])->name('venta.combustible.create');
+Route::get('venta/combustible/bomba',[VentaCombustibleController::class, 'bombasList'])->name('venta.combustible.bombasList');
+Route::post('venta/combustible/bomba_v/{bomba}',[VentaCombustibleController::class, 'vendido'])->name('venta.combustible.bomba_v');

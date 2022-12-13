@@ -359,24 +359,6 @@ return [
             'icon'    => 'fas fa-fw fa-building',
             'submenu' => [
                 [
-                    'text' => 'Tanques',
-                    'icon'    => 'fas fa-fw fa-tint',
-                    'url'  => 'tanques/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo tanque',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'tanques/create',
-                        ],
-                        [
-                            'text' => 'Lista de tanques',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'tanques',
-                        ],
-                    ],
-                ],
-
-                [
                     'text' => 'Bombas',
                     'icon'    => 'fas fa-fw fa-battery-three-quarters',
                     'url'  => 'bombas/*',
@@ -397,6 +379,24 @@ return [
                 ],
 
                 [
+                    'text' => 'Tanques',
+                    'icon'    => 'fas fa-fw fa-tint',
+                    'url'  => 'tanques/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo tanque',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'tanques/create',
+                        ],
+                        [
+                            'text' => 'Lista de tanques',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'tanques',
+                        ],
+                    ],
+                ],
+
+                [
                     'text' => 'Combustibles',
                     'icon'    => 'fas fa-fw fa-battery-three-quarters',
                     'url'  => 'combustibles/*',
@@ -411,14 +411,11 @@ return [
                             'icon'    => 'fas fa-fw fa-list-ul',
                             'url'  => 'combustibles',
                         ],
-
-                    
                     ],
-                    
                 ],
                 [
                     'text' => 'Categorias',
-                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
+                    'icon'    => 'fas fa-fw fa-layer-group',
                     'url'  => '#',
                     'submenu' => [
                         [
@@ -437,6 +434,7 @@ return [
                 ],
             ],
         ],
+
         //-------------------modulo compras---------------------------------
         [
             'text'    => 'Compras',
@@ -521,11 +519,12 @@ return [
         //-------------------modulo ventas---------------------------------
         [
             'text'    => 'Ventas',
-            'icon'    => 'fas fa-fw fa-tag',
+            'icon'    => 'fas fa-fw fa-dollar-sign',
             'submenu' => [
                 [
-                    'text' => 'Gestionar venta',
-                    'url'  => '#',
+                    'text' => 'Gestionar venta', 
+                    'url'  => 'venta/combustible/bomba',
+                    'icon'    => 'fas fa-fw fa-money-bill-alt',
                 ],
                 [
                     'text'    => 'Clientes',
@@ -541,6 +540,23 @@ return [
                             'text' => 'Lista de clientes',
                             'icon'    => 'fas fa-fw fa-list-ul',
                             'url'  => 'clientes',
+                        ],
+                    ],
+                ],
+                [
+                    'text'    => 'Vender productos',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'nota_venta_producto',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo nota de venta',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_venta_producto/create',
+                        ],
+                        [
+                            'text' => 'Lista de notas de venta',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_venta_producto',
                         ],
                     ],
                 ],
@@ -624,6 +640,7 @@ return [
                     'text'    => 'Roles & Privilegios',
                     'route'   => 'admin.roles.index',
                     'icon'    => 'fas fa-fw fa-handshake',
+                    'can'     => 'admin.roles.index',
                 ],
 
                 [

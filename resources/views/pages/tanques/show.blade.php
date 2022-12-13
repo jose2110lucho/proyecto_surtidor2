@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label>Combustible</label>
-                            <p class="form-control my-colorpicker1">{{ $tanque->combustible }}</p>
+                            <p class="form-control my-colorpicker1">{{ $tanque->combustible->nombre }}</p>
 
                         </div>
                         <div class="col-sm-4">

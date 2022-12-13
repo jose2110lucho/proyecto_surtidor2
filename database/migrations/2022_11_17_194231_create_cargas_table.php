@@ -17,7 +17,8 @@ class CreateCargasTable extends Migration
             $table->bigIncrements('id');
             $table->string('codigo')->unique();
             $table->date('fecha');
-            $table->integer('cantidad')->requiered();
+            $table->integer('cantidad_total')->requiered();
+            $table->integer('cantidad_tanque')->requiered();
             $table->double('precio_unitario')->requiered(); //por litro
             $table->double('precio_total')->requiered();
             $table->foreignId('tanque_id')
@@ -25,6 +26,8 @@ class CreateCargasTable extends Migration
             ->constrained('tanques')
             ->on('tanques')
             ->onDelete('cascade');
+            $table->integer('combustible_id')->unsigned();
+            $table->foreign('combustible_id')->references('id')->on('combustibles')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

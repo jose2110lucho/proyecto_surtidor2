@@ -79,7 +79,7 @@
                            
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {{ Form::label('categoria_id') }}
+                                    {{ Form::label('Categoria') }}
                                     {{ Form::select('categoria_id',$categorias,$combustibles->categoria_id,['class'=>'form-control',
                                     ($errors->has('categoria_id')? 'is-invalid' : ''), 'placeholder'=>'']) }}
                                      {!! $errors->first('categoria:id','<div class="invalid-feedback">: message</p>') !!}
@@ -87,6 +87,7 @@
                                  </div>
                                 
                             </div>
+                
                            
                         </div>
                       
@@ -115,7 +116,12 @@
                         </div>
                     </div>
                 </form>
+
+               
+
             </div>
+
+            
             
         </div>
 
