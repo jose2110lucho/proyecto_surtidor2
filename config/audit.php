@@ -151,7 +151,7 @@ return [
 
     'drivers' => [
         'database' => [
-            'table'      => 'audits',
+            'table'      => 'bitacoras',
             'connection' => null,
         ],
     ],

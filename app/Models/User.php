@@ -8,15 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
-
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable //, Auditable
+class User extends Authenticatable  implements Auditable
 {
     use HasRoles;
     use HasApiTokens, HasFactory, Notifiable;
-
-    //use OwenIt\Auditing\Auditable;
+    use \OwenIt\Auditing\Auditable;
     /**
      * The attributes that are mass assignable.
      *

@@ -148,17 +148,12 @@ class ClienteController extends Controller
                 $sobrante = $cliente->puntos - $total_puntos_req;
 
                 $cliente->update(['puntos' => $sobrante]);
-                $premio->update(['stock' => $premio->stock - $request->cantidad]);
                 return redirect()->route('clientes.show', compact('cliente'));
             } else {
                 $errors = new MessageBag();
                 $errors->add('premio_id', 'Puntos insuficientes!');
-                return redirect()->back()->withInput()->withErrors($errors);
+                return redirect()->back()->withErrors($errors);
             }
-        } else {
-            $errors = new MessageBag();
-            $errors->add('cantidad', 'La cantidad de premios a canjear supera el stock');
-            return redirect()->back()->withInput()->withErrors($errors);
         }
     }
 
