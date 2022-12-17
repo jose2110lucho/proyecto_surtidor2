@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -312,47 +312,154 @@ return [
             'can'  => 'manage-blog',
         ],
 
-        //-------------------modulo premios---------------------------------
-        [
-            'text'    => 'Premios',
-            'icon'    => 'fas fa-fw fa-gift',
-            'url'  => 'premios/*',
-            'submenu' => [
-                [
-                    'text' => 'Nuevo premio',
-                    'icon'    => 'fas fa-fw fa-plus',
-                    'url'  => 'premios/create',
-                ],
-                [
-                    'text' => 'Lista de premios',
-                    'icon'    => 'fas fa-fw fa-list-ul',
-                    'url'  => 'premios',
-                ],
-            ],
-        ],
-
         //-------------------modulo inventario---------------------------------
         [
             'text'    => 'Inventario',
             'icon'    => 'fas fa-fw fa-clipboard-list',
             'submenu' => [
-              
                 [
-                    'text' => 'Nuevo Producto',
-                    'icon'    => 'fas fa-fw fa-plus',
-                    'url'  => 'producto/create',
+                    'text' => 'Productos',
+                    'icon'    => 'fas fa-fw fa-box-open',
+                    'url'  => 'producto/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo Producto',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'producto/create',
+                        ],
+                        [
+                            'text' => 'Almacen',
+                            'icon'    => 'fas fa-fw fa-warehouse',
+                            'url'  => '/producto',
+                        ],
+                    ],
                 ],
                 [
-                    'text' => 'Almacen',
-                    'icon'    => 'fas fa-fw fa-warehouse',
-                    'url'  => '/producto',
+                    'text'    => 'Premios',
+                    'icon'    => 'fas fa-fw fa-gift',
+                    'url'  => 'premios/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo premio',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'premios/create',
+                        ],
+                        [
+                            'text' => 'Lista de premios',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'premios',
+                        ],
+                    ],
                 ],
-                
+
             ],
-            
-            
+
+
         ],
 
+        //-------------------modulo compras---------------------------------
+        [
+            'text'    => 'Compras',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Gestionar compra',
+                    'url'  => '#',
+                ],
+                /*
+                [
+                    'text' => 'level_one',
+                    'url'  => '#',
+                ],
+                [
+                    'text'    => 'level_one',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'level_two',
+                            'url'  => '#',
+                        ],
+                        [
+                            'text'    => 'level_two',
+                            'url'     => '#',
+                            'submenu' => [
+                                [
+                                    'text' => 'level_three',
+                                    'url'  => '#',
+                                ],
+                                [
+                                    'text' => 'level_three',
+                                    'url'  => '#',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+              */
+            ],
+        ],
+        //------------------------------------------------------------------
+        //-------------------modulo ventas---------------------------------
+        [
+            'text'    => 'Ventas',
+            'icon'    => 'fas fa-fw fa-dollar-sign',
+            'submenu' => [
+                [
+                    'text' => 'Gestionar venta',
+                    'url'  => 'venta/combustible/bomba',
+                    'icon'    => 'fas fa-fw fa-money-bill-alt',
+                ],
+                [
+                    'text'    => 'Clientes',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'clientes/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo cliente',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'clientes/create',
+                        ],
+                        [
+                            'text' => 'Lista de clientes',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'clientes',
+                        ],
+                    ],
+                ],
+                [
+                    'text'    => 'Vender productos',
+                    'icon'    => 'fas fa-fw fa-users',
+                    'url'  => 'nota_venta_producto',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo nota de venta',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_venta_producto/create',
+                        ],
+                        [
+                            'text' => 'Lista de notas de venta',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_venta_producto',
+                        ],
+                    ],
+                ],
+                [
+                    'text'    => 'Vehiculos',
+                    'icon'    => 'fa fa-fw fa-car-side',
+                    'url'  => 'vehiculos',
+                ],
+                [
+                    'text' => 'Gestionar premio',
+                    'icon'    => 'fas fa-fw fa-gift',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Gestionar canjeo',
+                    'icon'    => 'fas fa-fw fa-sync-alt',
+                    'url'  => '#',
+                ],
+            ],
+        ],
         //-------------------modulo infraestructura---------------------------------
         [
             'text'    => 'Infraestructura',
@@ -374,7 +481,7 @@ return [
                             'url'  => 'bombas',
                         ],
 
-                    
+
                     ],
                 ],
                 [
@@ -428,111 +535,8 @@ return [
                             'url'  => 'categorias',
                         ],
 
-                    
+
                     ],
-                ],
-            ],
-        ],
-        //-------------------modulo compras---------------------------------
-        [
-            'text'    => 'Compras',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'Gestionar compra',
-                    'url'  => '#',
-                ],
-                /*
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-              */
-            ],
-        ],
-        //------------------------------------------------------------------
-        //-------------------modulo ventas---------------------------------
-        [
-            'text'    => 'Ventas',
-            'icon'    => 'fas fa-fw fa-dollar-sign',
-            'submenu' => [
-                [
-                    'text' => 'Gestionar venta', 
-                    'url'  => 'venta/combustible/bomba',
-                    'icon'    => 'fas fa-fw fa-money-bill-alt',
-                ],
-                [
-                    'text'    => 'Clientes',
-                    'icon'    => 'fas fa-fw fa-users',
-                    'url'  => 'clientes/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo cliente',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'clientes/create',
-                        ],
-                        [
-                            'text' => 'Lista de clientes',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'clientes',
-                        ],
-                    ],
-                ],
-                [
-                    'text'    => 'Vender productos',
-                    'icon'    => 'fas fa-fw fa-users',
-                    'url'  => 'nota_venta_producto',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo nota de venta',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'nota_venta_producto/create',
-                        ],
-                        [
-                            'text' => 'Lista de notas de venta',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'nota_venta_producto',
-                        ],
-                    ],
-                ],
-                [
-                    'text'    => 'Vehiculos',
-                    'icon'    => 'fa fa-fw fa-car-side',
-                    'url'  => 'vehiculos',
-                ],
-                [
-                    'text' => 'Gestionar premio',
-                    'icon'    => 'fas fa-fw fa-gift',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Gestionar canjeo',
-                    'icon'    => 'fas fa-fw fa-sync-alt',
-                    'url'  => '#',
                 ],
             ],
         ],
@@ -598,7 +602,7 @@ return [
                     'url'  => 'empleados/',
                     'icon'    => 'fas fa-fw fa-hard-hat',
                 ],
-                
+
                 [
                     'text'    => 'Roles & Privilegios',
                     'route'   => 'admin.roles.index',
@@ -625,7 +629,7 @@ return [
                                     'text' => 'lista de asistencias',
                                     'icon'    => 'fas fa-fw fa-list-ul',
                                     'url'  => 'asistencia',
-                                ], 
+                                ],
                             ],
                         ],
                         [
@@ -647,7 +651,7 @@ return [
                         ],
                     ],
                 ],
-            
+
 
 
 
@@ -731,7 +735,7 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js',
                 ],
             ],
         ],

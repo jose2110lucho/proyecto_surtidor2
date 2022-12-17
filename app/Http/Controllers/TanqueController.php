@@ -131,7 +131,8 @@ class TanqueController extends Controller
      */
     public function edit(Tanque $tanque)
     {
-        return view('pages.tanques.edit', compact('tanque'));
+        $combustibles= Combustible::all();
+        return view('pages.tanques.edit', compact('tanque','combustibles'));
     }
 
     /**
