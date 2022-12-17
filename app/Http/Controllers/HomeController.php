@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -21,8 +23,32 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function dashboard()
     {
-        return view('/');
+        $users_activos = collect();
+        $users = User::all();
+        foreach ($users as $user) {
+            if (Cache::has('user-is-online-' . $user->id)) {
+                $users_activos->push($user);
+            }
+        }
+        return view('admin/index', compact('users_activos'));
+    }
+
+    /**
+     * Retorna una lista con todos los usuarios activos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listaActivos()
+    {
+        $lista_activos = collect();
+        $users = User::all();
+        foreach ($users as $user) {
+            if (Cache::has('user-is-online-' . $user->id)) {
+                $lista_activos->push($user);
+            }
+        }
+        return $lista_activos;
     }
 }

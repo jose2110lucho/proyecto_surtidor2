@@ -25,7 +25,7 @@ class UpdateTanqueRequest extends FormRequest
     {
         return [
             'codigo' => 'required | max:30 | min:1',
-            'combustible' => 'required | max:30 | min:1',
+            'combustible_id' => 'required',
             'estado' => 'required',
             'capacidad' => 'required | gt:0',
             'cantidad_min' => 'required | lte:capacidad',

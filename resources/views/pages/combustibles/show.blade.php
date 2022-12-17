@@ -16,7 +16,8 @@
                             @csrf
                             @method('delete')
                             <div class="card-tools">
-                                <button type="submit" class="btn btn-danger px-2" onclick="return confirm('¿Estas seguro?')">
+                                <button type="submit" class="btn btn-danger px-2"
+                                    onclick="return confirm('¿Estas seguro?')">
                                     <i class="fas fa-trash-alt" aria-hidden="true">
                                     </i>
                                 </button>
@@ -24,8 +25,6 @@
                                     <i class="fas fa-pen" aria-hidden="true">
                                     </i>
                                 </a>
-
-
                             </div>
                         </form>
                     </div>
@@ -35,22 +34,29 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Codigo</label>
-                                <p class="form-control my-colorpicker1">{{ $combustible->codigo }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
                                 <label>Nombre</label>
                                 <p class="form-control my-colorpicker1">{{ $combustible->nombre }}</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label>Tipo</label>
+                                <p class="form-control my-colorpicker1">{{ $combustible->tipo }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Unidad Medida</label>
+                                <p class="form-control my-colorpicker1">{{ $combustible->unidad_medida }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label>Precio Compra</label>
                                 <p class="form-control my-colorpicker1">{{ $combustible->precio_compra }}</p>
                             </div>
-
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -59,20 +65,7 @@
                             </div>
 
                         </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Unidad Medida</label>
-                                <p class="form-control my-colorpicker1">{{ $combustible->unidad_medida }}</p>
-                            </div>
-
-                        </div>
-                       
                     </div>
-                    
-
-
-
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-between ">
