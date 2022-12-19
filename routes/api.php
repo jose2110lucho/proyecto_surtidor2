@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TanqueController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductoController;
 use App\Http\Controllers\Api\UserController;
@@ -30,3 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::apiResource('productos', ProductoController::class);
 Route::apiResource('users', UserController::class);
 Route::post('login', [AuthController::class, 'login']);
+
+Route::get('tanques',[TanqueController::class, 'indexApi']);
+//Route::apiResource('tanques', TanqueController::class);

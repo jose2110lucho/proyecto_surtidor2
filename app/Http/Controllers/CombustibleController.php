@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateCombustibleRequest;
 use App\Models\Combustible;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class CombustibleController extends Controller
 {
@@ -17,19 +17,15 @@ class CombustibleController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function byTanque(){
-
-        return Combustible::where('tanque_id', $id)->get(); 
-     }
+/*     public function byTanque()
+    {
+        return Combustible::where('tanque_id', $id)->get();
+    } */
     public function index()
 
-    {   //return true;
-         $combustibles = Combustible::orderby('codigo', 'desc')->get();
-        //return view('pages.bombas.index', compact('bombas'));
-        //$bombas=Bomba::all();
-        return view('pages.combustibles.index',compact('combustibles'));
-
-   
+    {
+        $combustibles = Combustible::orderby('nombre', 'desc')->get();
+        return view('pages.combustibles.index', compact('combustibles'));
     }
 
     /**
@@ -40,12 +36,11 @@ class CombustibleController extends Controller
     public function create()
     {
 
-        $combustibles= new Combustible();
-       
-        $categorias=Categoria::pluck('codigo','id'); 
-        
-        return view('pages.combustibles.create',compact('combustibles','categorias'));
-        
+        $combustibles = new Combustible();
+
+        $categorias = Categoria::pluck('codigo', 'id');
+
+        return view('pages.combustibles.create', compact('combustibles', 'categorias'));
     }
 
     /**
@@ -62,7 +57,6 @@ class CombustibleController extends Controller
     {
         $Combustible = Combustible::create($request->all());
         return redirect()->route('combustibles.show', $Combustible);
-
     }
 
     /**
@@ -107,7 +101,7 @@ class CombustibleController extends Controller
      */
     public function update(UpdateCombustibleRequest $request, Combustible $combustible)
     {
-        
+
         $combustible->update($request->all());
         return redirect()->route('combustibles.show', $combustible);
     }
@@ -119,9 +113,17 @@ class CombustibleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Combustible $combustible)
     {
         $combustible->delete();
         return redirect()->route('combustibles.index');
+    }
+
+    public function nivelesCombustible()
+    {
+        $niveles_combustible = DB::table('tanques')
+            ->join('combustibles', 'tanques.combustible_id', '=', 'combustibles.id')
+            ->select('tipo', DB::raw('SUM(cantidad_disponible) as cantidad_disponible'))->groupBy('tipo')->get();
+        return $niveles_combustible;
     }
 }

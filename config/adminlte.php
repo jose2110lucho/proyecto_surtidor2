@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -312,217 +312,100 @@ return [
             'can'  => 'manage-blog',
         ],
 
-        //-------------------modulo premios---------------------------------
-        [
-            'text'    => 'Premios',
-            'icon'    => 'fas fa-fw fa-gift',
-            'url'  => 'premios/*',
-            'submenu' => [
-                [
-                    'text' => 'Nuevo premio',
-                    'icon'    => 'fas fa-fw fa-plus',
-                    'url'  => 'premios/create',
-                ],
-                [
-                    'text' => 'Lista de premios',
-                    'icon'    => 'fas fa-fw fa-list-ul',
-                    'url'  => 'premios',
-                ],
-            ],
-        ],
-
         //-------------------modulo inventario---------------------------------
         [
             'text'    => 'Inventario',
             'icon'    => 'fas fa-fw fa-clipboard-list',
             'submenu' => [
-              
                 [
-                    'text' => 'Nuevo Producto',
-                    'icon'    => 'fas fa-fw fa-plus',
-                    'url'  => 'producto/create',
+                    'text' => 'Productos',
+                    'icon'    => 'fas fa-fw fa-box-open',
+                    'url'  => 'producto/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo Producto',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'producto/create',
+                        ],
+                        [
+                            'text' => 'Almacen',
+                            'icon'    => 'fas fa-fw fa-warehouse',
+                            'url'  => '/producto',
+                        ],
+                    ],
                 ],
                 [
-                    'text' => 'Almacen',
-                    'icon'    => 'fas fa-fw fa-warehouse',
-                    'url'  => '/producto',
+                    'text'    => 'Premios',
+                    'icon'    => 'fas fa-fw fa-gift',
+                    'url'  => 'premios/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo premio',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'premios/create',
+                        ],
+                        [
+                            'text' => 'Lista de premios',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'premios',
+                        ],
+                    ],
                 ],
-                
+
             ],
-            
-            
-        ],
 
-        //-------------------modulo infraestructura---------------------------------
-        [
-            'text'    => 'Infraestructura',
-            'icon'    => 'fas fa-fw fa-building',
-            'submenu' => [
-                [
-                    'text' => 'Bombas',
-                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
-                    'url'  => 'bombas/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo Bomba',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'bombas/create',
-                        ],
-                        [
-                            'text' => 'Lista de bombas',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'bombas',
-                        ],
 
-                    
-                    ],
-                ],
-
-                [
-                    'text' => 'Tanques',
-                    'icon'    => 'fas fa-fw fa-tint',
-                    'url'  => 'tanques/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo tanque',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'tanques/create',
-                        ],
-                        [
-                            'text' => 'Lista de tanques',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'tanques',
-                        ],
-                    ],
-                ],
-
-                [
-                    'text' => 'Combustibles',
-                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
-                    'url'  => 'combustibles/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Ingresar Combustible',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'combustibles/create',
-                        ],
-                        [
-                            'text' => 'Lista de Combustibles',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'combustibles',
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Categorias',
-                    'icon'    => 'fas fa-fw fa-layer-group',
-                    'url'  => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo Categoria',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'categorias/create',
-                        ],
-                        [
-                            'text' => 'Lista de Categorias',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'categorias',
-                        ],
-
-                    
-                    ],
-                ],
-            ],
         ],
 
         //-------------------modulo compras---------------------------------
         [
             'text'    => 'Compras',
-            'icon'    => 'fas fa-fw fa-shopping-bag',
+            'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Carga',//compra de combustible 
-                    'icon'    => 'fas fa-fw fa-solid fa-truck',
-                    'url'  => 'cargas/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Nueva Carga',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'cargas/create',
-                        ],
-                        [
-                            'text' => 'Lista de Cargas',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'cargas',
-                        ],
-
-                    
-                    ],
-                ],
-
-                [
-                    'text' => 'Pedidos',
-                    'icon'    => 'fas fa-fw fa-sharp fa-solid fa-cart-plus',
+                    'text' => 'Gestionar compra',
                     'url'  => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo Pedido',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'pedidos/create',
-                        ],
-                        [
-                            'text' => 'Lista de Pedidos',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'pedidos',
-                        ],
-
-                    
-                    ],
+                ],
+                /*
+                [
+                    'text' => 'level_one',
+                    'url'  => '#',
                 ],
                 [
-                    'text'    => 'Comprar productos',
-                    'icon'    => 'fas fa-clipboard-check',
+                    'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'Nueva Nota de Compra',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'nota_producto/create',
+                            'text' => 'level_two',
+                            'url'  => '#',
                         ],
                         [
-                            'text' => 'Lista de Notas de Compra',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'nota_producto',
+                            'text'    => 'level_two',
+                            'url'     => '#',
+                            'submenu' => [
+                                [
+                                    'text' => 'level_three',
+                                    'url'  => '#',
+                                ],
+                                [
+                                    'text' => 'level_three',
+                                    'url'  => '#',
+                                ],
+                            ],
                         ],
                     ],
                 ],
-                [
-                    'text'    => 'Gestionar proveedor',
-                    'icon'    => 'fas fa-fw fa-truck',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo proveedor',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'proveedor/create',
-                        ],
-                        [
-                            'text' => 'Lista proveedores',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'proveedor',
-                        ],
-                    ],
-                ],
-              
+              */
             ],
         ],
+        //------------------------------------------------------------------
         //-------------------modulo ventas---------------------------------
         [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-fw fa-dollar-sign',
             'submenu' => [
                 [
-                    'text' => 'Gestionar venta', 
+                    'text' => 'Gestionar venta',
                     'url'  => 'venta/combustible/bomba',
                     'icon'    => 'fas fa-fw fa-money-bill-alt',
                 ],
@@ -577,6 +460,86 @@ return [
                 ],
             ],
         ],
+        //-------------------modulo infraestructura---------------------------------
+        [
+            'text'    => 'Infraestructura',
+            'icon'    => 'fas fa-fw fa-building',
+            'submenu' => [
+                [
+                    'text' => 'Bombas',
+                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
+                    'url'  => 'bombas/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo Bomba',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'bombas/create',
+                        ],
+                        [
+                            'text' => 'Lista de bombas',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'bombas',
+                        ],
+
+
+                    ],
+                ],
+                [
+                    'text' => 'Tanques',
+                    'icon'    => 'fas fa-fw fa-tint',
+                    'url'  => 'tanques/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo tanque',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'tanques/create',
+                        ],
+                        [
+                            'text' => 'Lista de tanques',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'tanques',
+                        ],
+                    ],
+                ],
+
+                [
+                    'text' => 'Combustibles',
+                    'icon'    => 'fas fa-fw fa-battery-three-quarters',
+                    'url'  => 'combustibles/*',
+                    'submenu' => [
+                        [
+                            'text' => 'Ingresar Combustible',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'combustibles/create',
+                        ],
+                        [
+                            'text' => 'Lista de Combustibles',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'combustibles',
+                        ],
+                    ],
+                ],
+                [
+                    'text' => 'Categorias',
+                    'icon'    => 'fas fa-fw fa-layer-group',
+                    'url'  => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo Categoria',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'categorias/create',
+                        ],
+                        [
+                            'text' => 'Lista de Categorias',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'categorias',
+                        ],
+
+
+                    ],
+                ],
+            ],
+        ],
         //-------------------modulo herramientas---------------------------------
         [
             'text'    => 'Herramientas',
@@ -584,7 +547,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Gestionar bitacora',
-                    'url'  => '#',
+                    'url'  => 'bitacora',
+                ],
+                [
+                    'text' => 'Backup',
+                    'url'  => 'backups',
                 ],
                 [
                     'text'    => 'Gestionar reporte',
@@ -635,7 +602,7 @@ return [
                     'url'  => 'empleados/',
                     'icon'    => 'fas fa-fw fa-hard-hat',
                 ],
-                
+
                 [
                     'text'    => 'Roles & Privilegios',
                     'route'   => 'admin.roles.index',
@@ -662,7 +629,7 @@ return [
                                     'text' => 'lista de asistencias',
                                     'icon'    => 'fas fa-fw fa-list-ul',
                                     'url'  => 'asistencia',
-                                ], 
+                                ],
                             ],
                         ],
                         [
@@ -684,7 +651,7 @@ return [
                         ],
                     ],
                 ],
-            
+
 
 
 
@@ -768,7 +735,7 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js',
                 ],
             ],
         ],
