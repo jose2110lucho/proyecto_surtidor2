@@ -30,7 +30,7 @@ use App\Http\Controllers\VentaCombustibleController;
 
 
 use App\Http\Controllers\NotaVentaProductoController;
-
+use App\Http\Controllers\FacturaProductoController;
 
 
 /*
@@ -90,10 +90,9 @@ Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProd
 
 //------------------Generar Factura--------------------------
 
-Route::get('nota_venta_producto/{nota_venta_producto_id}/generateInvoice',[NotaVentaProductoController::class,'generateInvoice'])->name('nota_venta_producto.generateInvoice');
-
-
-
+Route::get('factura_producto/{nota_venta_producto_id}/generateInvoice',[FacturaProductoController::class,'generateInvoice'])->name('factura_producto.generateInvoice');
+Route::get('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'create'])->name('factura_producto.create');
+Route::post('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'store'])->name('factura_producto.store');
 
 
 //-----------------PROVEEDORES------------------//
