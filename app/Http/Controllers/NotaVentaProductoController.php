@@ -7,6 +7,7 @@ use App\Models\Producto;
 use App\Models\Cliente;
 use App\Models\NotaVentaProducto;
 use App\Models\DetalleNotaVentaProducto;
+use App\Models\FacturaProducto;
 
 
 
@@ -93,22 +94,22 @@ class NotaVentaProductoController extends Controller
      */
     public function show($id)
     {
-        $nota_venta_producto =  
-        $lista_productos =
 
         $nota_venta_producto = NotaVentaProducto::join('clientes', 'nota_venta_producto.cliente_id', 'clientes.id')
                                                   ->where('nota_venta_producto.id', '=', $id)
                                                   ->select('nota_venta_producto.*', 'clientes.nombre')->first();
 
-        //dd($nota_producto); 
 
         $lista_productos = DetalleNotaVentaProducto::join('producto', 'detalle_nota_venta_producto.producto_id', 'producto.id')
                                                      ->where('detalle_nota_venta_producto.nota_venta_producto_id', '=', $id)
                                                      ->select('detalle_nota_venta_producto.*', 'producto.nombre','producto.precio_venta')->get();
 
-        //dd($lista_productos); 
 
-        return view('modulo_ventas.nota_venta_producto.show', compact('nota_venta_producto', 'lista_productos'));
+        $listaFacturaProducto = FacturaProducto::where('nota_venta_producto_id','=',$id)->select('*')->get();
+        
+        $existeFactura = count($listaFacturaProducto) > 0 ? true : false;
+
+        return view('modulo_ventas.nota_venta_producto.show', compact('nota_venta_producto', 'lista_productos','existeFactura'));
     }
 
     /**
