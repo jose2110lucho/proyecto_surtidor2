@@ -454,23 +454,6 @@ return [
                     'icon'    => 'fas fa-fire',
                 ],
                 [
-                    'text'    => 'Clientes',
-                    'icon'    => 'fas fa-fw fa-users',
-                    'url'  => 'clientes/*',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo cliente',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'clientes/create',
-                        ],
-                        [
-                            'text' => 'Lista de clientes',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'clientes',
-                        ],
-                    ],
-                ],
-                [
                     'text'    => 'Productos',
                     'icon'    => 'fas fa-fw fa-shopping-cart',
                     'url'  => 'nota_venta_producto',
@@ -486,18 +469,34 @@ return [
                             'url'  => 'nota_venta_producto',
                         ],
                     ],
-                ],
+                ],            
                 [
-                    'text'    => 'Vehiculos',
-                    'icon'    => 'fa fa-fw fa-car-side',
-                    'url'  => 'vehiculos',
-                ],
-                [
-                    'text' => 'Canjeo',
-                    'icon'    => 'fas fa-fw fa-sync-alt',
-                    'url'  => '#',
+                    'text' => 'Reportes',
+                    'icon'    => 'fas fa-fw fa-gift',
                 ],
             ],
+        ],
+        [
+            'text'    => 'Clientes',
+            'icon'    => 'fas fa-fw fa-users',
+            'url'  => 'clientes/*',
+            'submenu' => [
+                [
+                    'text' => 'Nuevo cliente',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'url'  => 'clientes/create',
+                ],
+                [
+                    'text' => 'Lista de clientes',
+                    'icon'    => 'fas fa-fw fa-list-ul',
+                    'url'  => 'clientes',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Vehiculos',
+            'icon'    => 'fa fa-fw fa-car-side',
+            'url'  => 'vehiculos',
         ],
         //-------------------modulo infraestructura---------------------------------
         [

@@ -90,7 +90,7 @@ class VehiculoController extends Controller
         $request->merge(['placa' => strtoupper($request->placa)]);
 
         $vehiculo->update($request->all());
-        return redirect()->back();
+        return view('pages.vehiculos.show', compact('vehiculo'));
     }
 
     /**

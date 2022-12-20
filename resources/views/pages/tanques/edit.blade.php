@@ -108,12 +108,12 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="progress my-1" style="height: 2px;">
+                                <div class="progress my-1" style="height: 4px;">
                                     <div class="progress-bar bg-cyan "
                                         style="width:{{ ($tanque->cantidad_min * 100) / $tanque->capacidad }}%;">
                                     </div>
                                 </div>
-                                <div class="progress" style="height: 30px;">
+                                <div class="progress" style="height: 35px;">
                                     <div class="progress-bar text-left p-2 progress-bar-striped progress-bar-animated 
                                 @if ($tanque->cantidad_disponible > $tanque->cantidad_min) bg-cyan
                                 @else bg-red @endif"

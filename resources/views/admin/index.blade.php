@@ -4,7 +4,7 @@
 
 @section('content')
     <section class="content">
-        <div class="container-fluid">
+        <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
@@ -55,12 +55,70 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <div class="container p-4"></div>
     </section>
 @stop
 
-@section('plugins.Chartjs', true);
+@section('footer')
+    <footer>
+        <div class="container text-sm">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <!--Column1-->
+                    <div class="footer-pad">
+                        <h6 class="text-light font-weight-light">Acerca de nosotros</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="#"></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <!--Column2-->
+                    <div class="footer-pad">
+                        <h6 class="text-light font-weight-light">Documentcaión</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Website Tutorial</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <!--Column3-->
+                    <div class="footer-pad">
+                        <h6 class="text-light font-weight-light">Heading 3</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Parks and Recreation</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="text-light font-weight-light">Descarga la app</h6>
+                    <a href="#" class="text-sm text-secondary"><i class="fab fa-fw fa-android"></i> Android</a>
+                    <br>
+                    <a href="#" class="text-sm text-secondary"><i class="fab fa-fw fa-apple"></i> IOS</a>
+                </div>
+            </div>
+            <hr class="bg-gray-dark">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center my-auto">&copy; Copyright 2022 - SOFTIDOR. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+@stop
+
+@section('plugins.Chartjs', true)
+
+@section('css')
+    <style>
+        .main-footer {
+            background-color: rgb(31, 38, 43) !important
+        }
+    </style>
+@stop
+
 
 @section('js')
     <script>

@@ -74,7 +74,7 @@ class ClienteController extends Controller
                 'cliente_id' => $cliente->id,
                 'placa' => strtoupper($request->placa),
                 'tipo' => $request->tipo,
-                'marca' => $request->placa,
+                'marca' => $request->marca,
                 'b_sisa' => $request->b_sisa,
             ]
         );
