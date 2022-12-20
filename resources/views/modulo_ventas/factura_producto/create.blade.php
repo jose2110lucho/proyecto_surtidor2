@@ -12,7 +12,7 @@
                 <!--inicio campo nombre-->
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input name="nombre" type="text" class="form-control" id="nombre" placeholder="introduzca nombre" required>
+                    <input name="nombre" type="text" class="form-control" id="nombre" placeholder="introduzca nombre" required value="{{$cliente->nombre.' '.$cliente->apellido}}">
                 </div>
                 <!--fin campo nombre-->
                 <!--inicio campo nit-->

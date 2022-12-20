@@ -12,6 +12,7 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use Carbon\Carbon;
+use App\Models\Cliente;
 
 
 
@@ -35,7 +36,9 @@ class FacturaProductoController extends Controller
      */
     public function create($id)
     {
-        return view('modulo_ventas/factura_producto/create',['nota_venta_producto_id' => $id]);
+        $nota_venta_producto = NotaVentaProducto::find($id);
+        $cliente = Cliente::find($nota_venta_producto->cliente_id);
+        return view('modulo_ventas/factura_producto/create',['nota_venta_producto_id' => $id,'cliente'=>$cliente]);
     }
 
     /**
