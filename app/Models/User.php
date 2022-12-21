@@ -30,7 +30,6 @@ class User extends Authenticatable  implements Auditable
         'telefono',
         'estado',
         'foto_perfil',
-
     ];
 
     /**

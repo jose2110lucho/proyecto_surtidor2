@@ -6,6 +6,7 @@ use App\Models\Vehiculo;
 use App\Http\Requests\StoreVehiculoRequest;
 use App\Http\Requests\UpdateVehiculoRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class VehiculoController extends Controller
@@ -17,19 +18,23 @@ class VehiculoController extends Controller
      */
     public function index(Request $request)
     {
-        $tipos = ['automovil', 'camioneta', 'camion', 'minibus', 'bus'];
+        $tipos = ['automovil', 'camioneta', 'camion', 'minibus', 'bus', 'vagoneta'];
         if ($request->ajax()) {
-
-            $vehiculos = Vehiculo::select('vehiculos.*');
+            $vehiculos = DB::table('vehiculos')
+                ->join('clientes', 'vehiculos.cliente_id', '=', 'clientes.id')
+                ->select(['vehiculos.*', 'clientes.nombre as cliente']);
 
             return DataTables::of($vehiculos)
                 ->addColumn('actions', 'partials.vehiculos.actions')
                 ->rawColumns(['actions'])
                 ->filter(function ($query) use ($request) {
+                    if ($request->has('buscar') && !empty($request->get('buscar'))) {
+                        $query->where('placa', 'ilike', "%" . $request->get('buscar') . "%")->orWhere('clientes.nombre', 'ilike', "%" . $request->get('buscar') . "%");
+                    }
                     if ($request->has('tipo') && !empty($request->get('tipo'))) {
                         $query->where('tipo', $request->get('tipo'));
                     }
-                })->make(true);
+                })->toJson();
         }
 
         return view('pages.vehiculos.index', compact('tipos'));

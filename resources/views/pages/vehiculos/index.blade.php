@@ -8,28 +8,45 @@
         <div class="container-fluid pt-4">
             <div class="card">
                 <div class="card-header">
-                    <div class="col-sm-6">
-                        <h3 class="card-title">
-                            <strong>LISTA DE VEHICULOS</strong>
-                        </h3>
-                    </div>
-                </div>
-                <div class="card-body table-responsive">
-                    <div class="row mb-3">
-                        <div class="input-group input-group-sm">
-                            <div class="col-sm-3">
-                                <select class="form-control form-control-sm  tipo" name="tipo">
-                                    <option value="">Seleccione</option>
-                                    @foreach ($tipos as $tipo)
-                                        <option value="{{ $tipo }}">{{ $tipo }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-1">
-                                <button id="filtrar" class="btn-sm btn-danger">Filtrar</button>
+                    <div class="row justify-content-between">
+                        <div class="col-sm-4 my-auto">
+                            <h3 class="card-title">
+                                <strong>LISTA DE VEHICULOS</strong>
+                            </h3>
+                        </div>
+                        <div class="col-sm-8 ">
+                            <div class="d-flex justify-content-end ">
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <select class="form-control" name="tipo" id="tipo">
+                                            <option value="">Tipo</option>
+                                            @foreach ($tipos as $tipo)
+                                                <option value="{{ $tipo }}">{{ $tipo }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="input-group-append">
+                                            <div id="filtrar" class="btn btn-default"><span
+                                                    class="fas fa-filter my-auto"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="input-group input-group-sm">
+                                        <input name="buscar" id="buscar" type="text" class="form-control"
+                                            placeholder="placa o dueño">
+                                        <div class="input-group-append">
+                                            <div class="btn btn-default">
+                                                <span class="fa fa-search"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="card-body table-responsive">
                     @include('partials.vehiculos.table_vehiculos')
                 </div>
             </div>
@@ -55,10 +72,6 @@
 
     <script>
         $(document).ready(function() {
-            $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
-                className: 'btn btn-sm'
-            })
-
             var table = $('#table_vehiculos').DataTable({
                 processing: true,
                 serverSide: true,
@@ -66,90 +79,94 @@
                 ajax: {
                     url: "{{ route('vehiculos.index') }}",
                     data: function(d) {
-                        d.tipo = $('.tipo').val()
+                        d.tipo = $('#tipo').val();
+                        d.buscar = $('#buscar').val();
+                        console.log(d);
                     },
                 },
                 dataType: 'json',
                 type: "POST",
                 language: {
-                    searchPlaceholder: "placa",
                     url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json'
                 },
-                dom: 'lBfrtip',
+                dom: '<"mt-n1 mb-n2"r<"row justify-content-between my-auto pb-1 px-2"lB>t<"row justify-content-between my-auto pt-2 px-3"ip>>',
                 buttons: [{
                         extend: 'collection',
                         text: 'Opciones',
-                        className: 'bg-navy',
+                        className: 'bg-navy btn-sm my-1',
                         buttons: [{
                                 extend: 'copy',
-                                className: 'btn-secondary',
+                                className: 'btn-secondary btn-sm',
                             },
                             {
                                 extend: 'print',
+                                className: 'btn-sm',
                                 exportOptions: {
                                     columns: ':visible'
                                 }
+                            },
+                            {
+                                extend: 'colvis',
+                                className: 'btn-sm',
+                                text: 'Ocultar Columnas',
+                                exportOptions: {
+                                    columns: ':visible'
+                                },
                             },
                         ]
                     },
                     {
                         extend: 'collection',
                         text: 'Exportar',
-                        className: 'bg-navy',
+                        className: 'bg-maroon btn-sm my-1',
                         buttons: [{
                                 extend: 'excel',
-                                className: 'btn-secondary',
+                                className: 'btn-secondary btn-sm',
                                 exportOptions: {
                                     columns: ':visible'
                                 }
                             },
                             {
                                 extend: 'pdf',
-                                className: 'btn btn-secondary',
+                                className: 'btn btn-secondary btn-sm',
                                 exportOptions: {
                                     columns: ':visible'
                                 }
                             },
                             {
                                 extend: 'csv',
-                                className: 'btn btn-secondary',
+                                className: 'btn btn-secondary btn-sm',
                                 exportOptions: {
                                     columns: ':visible'
                                 }
                             },
                         ]
                     },
-                    {
-                        extend: 'colvis',
-                        className: 'bg-maroon',
-                        text: 'Visibilidad Columnas',
-                        exportOptions: {
-                            columns: ':visible'
-                        },
-                    },
                 ],
 
                 columns: [{
                         data: 'placa',
-                        name: 'placa'
+                        name: 'placa',
+                        searchable: true,
+                        orderable: true
+                    },
+                    {
+                        data: 'cliente',
+                        name: 'cliente',
+                        searchable: false,
+                        orderable: true
                     },
                     {
                         data: 'tipo',
                         name: 'tipo',
                         searchable: false,
-                        orderable: false
-                    },
-                    {
-                        data: 'marca',
-                        name: 'marca',
-                        searchable: false,
-                        orderable: false
+                        orderable: true
                     },
                     {
                         data: 'b_sisa',
                         name: 'b_sisa',
                         searchable: false,
-                        orderable: false,
+                        orderable: true,
                         render: function(data, type, row) {
                             return (data == true) ? '<span class="badge bg-success">HÁBIL</span>' :
                                 ' <span class="badge bg-secondary">INHÁBIL</span> ';
@@ -163,9 +180,14 @@
                         orderable: false
                     }
                 ],
-            })
+            });
 
             $('#filtrar').click(function() {
+                console.log('boto filtrar')
+                table.draw()
+            })
+
+            $('#buscar').on('change', function() {
                 table.draw()
             })
         })

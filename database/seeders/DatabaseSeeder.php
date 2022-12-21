@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ClienteSeeder::class);
         $this->call(CombustibleSeeder::class);
-        \App\Models\Cliente::factory(5)->create();
+        \App\Models\Cliente::factory(20)->create();
         \App\Models\Tanque::factory(5)->create();
      //   \App\Models\Premio::factory(5)->create();
-        \App\Models\Vehiculo::factory(10)->create();
+        \App\Models\Vehiculo::factory(100)->create();
         \App\Models\Producto::factory(50)->create();
     }
 }

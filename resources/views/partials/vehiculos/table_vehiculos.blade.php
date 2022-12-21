@@ -2,8 +2,8 @@
     <thead class="table-light">
         <tr>
             <th>PLACA</th>
+            <th>CLIENTE</th>
             <th>TIPO</th>
-            <th>MARCA</th>
             <th>B-SISA</th>
             <th>ACCIONES</th>
         </tr>
