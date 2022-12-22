@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\VehiculosDataTable;
+use App\Exports\VehiculosExport;
 use App\Models\Vehiculo;
 use App\Http\Requests\StoreVehiculoRequest;
 use App\Http\Requests\UpdateVehiculoRequest;
@@ -39,6 +41,7 @@ class VehiculoController extends Controller
 
         return view('pages.vehiculos.index', compact('tipos'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -108,5 +111,10 @@ class VehiculoController extends Controller
     {
         $vehiculo->delete();
         return redirect()->back();
+    }
+
+    public function exportHTML() 
+    {
+        return (new VehiculosExport)->download('vehiculos.html', \Maatwebsite\Excel\Excel::HTML);
     }
 }

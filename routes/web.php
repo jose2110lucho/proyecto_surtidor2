@@ -117,7 +117,7 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
-
+Route::get('vehiculos/export/html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
 //---------------BOMBAS------------//
 Route::resource('bombas', BombaController::class);
 Route::resource('cargas', CargaController::class);
