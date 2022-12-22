@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\UserBomba;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class EmpleadoController extends Controller
 {
@@ -19,15 +18,17 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-            $user = User::all();
+        $user = User::all();
         return view('modulo_administrativo/empleados/index', ['user' => $user]);
     }
 
+    
+
     public function bombas(User $user)
     {
-        $user_bombas=UserBomba::where('user_id',$user->id)->get();
-        $bombas=Bomba::all();
-        return view('modulo_administrativo/empleados/bombas', compact('user_bombas','bombas','user'));
+        $user_bombas = UserBomba::where('user_id', $user->id)->get();
+        $bombas = Bomba::all();
+        return view('modulo_administrativo/empleados/bombas', compact('user_bombas', 'bombas', 'user'));
     }
     /**
      * Show the form for creating a new resource.
@@ -40,17 +41,17 @@ class EmpleadoController extends Controller
         return view('modulo_administrativo/empleados/create');
     }
 
-    public function asignarbombas(Request $request ,User $user)
+    public function asignarbombas(Request $request, User $user)
     {
         $request->validate([
-            'bomba_id'=>'required'
+            'bomba_id' => 'required'
         ]);
         UserBomba::create([
-            'user_id'=>$user->id,
-            'bomba_id'=>$request->bomba_id
+            'user_id' => $user->id,
+            'bomba_id' => $request->bomba_id
         ]);
         return redirect(
-            route('empleadobombas.index',$user)
+            route('empleadobombas.index', $user)
         );
     }
 
@@ -61,7 +62,7 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {
         $request->merge(['password' => Hash::make($request->password)]);
         $user = User::create($request->all());
 
@@ -110,9 +111,8 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::all();
-        $user = User::find($id);
-        return view('modulo_administrativo.empleados.edit', compact('user', 'roles'));
+        $user = User::findOrFail($id); 
+        return view('modulo_administrativo.empleados.edit',compact('user')); 
     }
 
     /**
@@ -138,34 +138,9 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, int $id)
     {
-
-        /* $user = request()->except(['_token','_method']); */
-        $user = User::find($id);
-        if ($request->hasfile('foto_perfil')) {
-
-            if ($user->foto_perfil) {
-                if (app('firebase.storage')->getBucket()->object($user->foto_perfil)->exists()) {
-                    app('firebase.storage')->getBucket()->object($user->foto_perfil)->delete();
-                }
-                $user->update(['foto_perfil' => null]);
-            }
-
-            $image = $request->file('foto_perfil');
-            $firebase_storage_path = 'Users/';
-            $extension = $image->getClientOriginalExtension();
-            $file = $user->id . '.' . $extension;
-            $localfolder = public_path('firebase-temp-uploads') . '/';
-
-            if ($image->move($localfolder, $file)) {
-                $uploadedfile = fopen($localfolder . $file, 'r');
-                app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
-                $user->update((['foto_perfil' => $firebase_storage_path . $file]));
-                unlink($localfolder . $file);
-            }
-        }
-        $user->update($request->except(['foto_perfil']));
-        $user->roles()->sync($request->role);
-        return redirect()->route('empleados.index');
+        $datosUsuario = request()->except(['_token', '_method']);
+        User::where('id', '=', $id)->update($datosUsuario);
+        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');
     }
 
     /**
@@ -185,10 +160,10 @@ class EmpleadoController extends Controller
     }
     public function eliminarbombas(UserBomba $user_bomba)
     {
-        $user=User::find($user_bomba->user_id);
+        $user = User::find($user_bomba->user_id);
         $user_bomba->delete();
         return redirect(
-            route('empleadobombas.index',$user)
+            route('empleadobombas.index', $user)
         );
     }
 }

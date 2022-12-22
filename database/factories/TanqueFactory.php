@@ -16,8 +16,8 @@ class TanqueFactory extends Factory
         $capacidad = $this->faker->randomElement(['30000','35000','40000','45000','50000','55000']);
         
         return [
-            'codigo' => 'A'.$this->faker->unique()->numberBetween(1, 20),
-            'combustible' => $this->faker->randomElement(['gasolina','diesel']),
+            'codigo' => 'T'.$this->faker->unique()->numberBetween(1, 20),
+            'combustible_id' => $this->faker->numberBetween(1,4),
             'descripcion' => $this->faker->text(),
             'capacidad' => $capacidad,
             'cantidad_disponible' => $this->faker->numberBetween(10000,$capacidad),

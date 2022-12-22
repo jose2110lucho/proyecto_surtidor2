@@ -24,5 +24,16 @@ class ClienteSeeder extends Seeder
         $cliente->estado = true;
 
         $cliente->save();
+
+        $cliente = new Cliente();
+
+        $cliente->nombre = 'Predeterminado';
+        $cliente->apellido = '';
+        $cliente->ci = '0';
+        $cliente->telefono = '0';
+        $cliente->puntos = 0;
+        $cliente->estado = true;
+
+        $cliente->save();
     }
 }

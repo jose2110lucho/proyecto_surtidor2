@@ -251,8 +251,8 @@
                         d.fecha_fin = fechaFin;
                         d._token = token;
                         d.usuario = usuario;
-                        console.log(d);
-                    },
+                        
+                    },     
                 },
 
                 dataType: 'json',

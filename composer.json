@@ -18,12 +18,14 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "*",
         "laravelcollective/html": "^6.3",
-        "laraveldaily/laravel-invoices": "2.0",
+        "laraveldaily/laravel-invoices": "3.0",
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
         "owen-it/laravel-auditing": "^13.0",
         "spatie/laravel-permission": "^5.5",
-        "yajra/laravel-datatables-oracle": "9.21.2"
+        "yajra/laravel-datatables-oracle": "9.21.2",
+        "pavel-mironchik/laravel-backup-panel": "^2.2",
+        "spatie/laravel-backup": "7.*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

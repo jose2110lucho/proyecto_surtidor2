@@ -1,8 +1,5 @@
-@extends('layouts/master')
+@extends('adminlte::page')
 
-@section('content_header')
-    
-@stop
 
 @section('content')
 
@@ -15,7 +12,7 @@
 @stop
 
 @section('js')
-
+    
 @stop
 
-@section('plugins.Sweetalert2', true);
+@section('plugins.Chartjs', true);

@@ -15,15 +15,11 @@ class CreateCombustiblesTable extends Migration
     {
         Schema::create('combustibles', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique();
-            $table->string('nombre')->nulleable(false);
-            $table->decimal('precio_compra')->nulleable(false);
+            $table->string('nombre')->unique();
+            $table->string('tipo');
+            $table->decimal('precio_compra')->nullable();
             $table->decimal('precio_venta');
-            $table->string('unidad_medida')->nulleable(false);
-            $table->foreignId('categoria_id','id')->nulleable()
-            ->constrained('categorias')
-            ->on('categorias')
-            ->onDelete('cascade');
+            $table->string('unidad_medida')->nullable();
             $table->timestamps();
         });
     }

@@ -68,15 +68,35 @@
                 </a>
             </div> 
         </div>  
-        
-        <div class="row mb-0" style="text-align:right">
-            <div class="col-md-10 offset-md-2">
-                <a href="{{ route('nota_venta_producto.generateInvoice',[$nota_venta_producto->id]) }}" class="btn btn-success">
-                    Generar Factura
-                </a>
-            </div> 
-        </div>     
 
+        @if($existeFactura)
+
+            <div class="row mb-0" style="text-align:right">
+                <div class="col-md-10 offset-md-2">
+                    <a href="{{ route('factura_producto.generateInvoice',[$nota_venta_producto->id]) }}" class="btn btn-warning">
+                        Ver Factura
+                    </a>
+                </div> 
+            </div>
+
+        @else
+        
+            <div class="row mb-0" style="text-align:right">
+                <div class="col-md-10 offset-md-2">
+                    <a href="{{ route('factura_producto.create',[$nota_venta_producto->id]) }}" class="btn btn-warning">
+                        siguiente
+                    </a>
+                </div> 
+            </div>
+            
+        @endif 
+
+
+        
+
+
+        
+        
     <!--fin campo botones-->
     </div>
 </div>

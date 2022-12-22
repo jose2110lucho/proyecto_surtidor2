@@ -13,7 +13,17 @@
                 <div class="col-md-10">
                     <select class="form-control" id="cliente_id" name="cliente_id">
                         @foreach ($lista_clientes as $cliente)
-                            <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+
+                        @if ($cliente->ci == '0')
+
+                            <option value="{{ $cliente->id }}" selected>{{ $cliente->nombre }}</option>
+                            
+                        @else
+
+                            <option value="{{ $cliente->id }}">{{ $cliente->nombre.' '.$cliente->apellido }}</option>
+
+                        @endif
+
                         @endforeach
                     </select>
                 </div>
