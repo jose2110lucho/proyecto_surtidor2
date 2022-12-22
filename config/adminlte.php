@@ -364,7 +364,7 @@ return [
             'can'     => 'admin.home',
             'submenu' => [
                 [
-                    'text' => 'Carga',//compra de combustible 
+                    'text' => 'Carga', //compra de combustible 
                     'icon'    => 'fas fa-fw fa-solid fa-truck',
                     'url'  => 'cargas/*',
                     'submenu' => [
@@ -403,7 +403,7 @@ return [
 
                     ],
                 ],
-                
+
                 [
                     'text'    => 'Producto',
                     'icon'    => 'fas fa-clipboard-check',
@@ -420,7 +420,7 @@ return [
                             'url'  => 'nota_producto',
                         ],
                     ],
-                    
+
                 ],
                 [
                     'text'    => 'Proveedor',
@@ -434,16 +434,16 @@ return [
                         [
                             'text' => 'Lista proveedores',
                             'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'proveedor', 
+                            'url'  => 'proveedor',
                         ],
                     ],
                 ],
 
-              
+
             ],
         ],
         //------------------------------------------------------------------
-        
+
         //-------------------modulo ventas---------------------------------
         [
             'text'    => 'Ventas',
@@ -471,7 +471,7 @@ return [
                             'url'  => 'nota_venta_producto',
                         ],
                     ],
-                ],            
+                ],
                 [
                     'text' => 'Reportes',
                     'icon'    => 'fas fa-fw fa-gift',
@@ -500,6 +500,10 @@ return [
             'icon'    => 'fa fa-fw fa-car-side',
             'url'  => 'vehiculos',
         ],
+        //-------------------modulo herramientas---------------------------------
+        [
+            'header' => 'ADMINISTRACION',
+        ],
         //-------------------modulo infraestructura---------------------------------
         [
             'text'    => 'Infraestructura',
@@ -507,7 +511,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Bombas',
-                    'icon'    => 'fas fa-gas-pump',
+                    'icon'    => 'fas fa-fw fa-gas-pump',
                     'url'  => 'bombas/*',
                     'submenu' => [
                         [
@@ -526,7 +530,7 @@ return [
                 ],
                 [
                     'text' => 'Tanques',
-                    'icon'    => 'fas fa-battery-half',
+                    'icon'    => 'fas fa-fw fa-battery-half',
                     'url'  => 'tanques/*',
                     'submenu' => [
                         [
@@ -541,7 +545,6 @@ return [
                         ],
                     ],
                 ],
-
                 [
                     'text' => 'Combustibles',
                     'icon'    => 'fas fa-fw fa-tint',
@@ -559,70 +562,8 @@ return [
                         ],
                     ],
                 ],
-                [
-                    'text' => 'Categorias',
-                    'icon'    => 'fas fa-fw fa-layer-group',
-                    'url'  => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo Categoria',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'categorias/create',
-                        ],
-                        [
-                            'text' => 'Lista de Categorias',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'categorias',
-                        ],
-
-
-                    ],
-                ],
             ],
         ],
-        //-------------------modulo herramientas---------------------------------
-        [
-            'text'    => 'Herramientas',
-            'icon'    => 'fas fa-fw fa-wrench',
-            'can'     => 'admin.home',
-            'submenu' => [
-                [
-                    'text' => 'Bitacora',
-                    'icon'    => 'far fa-eye',
-                    'url'  => 'bitacora',
-                ],
-                [
-                    'text' => 'Backup',
-                    'icon'    => 'fas fa-save',
-                    'url'  => 'backups',
-                ],
-                /*[
-                    'text'    => 'Gestionar reporte',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Reporte de Inventario',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Reporte de Ventas',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],*/
-            ],
-        ],
-        //------------------------------------------------------------------
         //-------------------modulo administrativo---------------------------------
         [
             'text'    => 'Administrativo',
@@ -652,11 +593,6 @@ return [
                             'icon'    => 'fas fa-fw fa-clipboard',
                             'url'     => '#',
                             'submenu' => [
-                                /*[
-                                    'text' => 'nueva asistencia',
-                                    'icon'    => 'fas fa-fw fa-plus',
-                                    'url'  => '#',
-                                ], */
                                 [
                                     'text' => 'lista de asistencias',
                                     'icon'    => 'fas fa-fw fa-list-ul',
@@ -689,6 +625,23 @@ return [
 
             ],
         ],
+        [
+            'text'    => 'Herramientas',
+            'icon'    => 'fas fa-fw fa-wrench',
+            'submenu' => [
+                [
+                    'text' => 'Bitacora',
+                    'icon'    => 'far fa-eye',
+                    'url'  => 'bitacora',
+                ],
+                [
+                    'text' => 'Backup',
+                    'icon'    => 'fas fa-fw fa-save',
+                    'url'  => 'backups',
+                ],
+            ],
+        ],
+        //------------------------------------------------------------------
     ],
 
     /*

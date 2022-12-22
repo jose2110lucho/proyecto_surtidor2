@@ -5,7 +5,6 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
 
@@ -14,7 +13,6 @@ use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\UserTurnoController;
 use App\Http\Controllers\Admin\RoleController;
-
 use App\Http\Controllers\BombaController;
 use App\Http\Controllers\CombustibleController;
 use App\Http\Controllers\CategoriaController;
@@ -31,7 +29,7 @@ use App\Http\Controllers\VentaCombustibleController;
 
 use App\Http\Controllers\NotaVentaProductoController;
 use App\Http\Controllers\FacturaProductoController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,10 +50,10 @@ Route::get('/', function () {
 Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
 
 //-----------------EMPLEADO-----------------//
-Route::resource('empleados',EmpleadoController::class);
-Route::get('empleados-bombas/{user}',[EmpleadoController::class, 'bombas'])->name('empleadobombas.index');
-Route::post('empleados-bombas/{user}',[EmpleadoController::class, 'asignarbombas'])->name('empleadobombas.create');
-Route::delete('empleados-bombas/{user_bomba}',[EmpleadoController::class, 'eliminarbombas'])->name('empleadobombas.destroy');
+Route::resource('empleados', UserController::class);
+Route::get('empleados-bombas/{user}',[UserController::class, 'bombas'])->name('empleadobombas.index');
+Route::post('empleados-bombas/{user}',[UserController::class, 'asignarbombas'])->name('empleadobombas.create');
+Route::delete('empleados-bombas/{user_bomba}',[UserController::class, 'eliminarbombas'])->name('empleadobombas.destroy');
 
 Route::resource('roles',RoleController::class)->names('admin.roles');
 //-----------------TURNO-----------------//
@@ -115,7 +113,7 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
-
+Route::get('vehiculos/export/html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
 //---------------BOMBAS------------//
 Route::resource('bombas', BombaController::class);
 Route::resource('cargas', CargaController::class);

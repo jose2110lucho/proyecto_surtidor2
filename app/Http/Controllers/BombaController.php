@@ -33,7 +33,7 @@ class BombaController extends Controller
      */
     public function create()
     {   $bombas= new Bomba();
-        $tanques=Tanque::pluck('codigo','id'); //se aumento para ver los datos de tanque
+        $tanques = Tanque::pluck('codigo','id'); //se aumento para ver los datos de tanque
         
         return view('pages.bombas.create',compact('bombas','tanques'));
     }
@@ -70,7 +70,6 @@ class BombaController extends Controller
      */
     public function show(Bomba $bomba)
     {
-        
         return view('pages.bombas.show', compact('bomba'));
     }
 
@@ -94,8 +93,6 @@ class BombaController extends Controller
      */
     public function update(UpdateBombaRequest $request, Bomba $bomba)
     {
-       
-
         $bomba->update($request->all());
         return redirect()->route('bombas.show', $bomba);
     }

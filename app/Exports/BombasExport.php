@@ -3,7 +3,6 @@
 namespace App\Exports;
 
 use App\Models\Bomba;
-use App\Models\Tanque;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Contracts\View\View;
