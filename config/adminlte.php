@@ -361,6 +361,7 @@ return [
         [
             'text'    => 'Compras',
             'icon'    => 'fas fa-fw fa-shopping-bag',
+            'can'     => 'admin.home',
             'submenu' => [
                 [
                     'text' => 'Carga', //compra de combustible 
@@ -447,6 +448,7 @@ return [
         [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-fw fa-dollar-sign',
+            'can'     => 'venta.combustible.create',
             'submenu' => [
                 [
                     'text' => 'Combustible',

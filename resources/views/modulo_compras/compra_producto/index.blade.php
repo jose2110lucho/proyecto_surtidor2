@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('adminlte::page')
 
 @section('content_header')
 <h1>Notas de Compras de Productos</h1>

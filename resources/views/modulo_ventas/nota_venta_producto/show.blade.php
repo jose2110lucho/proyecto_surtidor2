@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('adminlte::page')
 
 @section('content_header')
 <h1> Nota de venta :{{$nota_venta_producto->id}}  </h1>
