@@ -45,7 +45,7 @@ use App\Http\Controllers\NotaVentaProductoController;
 
 Auth::routes();
 Route::get('/', function () {
-    return view('layouts/master');
+    return view('adminlte::page');
 })->middleware('auth');
 
 Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
