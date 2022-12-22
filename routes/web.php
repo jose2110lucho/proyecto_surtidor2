@@ -45,7 +45,11 @@ use App\Http\Controllers\FacturaProductoController;
 */
 
 Auth::routes();
-Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+Route::get('/', function () {
+    return view('adminlte::page');
+})->middleware('auth');
+
+Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
 
 //-----------------EMPLEADO-----------------//
 Route::resource('empleados',EmpleadoController::class);
@@ -73,27 +77,19 @@ Route::post('nota_producto',[NotaProductoController::class,'store'])->name('nota
 //-----------------DETALLEPRODUCTO----------------------//
 Route::get('detalle_producto/{nota_producto_id}',[NotaProductoController::class,'show'])->name('detalle_producto.show');
 
-
-
-
-
-
 //-----------------NOTAVENTAPRODUCTO-----------------//
 Route::get('nota_venta_producto',[NotaVentaProductoController::class,'index'])->name('nota_venta_producto.index');
 Route::get('nota_venta_producto/create',[NotaVentaProductoController::class,'create'])->name('nota_venta_producto.create');
 Route::post('nota_venta_producto',[NotaVentaProductoController::class,'store'])->name('nota_venta_producto.store');
 
-
 //-----------------DETALLENOTAVENTAPRODUCTO-----------------//
 Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProductoController::class,'show'])->name('detalle_nota_venta_producto.show');
-
 
 //------------------Generar Factura--------------------------
 
 Route::get('factura_producto/{nota_venta_producto_id}/generateInvoice',[FacturaProductoController::class,'generateInvoice'])->name('factura_producto.generateInvoice');
 Route::get('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'create'])->name('factura_producto.create');
 Route::post('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'store'])->name('factura_producto.store');
-
 
 //-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);
@@ -137,8 +133,6 @@ Route::get('/bombas-html',[BombaController::class, 'bombaHtml'])->name('bombas-h
 Route::get('/pages/categorias/export',[CategoriaController::class, 'exportCategoria'])->name('categorias.export');
 Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
 Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
-
-
 
 //USER_BOMBA
 Route::get('user-bombas/index',[UserBombaController::class, 'index'])->name('userbombas.index');
