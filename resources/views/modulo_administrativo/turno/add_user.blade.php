@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('adminlte::page')
 
 @section('content_header')
 <h1>Añadir Empleados a Turno {{$turno->descripcion}}</h1>

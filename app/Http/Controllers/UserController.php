@@ -8,10 +8,14 @@ use App\Models\User;
 use App\Models\UserBomba;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+
 use DateTime;
 use DateTimeZone;
 
-class EmpleadoController extends Controller
+use Spatie\Permission\Models\Role;
+
+
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -120,7 +124,8 @@ class EmpleadoController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id); 
-        return view('modulo_administrativo.empleados.edit',compact('user')); 
+        $roles = Role::all();
+        return view('modulo_administrativo.empleados.edit', compact('user', 'roles')); 
     }
 
     /**
@@ -144,11 +149,11 @@ class EmpleadoController extends Controller
         $user->roles()->attach($request->rol);
         return redirect()->route('admin.users.edit', $user);
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, $user_id)
     {
-        $datosUsuario = request()->except(['_token', '_method']);
-        User::where('id', '=', $id)->update($datosUsuario);
-        return redirect('/empleado')->with('status', 'Empleado Actualizado Exitosamente!');
+        $user = User::find($user_id);
+        $user->update($request->all());
+        return redirect()->route('empleados.show', $user)->with('status', 'Empleado Actualizado Exitosamente!');
     }
 
     /**

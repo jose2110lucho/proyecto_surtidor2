@@ -1,67 +1,85 @@
-@extends('layouts.reportes')
+@extends('adminlte::page')
 
-@section('title', 'Vehiculos registrados')
+@section('title', 'Lista de vehiculos')
 
-@section('table-title', 'VEHICULOS REGISTRADOS')
+@section('content')
 
-@section('filters')
-    <div class="col-auto mb-n4">
-        <div class="collapse" id="collapseFilters">
-            <div class="card card-body">
-                <div class="col mt-n2 mb-n4">
-                    <div class="row mx-n3 ">
-                        <div class="input-group input-group-sm">
-                            <input name="buscar" id="buscar" type="text" class="form-control"
-                                placeholder="Placa o cliente">
-                            <div class="input-group-append">
-                                <div class="btn btn-default">
-                                    <span class="fa fa-search"></span>
+    <section class="content">
+        <div class="container-fluid pt-4">
+            <div class="card">
+                <div class="card-header my-auto">
+                    <div class="row justify-content-between my-n1">
+                        <div class="col-sm-4 my-auto">
+                            <h3 class="card-title">
+                                <strong>LISTA DE VEHICULOS</strong>
+                            </h3>
+                        </div>
+                        <div class="d-flex justify-content-end" id="botones"></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-end pb-1" id="topRowTable">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm">
+                                <select class="form-control" name="tipo" id="tipo">
+                                    <option value="">Tipo</option>
+                                    @foreach ($tipos as $tipo)
+                                        <option value="{{ $tipo }}">{{ $tipo }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <div id="filtrar" class="btn btn-default"><span class="fas fa-filter my-auto"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm">
+                                <input name="buscar" id="buscar" type="text" class="form-control"
+                                    placeholder="placa o dueño">
+                                <div class="input-group-append">
+                                    <div class="btn btn-default">
+                                        <span class="fa fa-search"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mx-n3 pt-2">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupFileAddon01">Tipo</span>
-                            </div>
-                            <select class="form-control" name="tipo" id="tipo">
-                                <option value="">- - - - </option>
-                                @foreach ($tipos as $tipo)
-                                    <option value="{{ $tipo }}">{{ $tipo }}</option>
-                                @endforeach
-                            </select>
-                            <div class="input-group-append">
-                                <button class="btn btn-default" type="button" id="tipo_filter">
-                                    <span class="fas fa-check"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    @include('partials.vehiculos.table_vehiculos')
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-auto ml-n2 mr-n2">
-        <div id="filters" class="btn btn-info btn-sm" data-toggle="collapse" data-target="#collapseFilters"
-            aria-controls="collapseFilters" aria-expanded="false"><span class="fas fa-filter my-auto"></span>
-        </div>
-    </div>
-@endsection
+    </section>
+@stop
 
-@section('table-tr')
-    <th>PLACA</th>
-    <th>CLIENTE</th>
-    <th>TIPO</th>
-    <th>B-SISA</th>
-    <th>ACCIONES</th>
-@endsection
+@section('css')
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/r-2.3.0/datatables.min.css" />
+    <style>
+        div.dt-button-collection {
+            width: 129px;
+        }
+
+        div.dt-button-collection .dt-button {
+            min-width: 80px;
+        }
+    </style>
+@stop
+
+@section('js')
+    <script>
+        $(window).on('load', function() {
+            let a = 'hola'
+            if ('{{ $errors->any() }}') {
+                $('#formCreateModal').modal('show');
+            }
+        });
+    </script>
 
 
-@section('datatable-js')
     <script>
         $(document).ready(function() {
-            var table = $('#table').DataTable({
+            var table = $('#table_vehiculos').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -77,7 +95,7 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json'
                 },
-                dom: '<"mt-n1 mb-n2"r<"d-flex justify-content-start pl-4"l><"d-flex px-3"t><"row justify-content-between my-auto pt-2 px-4 pb-4"ip>>',
+                dom: '<"mt-n1 mb-n2"r<"row justify-content-start pl-2"l>t<"row justify-content-between my-auto pt-2 px-3"ip>>',
                 columns: [{
                         data: 'placa',
                         name: 'placa',
@@ -189,7 +207,7 @@
 
             table.buttons().containers().appendTo('#botones');
 
-            $('#tipo_filter').click(function() {
+            $('#filtrar').click(function() {
                 table.draw()
             })
 
@@ -198,4 +216,10 @@
             })
         })
     </script>
-@endsection
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/r-2.3.0/datatables.min.js">
+    </script>
+@stop
