@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Surtidor Bicentenario ',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -448,11 +448,25 @@ return [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-fw fa-dollar-sign',
             'submenu' => [
+                
                 [
-                    'text' => 'Combustible',
-                    'url'  => 'venta/combustible/bomba',
+                    'text'    => 'Combustible',
                     'icon'    => 'fas fa-fire',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo nota de venta',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_venta_combustible/create',
+                        ],
+                        [
+                            'text' => 'Lista de notas de venta',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_venta_combustible',
+                        ],
+                    ],
                 ],
+
+
                 [
                     'text'    => 'Clientes',
                     'icon'    => 'fas fa-fw fa-users',
@@ -558,7 +572,7 @@ return [
                         ],
                     ],
                 ],
-                [
+                /*[
                     'text' => 'Categorias',
                     'icon'    => 'fas fa-fw fa-layer-group',
                     'url'  => '#',
@@ -576,7 +590,7 @@ return [
 
 
                     ],
-                ],
+                ],*/
             ],
         ],
         //-------------------modulo herramientas---------------------------------

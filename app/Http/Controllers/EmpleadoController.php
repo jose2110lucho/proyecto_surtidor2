@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\UserBomba;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use DateTime;
+use DateTimeZone;
 
 class EmpleadoController extends Controller
 {
@@ -46,9 +48,15 @@ class EmpleadoController extends Controller
         $request->validate([
             'bomba_id' => 'required'
         ]);
+
+        $fecha_hora = new DateTime();  
+        $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
+        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s"); 
+
         UserBomba::create([
             'user_id' => $user->id,
-            'bomba_id' => $request->bomba_id
+            'bomba_id' => $request->bomba_id,
+            'fecha_asignacion' => $DateAndTime,
         ]);
         return redirect(
             route('empleadobombas.index', $user)
