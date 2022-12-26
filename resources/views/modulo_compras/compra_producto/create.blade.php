@@ -100,7 +100,7 @@
             //-------------------------------------------------------------------------------------------------------------------------
 
             $('#addRow').on('click', function() {
-                let producto_value = document.getElementById("producto_id").value.split('`');
+            let producto_value = document.getElementById("producto_id").value.split('`');
             let cantidad = document.getElementById("cantidad").value;
             let producto_id = producto_value[0];
             let producto = producto_value[1];
@@ -134,6 +134,7 @@
                 producto_list: productoList,
                 total: total
             };
+        
             $.ajax({
                 type: "post",
                 url: "{{ route('nota_producto.store') }}",

@@ -1,87 +1,72 @@
-@extends('adminlte::page')
+@extends('layouts/master')
 
-@section('title', 'cargas')
+@section('content_header')
+<h1> Nota de compra :{{$nota_carga->id}}  </h1>
+@stop
 
 @section('content')
-    <section class="content">
-        <div class="container-fluid p-4">
-            <!-- SELECT2 EXAMPLE -->
-            <div class="card">
-                <div class="bg-purple p-4">
-                    <div class="d-flex justify-content-between">
-                        <h4 class="card-title">
-                            <strong>DATOS DE LA CARGA</strong>
-                        </h4>
-                        <form action="{{ route('cargas.destroy', $carga) }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <div class="card-tools">
-                                <button type="submit" class="btn btn-danger px-2" onclick="return confirm('¿Estas seguro?')">
-                                    <i class="fas fa-trash-alt" aria-hidden="true">
-                                    </i>
-                                </button>
-                                <a href="{{ route('cargas.edit', $carga) }}" class="btn btn-info px-2">
-                                    <i class="fas fa-pen" aria-hidden="true">
-                                    </i>
-                                </a>
-
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Codigo</label>
-                                <p class="form-control my-colorpicker1">{{ $carga->codigo }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Fecha</label>
-                                <p class="form-control my-colorpicker1">{{ $carga->fecha }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Cantidad</label>
-                                <p class="form-control my-colorpicker1">{{ $carga->cantidad }}</p>
-                            </div>
-
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Precio Unitario</label>
-                                <p class="form-control my-colorpicker1">{{ $carga->precio_unitario }}</p>
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Precio Total</label>
-                                <p class="form-control my-colorpicker1">{{ $carga->precio_total }}</p>
-                            </div>
-    
-                        </div>
-                       
-                    </div>
-                    
-
-
-
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-between ">
-                        <p><small>Creado: {{ $carga->created_at }}</small></p>
-                        <p><small>Ultima modificación: {{ ' ' . $carga->updated_at . '  ' }}</small></p>
-                    </div>
-                </div>
+<div class="card">
+    <div class="card-body">
+        <div class="card" style="background:cornsilk">
+            <div class="card-body">
+            <!--inicio campo nombre del proveedor-->
+            <div class="mb-3">
+                <label for="combustible" class="form-label">Combustible</label>
+                <p type="text" class="form-control">{{ $nota_carga->nombre }}</p>
             </div>
-
-            <!-- /.container-fluid -->
-    </section>
+            <!--fin campo nombre del proveedor-->
+            <!--inicio campo fecha-->
+            <div class="mb-3">
+                <label for="fecha" class="form-label">fecha</label>
+                <p type="date" class="form-control">{{ $nota_carga->fecha }}</p>
+            </div>
+            <!--fin campo fecha-->
+            </div>
+          </div>
+        <div class="card" style="background:cornsilk">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <table class="table caption-top">
+                            <caption></caption>
+                            <thead class="table-white">
+                                <tr>
+                                    <th scope="col">Tanque</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($lista_tanques as $tanque)
+                                <tr>
+                                    <td>{{$tanque->tanque_codigo}}</td>
+                                    <td>{{$tanque->cantidad}}</td>
+                                    <td>{{$tanque->precio_unitario}}</td>
+                                    <td>{{$tanque->cantidad*$tanque->precio_unitario}}</td>
+                                </tr> 
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </table>
+                </div> 
+            </div>
+          </div>
+        <!--inicio campo total-->
+        <div class="mb-3">
+            <label for="total" class="form-label">total</label>
+            <p type="number" class="form-control">{{ $nota_carga->total }}</p>
+        </div>
+        <!--fin campo total-->
+        <!--inicio campo botones-->
+        <div class="row mb-0" style="text-align:right">
+            <div class="col-md-10 offset-md-2">
+                <a href="{{ url('/nota_carga') }}" class="btn btn-success">
+                    Atras
+                </a>
+            </div> 
+        </div>          
+    <!--fin campo botones-->
+    </div>
+</div>
 @stop
