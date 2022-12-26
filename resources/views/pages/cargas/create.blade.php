@@ -65,8 +65,8 @@
             <!----->
             <div style="text-align: right">
                 <div class="rigth col-md-10 offset-md-2">
-                    <button class ="btn btn-danger" id="#">Eliminar</button>
-                    <a href="{{ url('#') }}" class="btn btn-warning">
+                    <button class ="btn btn-danger" id="cargas.destroy">Eliminar</button>
+                    <a href="{{ url('cargas.editar') }}" class="btn btn-warning">
                         Editar
                     </a>
                 </div>
@@ -168,7 +168,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="addRow" onclick="Agregar()"{{--  id="example" --}}> Agregar Tanque</button>
+              <button type="button" class="btn btn-primary"  id="addRow" onclick="Agregar()" {{-- id="example" --}}> Agregar Tanque</button>
               
             </div>
           </div>
@@ -243,6 +243,34 @@ src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2
         console.log(codigo);
            
        } 
+
+       /* $('#example').on('click', 'tbody tr', function() {
+
+            let data_fila = t.row(this).data();
+            total = total - data_fila[2] * data_fila[3];
+            t.row(this).remove().draw();
+            tanqueList = tanqueList.filter(data => data.producto_id != data_fila[0]);
+
+        });
+
+        $("#guardar").click(function(e) {
+                var token = '{{ csrf_token() }}';
+                let tanqueId = document.getElementById("tanqueId").value;
+                var data = {
+                    tanqueId: tanqueId,
+                    _token: token,
+                    tanque_list: tanque_list,
+                    total: total
+                };
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('cargas.store') }}",
+                    data: data,
+                    success: function(cargas.store) {
+                        window.location.href=`{{ url('/cargas.store/${cargas.store}/') }}`;   
+                    }
+                });
+            }); */
 
       
        

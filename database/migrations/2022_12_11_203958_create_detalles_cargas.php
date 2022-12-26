@@ -15,6 +15,12 @@ class CreateDetallesCargas extends Migration
     {
         Schema::create('detalles_cargas', function (Blueprint $table) {
             $table->id();
+            $table->integer('cantidad');
+            $table->decimal('precio_compra',8,2);
+            $table->integer('nota_producto_id')->unsigned();
+            $table->foreign('nota_producto_id')->references('id')->on('nota_productos')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('producto_id')->unsigned();
+            $table->foreign('producto_id')->references('id')->on('producto')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
