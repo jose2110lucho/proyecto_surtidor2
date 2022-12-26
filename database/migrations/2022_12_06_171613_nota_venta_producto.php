@@ -16,11 +16,9 @@ class NotaVentaProducto extends Migration
         Schema::create('nota_venta_producto', function (Blueprint $table) {
             $table->id(); 
             $table->dateTime('fecha');
-            $table->decimal('total',8,2);
-
+            $table->decimal('total',8,2)->nullable();
             $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade')->onUpdate('cascade');
-
             $table->timestamps();
         }); 
     }
