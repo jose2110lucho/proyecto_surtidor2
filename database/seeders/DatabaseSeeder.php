@@ -26,5 +26,6 @@ class DatabaseSeeder extends Seeder
      //   \App\Models\Premio::factory(5)->create();
         \App\Models\Vehiculo::factory(100)->create();
         \App\Models\Producto::factory(50)->create();
+        $this->call(VentaProductoSeeder::class);
     }
 }

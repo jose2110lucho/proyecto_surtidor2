@@ -17,7 +17,6 @@ use App\Http\Controllers\BombaController;
 use App\Http\Controllers\CombustibleController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CargaController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\NotaProductoController;
 use App\Http\Controllers\VehiculoController;
@@ -29,6 +28,7 @@ use App\Http\Controllers\VentaCombustibleController;
 
 use App\Http\Controllers\NotaVentaProductoController;
 use App\Http\Controllers\FacturaProductoController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -43,11 +43,11 @@ use App\Http\Controllers\UserController;
 */
 
 Auth::routes();
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('adminlte::page');
-})->middleware('auth');
+})->middleware('auth'); */
 
-Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
+Route::get('',[HomeController::class, 'dashboard'])->name('admin.home');
 
 //-----------------EMPLEADO-----------------//
 Route::resource('empleados', UserController::class);
@@ -76,10 +76,13 @@ Route::post('nota_producto',[NotaProductoController::class,'store'])->name('nota
 Route::get('detalle_producto/{nota_producto_id}',[NotaProductoController::class,'show'])->name('detalle_producto.show');
 
 //-----------------NOTAVENTAPRODUCTO-----------------//
-Route::get('nota_venta_producto',[NotaVentaProductoController::class,'index'])->name('nota_venta_producto.index');
+Route::get('ventas-productos/reportes',[NotaVentaProductoController::class,'index'])->name('ventas_productos.reportes');
+Route::get('ventas-productos/graficas',[NotaVentaProductoController::class,'graficas'])->name('ventas_productos.graficas');
 Route::get('nota_venta_producto/create',[NotaVentaProductoController::class,'create'])->name('nota_venta_producto.create');
 Route::post('nota_venta_producto',[NotaVentaProductoController::class,'store'])->name('nota_venta_producto.store');
-
+Route::get('ventas-productos/reportes/export-html', [NotaVentaProductoController::class, 'exportHTML'])->name('ventas_productos.export.html');
+Route::post('/fetch/ventas-productos/monto-total-mes',[NotaVentaProductoController::class, 'ventasMes'])->name('fetch.ventas_productos.mes');
+Route::post('/fetch/ventas-productos/monto-promedio-x-venta',[NotaVentaProductoController::class, 'montoPromedioVentaMes'])->name('fetch.ventas_productos.monto_promedio.mes');
 //-----------------DETALLENOTAVENTAPRODUCTO-----------------//
 Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProductoController::class,'show'])->name('detalle_nota_venta_producto.show');
 
@@ -113,7 +116,7 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
-Route::get('vehiculos/export/html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
+Route::get('vehiculos/export-html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
 //---------------BOMBAS------------//
 Route::resource('bombas', BombaController::class);
 Route::resource('cargas', CargaController::class);

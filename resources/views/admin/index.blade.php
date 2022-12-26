@@ -11,7 +11,7 @@
                         <div class="card-header">
                             <div class="card-title">Usuarios activos</div>
                         </div>
-                        <div class="card-body"><canvas id="myChart"></canvas></div>
+                        <div class="card-body"><canvas id="combustibles_chart"></canvas></div>
                     </div>
                     <div class="card">
                         <div class="card-header">
@@ -25,7 +25,7 @@
                         <div class="card-header">
                             <div class="card-title">Niveles de combustible</div>
                         </div>
-                        <div class="card-body"><canvas id="chart_nivel_combustible"></canvas></div>
+                        <div class="card-body"><canvas id="nivel_combustibles_chart"></canvas></div>
                     </div>
                     <div class="card">
                         <div class="card-header">
@@ -56,7 +56,18 @@
                 </div>
             </div>
         </div>
-        <div class="container p-4"></div>
+        <form action="{{ route('fetch.ventas_productos.monto_promedio.mes') }}" method="post">
+            @csrf
+            <div class="form-group">
+                <label for=""></label>
+                <select class="form-control form-control-sm" id="rango" name="rango">
+                    <option value="3">3 meses</option>
+                    <option value="6">6 meses</option>
+                    <option value="12">12 meses</option>
+                </select>
+                <button type="submit">link</button>
+            </div>
+        </form>
     </section>
 @stop
 
@@ -122,8 +133,6 @@
 
 @section('js')
     <script>
-        const ctx = document.getElementById('myChart');
-
         var combustibles = [];
         var cantidades = [];
         var opacidad = 0.6;
@@ -170,9 +179,11 @@
 
         function generarGrafica() {
             new Chart(
-                document.getElementById('chart_nivel_combustible'),
+                document.getElementById('nivel_combustibles_chart'),
                 config
             );
         }
     </script>
+
+    <script></script>
 @stop

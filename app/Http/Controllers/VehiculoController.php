@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\VehiculosDataTable;
 use App\Exports\VehiculosExport;
 use App\Models\Vehiculo;
 use App\Http\Requests\StoreVehiculoRequest;
