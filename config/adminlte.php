@@ -376,7 +376,7 @@ return [
                         [
                             'text' => 'Lista de Cargas',
                             'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'cargas',
+                            'url'  => 'cargas/index',
                         ],
 
 

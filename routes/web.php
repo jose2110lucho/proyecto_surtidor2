@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\BombaController;
 use App\Http\Controllers\CombustibleController;
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\CargaController;
+use App\Http\Controllers\NotaCargaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\NotaProductoController;
 use App\Http\Controllers\VehiculoController;
@@ -30,6 +30,7 @@ use App\Http\Controllers\NotaVentaProductoController;
 use App\Http\Controllers\FacturaProductoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -119,12 +120,19 @@ Route::resource('vehiculos', VehiculoController::class);
 Route::get('vehiculos/export-html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
 //---------------BOMBAS------------//
 Route::resource('bombas', BombaController::class);
-Route::resource('cargas', CargaController::class);
+//Route::resource('cargas', CargaController::class);
 Route::resource('categorias', CategoriaController::class);
 Route::resource('combustibles', CombustibleController::class);
 
 Route::get('/fetch/combustibles/niveles',[CombustibleController::class, 'nivelesCombustible'])->name('fetch.combustibles.niveles');
 Route::resource('pedidos', PedidoController::class);
+
+//-----------------NOTACARGA----------------------//
+Route::get('cargas/index',[NotaCargaController::class,'index'])->name('cargas.index');
+Route::get('cargas/create',[NotaCargaController::class,'create'])->name('cargas.create');
+Route::post('cargas',[NotaCargaController::class,'store'])->name('cargas.store');
+//-----------------DETALLECARGA----------------------//
+Route::get('cargas/show/{nota_carga_id}',[NotaCargaController::class,'show'])->name('cargas.show');
 
 //Bombas Reportes//
 Route::get('/pages/bombas/export',[BombaController::class, 'exportBomba'])->name('bombas.export');
@@ -132,7 +140,7 @@ Route::get('/pages/bombas/download', [BombaController::class, 'downloadPDF'])->n
 Route::get('/bombas-html',[BombaController::class, 'bombaHtml'])->name('bombas-html');
 //Categorias Reportes//
 Route::get('/pages/categorias/export',[CategoriaController::class, 'exportCategoria'])->name('categorias.export');
-Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
+//Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
 Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
 
 //USER_BOMBA
