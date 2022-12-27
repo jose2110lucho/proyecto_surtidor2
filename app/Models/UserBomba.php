@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class UserBomba extends Model
 {
     use HasFactory;
-    protected $fillable=['id','user_id','bomba_id'];
+    protected $fillable=[
+        'id',
+        'fecha_asignacion',
+        'user_id',
+        'bomba_id',
+    ];
 
     public function Bomba()
     {

@@ -8,7 +8,12 @@ use App\Models\User;
 use App\Models\UserBomba;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+
+use DateTime;
+use DateTimeZone;
+
 use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -28,7 +33,7 @@ class UserController extends Controller
     public function bombas(User $user)
     {
         $user_bombas = UserBomba::where('user_id', $user->id)->get();
-        $bombas = Bomba::all();
+        $bombas = Bomba::where('libre', '=', true)->get();
         return view('modulo_administrativo/empleados/bombas', compact('user_bombas', 'bombas', 'user'));
     }
     /**
@@ -47,10 +52,21 @@ class UserController extends Controller
         $request->validate([
             'bomba_id' => 'required'
         ]);
+
+        $fecha_hora = new DateTime();  
+        $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
+        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s"); 
+
         UserBomba::create([
             'user_id' => $user->id,
-            'bomba_id' => $request->bomba_id
+            'bomba_id' => $request->bomba_id,
+            'fecha_asignacion' => $DateAndTime,
         ]);
+
+        $bomba = Bomba::find($request->bomba_id);
+        $bomba->libre = false;
+        $bomba->save();
+        
         return redirect(
             route('empleadobombas.index', $user)
         );

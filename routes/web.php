@@ -16,20 +16,22 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\BombaController;
 use App\Http\Controllers\CombustibleController;
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\CargaController;
+use App\Http\Controllers\NotaCargaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\NotaProductoController;
 use App\Http\Controllers\VehiculoController;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\UserBombaController;
-use App\Http\Controllers\VentaCombustibleController;
+//use App\Http\Controllers\VentaCombustibleController;
 
 
 use App\Http\Controllers\NotaVentaProductoController;
 use App\Http\Controllers\FacturaProductoController;
+use App\Http\Controllers\NotaVentaCombustibleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +94,23 @@ Route::get('factura_producto/{nota_venta_producto_id}/generateInvoice',[FacturaP
 Route::get('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'create'])->name('factura_producto.create');
 Route::post('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'store'])->name('factura_producto.store');
 
+
+
+
+
+
+//------------------NotaVentaCombustible--------------------------
+Route::get('nota_venta_combustible',[NotaVentaCombustibleController::class,'index'])->name('nota_venta_combustible.index');
+Route::get('nota_venta_combustible/create',[NotaVentaCombustibleController::class,'create'])->name('nota_venta_combustible.create');
+Route::post('nota_venta_combustible',[NotaVentaCombustibleController::class,'store'])->name('nota_venta_combustible.store');
+Route::get('nota_venta_combustible/{nota_venta_combustible_id}/show',[NotaVentaCombustibleController::class,'show'])->name('nota_venta_combustible.show');
+
+
+
+
+
+
+
 //-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/desactivar', [ProveedorController::class, 'desactivar']);
@@ -119,12 +138,19 @@ Route::resource('vehiculos', VehiculoController::class);
 Route::get('vehiculos/export-html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
 //---------------BOMBAS------------//
 Route::resource('bombas', BombaController::class);
-Route::resource('cargas', CargaController::class);
+//Route::resource('cargas', CargaController::class);
 Route::resource('categorias', CategoriaController::class);
 Route::resource('combustibles', CombustibleController::class);
 
 Route::get('/fetch/combustibles/niveles',[CombustibleController::class, 'nivelesCombustible'])->name('fetch.combustibles.niveles');
 Route::resource('pedidos', PedidoController::class);
+
+//-----------------NOTACARGA----------------------//
+Route::get('cargas/index',[NotaCargaController::class,'index'])->name('cargas.index');
+Route::get('cargas/create',[NotaCargaController::class,'create'])->name('cargas.create');
+Route::post('cargas',[NotaCargaController::class,'store'])->name('cargas.store');
+//-----------------DETALLECARGA----------------------//
+Route::get('cargas/show/{nota_carga_id}',[NotaCargaController::class,'show'])->name('cargas.show');
 
 //Bombas Reportes//
 Route::get('/pages/bombas/export',[BombaController::class, 'exportBomba'])->name('bombas.export');
@@ -132,7 +158,7 @@ Route::get('/pages/bombas/download', [BombaController::class, 'downloadPDF'])->n
 Route::get('/bombas-html',[BombaController::class, 'bombaHtml'])->name('bombas-html');
 //Categorias Reportes//
 Route::get('/pages/categorias/export',[CategoriaController::class, 'exportCategoria'])->name('categorias.export');
-Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
+//Route::get('/pages/categorias/download', [CategoriaController::class, 'downloadPDF'])->name('download-pdf');
 Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->name('categorias-html');
 
 //USER_BOMBA
