@@ -33,7 +33,7 @@ class UserController extends Controller
     public function bombas(User $user)
     {
         $user_bombas = UserBomba::where('user_id', $user->id)->get();
-        $bombas = Bomba::all();
+        $bombas = Bomba::where('libre', '=', true)->get();
         return view('modulo_administrativo/empleados/bombas', compact('user_bombas', 'bombas', 'user'));
     }
     /**
@@ -62,6 +62,11 @@ class UserController extends Controller
             'bomba_id' => $request->bomba_id,
             'fecha_asignacion' => $DateAndTime,
         ]);
+
+        $bomba = Bomba::find($request->bomba_id);
+        $bomba->libre = false;
+        $bomba->save();
+        
         return redirect(
             route('empleadobombas.index', $user)
         );

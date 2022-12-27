@@ -87,11 +87,13 @@ class NotaVentaCombustibleController extends Controller
                     $cliente->save();
                 }
 
-                
-
+ 
                 return redirect('nota_venta_combustible');
+
             }else{
-                return redirect()->route('nota_venta_combustible.create')->with('mensaje', 'cantidad de combustible insuficiente, disponible: '.$tanque->cantidad_disponible.' litros');
+
+                return redirect()->route('nota_venta_combustible.create');
+                
             }
      
         }    
@@ -116,7 +118,7 @@ class NotaVentaCombustibleController extends Controller
         ->where('nota_venta_combustible.id','=',$id)
         ->select('nota_venta_combustible.*', 'vehiculos.placa','clientes.nombre')->first();
         
-        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','bomba','tanque','combustible'));
+        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','bomba','tanque','combustible','user'));
     }
 
     /**

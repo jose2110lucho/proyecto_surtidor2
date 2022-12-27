@@ -472,21 +472,7 @@ return [
                     'icon'    => 'fas fa-fw fa-shopping-cart',
                     'url'  => 'nota_venta_producto',
                     'submenu' => [
-                        /* [
-                            'text' => 'Nuevo nota de venta',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'nota_venta_producto/create',
-                        ],
-                        [
-                            'text' => 'Reporte(s)',
-                            'icon'    => 'fas fa-fw fa-file-invoice-dollar',
-                            'url'  => 'ventas-productos/reporte',
-                        ],
-                        [
-                            'text' => 'Graficos',
-                            'icon'    => 'fas fas fa-fw fa-chart-pie',
-                            'url'  => 'ventas-productos/graficos',
-                        ], */
+                        
                         [
                             'text' => 'Nuevo nota de venta',
                             'icon'    => '',

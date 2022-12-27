@@ -2,13 +2,6 @@
 
 @section('content_header')
 
-@if ($mensaje)
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{$mensaje}}</strong> 
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>  
-@endif
-
 
 <div class="card">
     <div class="bg-black p-3">
@@ -164,7 +157,6 @@
 
         }
         
-
         $(document).ready(function() {
             $('.js-example-basic-single').select2(); 
         });
