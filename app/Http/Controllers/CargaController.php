@@ -20,8 +20,8 @@ class CargaController extends Controller
      */
     public function index()
     {
-        $cargas = Carga::orderby('codigo', 'desc')->get();
-        return view('pages.cargas.index',compact('cargas'));
+        /* $cargas = Carga::orderby('codigo', 'desc')->get();
+        return view('pages.cargas.index',compact('cargas')); */
     }
 
     /**
@@ -31,10 +31,14 @@ class CargaController extends Controller
      */
     public function create()
     {
-        $cargas= new Carga();
+        /* $cargas= new Carga();
         $tanques=Tanque::pluck('codigo','id');
         $combustibles=Combustible::pluck('codigo','id');
-        return view('pages.cargas.create',compact('cargas','tanques','combustibles'));
+        return view('pages.cargas.create',compact('cargas','tanques','combustibles')); */
+
+       /*  $lista_combustibles = Combustible::all();//combustibles
+        $lista_tanques = Tanque::all(); //productos
+        return view('pages/cargas/create',['lista_combustibles'=>$lista_combustibles,'lista_tanques'=>$lista_tanques]); */
     }
 
     /**
@@ -45,7 +49,7 @@ class CargaController extends Controller
      */
     public function store(StoreCargaRequest $request, Carga $carga)
     {
-        $codTanque= $request->cod_tanque;
+       /*  $codTanque= $request->cod_tanque;
         $sql = "SELECT * FROM tanques where codigo='".$codTanque."'";
         $tanque = DB::select($sql);
 
@@ -55,7 +59,7 @@ class CargaController extends Controller
             if($item->cantidad_disponible){
                 $cargaDisponible=$item->cantidad_disponible;
             }
-}
+         }
         foreach($tanque as $tan){
             if($tan->capacidad >=($request->cantidad+$cargaDisponible)){
     
@@ -65,14 +69,47 @@ class CargaController extends Controller
             'cantidad'=>$request->cantidad,
             'precio_unitario'=>$request->precio_unitario,
             'precio_total'=>$request->precio_total,
-     ]);
-        //--TRIGGER->PROCEDIMIENTO ALMACENADO
-        $cantidadRenovada=$cargaDisponible+=$request->cantidad;
-        $sql = "UPDATE tanques  SET cantidad_disponible='".$cantidadRenovada."' where codigo='".$codTanque."' ";
-        DB::select($sql);
-        return redirect()->route('cargas.show', $Carga);
-  }
-}
+            ]);
+            //--TRIGGER->PROCEDIMIENTO ALMACENADO
+            $cantidadRenovada=$cargaDisponible+=$request->cantidad;
+            $sql = "UPDATE tanques  SET cantidad_disponible='".$cantidadRenovada."' where codigo='".$codTanque."' ";
+            DB::select($sql);
+            return redirect()->route('cargas.show', $Carga);
+             }
+        } */
+
+        /* $combustible_id = $request->combustible_id;
+        $tanque_list = $request->tanque_list;
+        $total = $request->total;
+        $fecha_hora = new DateTime();  
+        $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
+        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s"); 
+        
+
+        $nota_producto =  new NotaProducto();
+        $nota_producto->proveedor_id=$proveedor_id;
+        $nota_producto->fecha=$DateAndTime;
+        $nota_producto->total=$total;
+        $nota_producto->save();
+        
+        
+
+        foreach ($producto_list as $producto) {
+            $detalle_producto = new DetalleProducto();
+            $detalle_producto->cantidad=$producto['cantidad'];
+            $detalle_producto->precio_compra = $producto['precio'];
+            $detalle_producto->nota_producto_id=$nota_producto->id;
+            $detalle_producto->producto_id=$producto['producto_id'];
+            $detalle_producto->save();
+
+            $refill = Producto::find($producto['producto_id']);
+            $refill->cantidad = $refill->cantidad + $producto['cantidad'];
+            $refill->estado = true;
+            $refill->save();
+        }
+
+        
+        return $nota_producto->id; */
     }
 
 
@@ -84,7 +121,7 @@ class CargaController extends Controller
      */
     public function show(Carga $carga)
     {
-        return view('pages.cargas.show', compact('carga'));
+     /*    return view('pages.cargas.show', compact('carga')); */
     }
 
     /**
@@ -95,7 +132,7 @@ class CargaController extends Controller
      */
     public function edit(Carga $carga)
     {
-        return view('pages.cargas.edit', compact('carga'));
+       /*  return view('pages.cargas.edit', compact('carga')); */
     }
 
     /**
@@ -108,8 +145,8 @@ class CargaController extends Controller
     public function update(UpdateCargaRequest $request, Carga $carga)
     {
        
-        $carga->update($request->all());
-        return redirect()->route('cargas.show', $carga);
+        /* $carga->update($request->all());
+        return redirect()->route('cargas.show', $carga); */
     }
 
     /**
@@ -120,8 +157,8 @@ class CargaController extends Controller
      */
     public function destroy(Carga $carga)
     {
-        $carga->delete();
-        return redirect()->route('cargas.index');
+        /* $carga->delete();
+        return redirect()->route('cargas.index'); */
     }
 
     //Para la tabla dinamica
