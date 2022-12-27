@@ -61,8 +61,6 @@
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
-                   {{--  {{ csrf_field() }} --}}
-                <!--Encapsular el formulario--> 
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Carga</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -104,7 +102,7 @@
                 
                 </div>
               </div>
-              {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+
              <table id="example" class="display" style="width:100%">
                     <thead>
                          <tr>
@@ -120,7 +118,7 @@
                 <div class="row mb-0">
                     <div class="col-md-10 offset-md-2">
                         <button class="btn btn-success" id="guardar">Guardar</button>
-                            <a href="{{ url('nota_cargas') }}" class="btn btn-secondary">
+                            <a href="{{ url('cargas/index') }}" class="btn btn-secondary">
                             Atras
                         </a>
                     </div>
@@ -135,7 +133,7 @@
         href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/r-2.3.0/datatables.min.css" />
 @stop
 @section('js')
-   {{--  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/r-2.3.0/datatables.min.js">
     </script>
@@ -178,27 +176,23 @@
              });
 
              $("#guardar").click(function(e) {
-                var token = '{{ csrf_token() }}'; 
+                 var token = '{{ csrf_token() }}'; 
                 let combustible = document.getElementById("combustible_nombre").value;
                 var data = {
                     combustible_nombre: combustible,
-                    _token: token, 
+                    _token: token,  
                     tanque_list: tanqueList,
-                    total: total
+                    total: total,
                     };
-                /* $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                    }
-                }); */
+                
+                console.log(data);
                 $.ajax({
                     type: "post",
                     url: "{{ route('cargas.store') }}",
                     data: data,
                     success: function(cargas_id) {
                          window.location.href=
-                        `{{ url('/detalle_carga/${cargas_id}/') }}`;  
-                        console.log(cargas_id);
+                        `{{ url('/cargas/show/${cargas_id}/') }}`;  
                     }
                 });
             });

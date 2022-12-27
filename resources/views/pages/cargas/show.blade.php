@@ -61,7 +61,7 @@
         <!--inicio campo botones-->
         <div class="row mb-0" style="text-align:right">
             <div class="col-md-10 offset-md-2">
-                <a href="{{ url('/nota_carga') }}" class="btn btn-success">
+                <a href="{{ url('/cargas/index') }}" class="btn btn-success">
                     Atras
                 </a>
             </div> 

@@ -25,7 +25,7 @@ class NotaCargaController extends Controller
      */
     public function index()
     {
-        $lista_nota_carga = NotaCarga::join('combustibles','nota_cargas.combustible_id','combustibles.id')
+        $lista_nota_carga = NotaCarga::join('combustibles','nota_cargas.combustible_nombre','combustibles.id')
         ->select('nota_cargas.*','combustibles.nombre')->get();
         return view('pages/cargas/index',['lista_nota_carga'=>$lista_nota_carga]); 
     }
@@ -64,18 +64,23 @@ class NotaCargaController extends Controller
         $nota_carga->total=$total;
         $nota_carga->save();
         
-        
+        //return $nota_carga->id;
 
         foreach ($tanque_list as $tanque) {
+            
+            $refill = Tanque::where('codigo',$tanque['tanque_codigo'])->first();
+            //return $refill->id;
             $detalle_carga = new DetalleCarga();
-            $detalle_carga->cantidad=$tanque['cantidad'];
+            $detalle_carga->cantidad=$tanque['cantidad_tanque'];
             $detalle_carga->precio_unitario = $tanque['precio'];
-            $detalle_carga->nota_carga_id=$nota_carga->id;
+            $detalle_carga->nota_cargas_id=$nota_carga->id;
+            $detalle_carga->tanque_codigo=$refill->id;
+           //return $detalle_carga;
             $detalle_carga->save();
-
-            $refill = Tanque::find($tanque['tanque_codigo']);
-            $refill->cantidad = $refill->cantidad + $tanque['cantidad'];
-            $refill->estado = true;
+            
+            
+            $refill->cantidad_disponible = $refill->cantidad_disponible + $tanque['cantidad_tanque'];
+            //$refill->estado = true;
             $refill->save();
         }
 
@@ -91,7 +96,15 @@ class NotaCargaController extends Controller
      */
     public function show($id)
     {
-        //
+        $nota_carga = NotaCarga::join('combustibles','nota_cargas.combustible_nombre','combustibles.id')
+                                           ->where('nota_cargas.id','=', $id)
+                                           ->select('nota_cargas.*','combustibles.nombre')->first();
+                                           
+        $lista_tanques = DetalleCarga::join('tanques','detalle_cargas.tanque_codigo','tanques.id')
+                                            ->where('detalle_cargas.nota_cargas_id','=',$id)
+                                            ->select('detalle_cargas.*','tanques.codigo')->get();                                   
+                                         
+        return view('pages.cargas.show',compact('nota_carga','lista_tanques'));
     }
 
     /**

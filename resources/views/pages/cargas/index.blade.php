@@ -38,7 +38,7 @@
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             
-                          <a style="text-align: right" href="{{ url('/detalle_carga/'. $nota_carga->id) }}"
+                          <a style="text-align: right" href="{{ url('cargas/show/'. $nota_carga->id) }}"
                             class="btn btn-success">
                             <i class="fa fa-eye"></i>
                           </a>
@@ -53,4 +53,6 @@
   </div>
 
 @stop
+
+
 
