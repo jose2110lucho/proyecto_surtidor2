@@ -13,7 +13,6 @@ use Carbon\Carbon;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Type\Decimal;
 use Yajra\DataTables\Facades\DataTables;
 
 class NotaVentaProductoController extends Controller
@@ -26,11 +25,11 @@ class NotaVentaProductoController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $vehiculos = DB::table('nota_venta_producto')
+            $nota_venta_producto = DB::table('nota_venta_producto')
                 ->join('clientes', 'nota_venta_producto.cliente_id', '=', 'clientes.id')
                 ->select(['nota_venta_producto.*', 'clientes.nombre as cliente']);
 
-            return DataTables::of($vehiculos)
+            return DataTables::of($nota_venta_producto)
                 ->addColumn('actions', 'partials.ventas_productos.actions')
                 ->rawColumns(['actions'])
                 ->filter(function ($query) use ($request) {
@@ -120,7 +119,7 @@ class NotaVentaProductoController extends Controller
             ->select('nota_venta_producto.*', 'clientes.nombre')->first();
 
 
-        $lista_productos = DetalleNotaVentaProducto::join('producto', 'detalle_nota_venta_producto.producto_id', 'producto.id')
+        $detalles = DetalleNotaVentaProducto::join('producto', 'detalle_nota_venta_producto.producto_id', 'producto.id')
             ->where('detalle_nota_venta_producto.nota_venta_producto_id', '=', $id)
             ->select('detalle_nota_venta_producto.*', 'producto.nombre', 'producto.precio_venta')->get();
 
@@ -129,7 +128,7 @@ class NotaVentaProductoController extends Controller
 
         $existeFactura = count($listaFacturaProducto) > 0 ? true : false;
 
-        return view('modulo_ventas.nota_venta_producto.show', compact('nota_venta_producto', 'lista_productos', 'existeFactura'));
+        return view('modulo_ventas.nota_venta_producto.show', compact('nota_venta_producto', 'detalles', 'existeFactura'));
     }
 
     /**

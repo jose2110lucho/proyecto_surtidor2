@@ -3,46 +3,69 @@
 @section('content')
     <section class="content">
         <div class="container-fluid py-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title text-uppercase">
-                        <strong> Monto de ventas en los ultimos meses</strong>
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="row justify-content-end">
-                        <div class="d-flex my-auto" id="flex-loading">
+            <div class="row">
+                <div class="col col-lg-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title text-uppercase">
+                                <strong> Monto total de ventas</strong>
+                            </h3>
+                            <div class="card-tools">
+                                <button class="btn m-n2" id="export_chart_monto_total"><i
+                                        class="fas fa-file-download"></i></button>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="d-flex px-2">
-                            <select class="form-control form-control-sm" id="rango_chart_monto_total" name="rango">
-                                <option value="3">3 meses</option>
-                                <option value="6">6 meses</option>
-                                <option value="12">12 meses</option>
-                            </select>
-                        </div>
-                    </div>
-                    <canvas id="chart_monto_total_mes"></canvas>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title text-uppercase">
-                        <strong> Monto promedio por venta</strong>
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="row justify-content-end">
-                        <div class="d-flex my-auto" id="flex-loading">
-                        </div>
-                        <div class="d-flex px-2">
-                            <select class="form-control form-control-sm" id="rango_chart_monto_promedio" name="rango">
-                                <option value="3">3 meses</option>
-                                <option value="6">6 meses</option>
-                                <option value="12">12 meses</option>
-                            </select>
+                        <div class="card-body">
+                            <div class="row justify-content-end">
+                                <div class="d-flex my-auto" id="loading_chart_monto_total">
+                                </div>
+                                <div class="d-flex px-2">
+                                    <select class="form-control form-control-sm" id="rango_chart_monto_total"
+                                        name="rango">
+                                        <option value="3">3 meses</option>
+                                        <option value="6">6 meses</option>
+                                        <option value="12">12 meses</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <canvas id="chart_monto_total_mes"></canvas>
                         </div>
                     </div>
-                    <canvas id="chart_monto_promedio_mes"></canvas>
+                </div>
+                <div class="col col-lg-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title text-uppercase">
+                                <strong> Monto promedio por venta</strong>
+                            </h3>
+                            <div class="card-tools">
+                                <button class="btn m-n2" id="export_chart_monto_promedio">
+                                    <i class="fas fa-file-download"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row justify-content-end">
+                                <div class="d-flex my-auto" id="loading_chart_monto_promedio">
+                                </div>
+                                <div class="d-flex px-2">
+                                    <select class="form-control form-control-sm" id="rango_chart_monto_promedio"
+                                        name="rango">
+                                        <option value="3">3 meses</option>
+                                        <option value="6">6 meses</option>
+                                        <option value="12">12 meses</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <canvas id="chart_monto_promedio_mes"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,7 +116,7 @@
                         y: {
                             beginAtZero: true
                         }
-                    }
+                    },
                 }
             };
 
@@ -119,7 +142,7 @@
                         chart_monto_total_mes.data.labels = meses;
                         chart_monto_total_mes.data.datasets[0].data = montos;
                         chart_monto_total_mes.update();
-                        $("#flex-loading").find(".spinner-border").remove();
+                        $("#loading_chart_monto_total").find(".spinner-border").remove();
                     })
                     .catch(function(error) {
                         console.log(error);
@@ -133,7 +156,7 @@
 
 
             $('#rango_chart_monto_total').on('change', function() {
-                $("#flex-loading").prepend('<div class="spinner-border spinner-border-sm"></div>');
+                $("#loading_chart_monto_total").prepend('<div class="spinner-border spinner-border-sm"></div>');
                 montos = [];
                 meses = [];
 
@@ -141,6 +164,13 @@
                     'rango': $('#rango_chart_monto_total').val(),
                 }
                 getDatos(request);
+            })
+
+            $('#export_chart_monto_total').on('click', function(a) {
+                var a = document.createElement('a');
+                a.href = chart_monto_total_mes.toBase64Image();
+                a.download = 'Gráfico - Monto total de ventas por mes.png';
+                a.click();
             })
         }
     </script>
@@ -175,7 +205,7 @@
                         y: {
                             beginAtZero: true
                         }
-                    }
+                    },
                 }
             };
 
@@ -197,11 +227,11 @@
                             meses.push(element.mes);
                             montos.push(parseFloat(element.monto_promedio));
                         });
-                        console.log(montos)
                         chart_monto_promedio_mes.data.labels = meses;
                         chart_monto_promedio_mes.data.datasets[0].data = montos;
                         chart_monto_promedio_mes.update();
-                        $("#flex-loading").find(".spinner-border").remove();
+                        $("#loading_chart_monto_promedio").find(".spinner-border").remove();
+                        var image = chart_monto_promedio_mes.toBase64Image();
                     })
                     .catch(function(error) {
                         console.log(error);
@@ -215,7 +245,7 @@
 
 
             $('#rango_chart_monto_promedio').on('change', function() {
-                $("#flex-loading").prepend('<div class="spinner-border spinner-border-sm"></div>');
+                $("#loading_chart_monto_promedio").prepend('<div class="spinner-border spinner-border-sm"></div>');
                 montos = [];
                 meses = [];
 
@@ -223,6 +253,13 @@
                     'rango': $('#rango_chart_monto_promedio').val(),
                 }
                 getDatos(request);
+            })
+
+            $('#export_chart_monto_promedio').on('click', function(a) {
+                var a = document.createElement('a');
+                a.href = chart_monto_promedio_mes.toBase64Image();
+                a.download = 'Gráfico - Monto promedio por venta.png';
+                a.click();
             })
         }
     </script>

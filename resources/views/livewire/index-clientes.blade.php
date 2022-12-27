@@ -43,7 +43,7 @@
     </div>
     <div class="card-body p-0">
         @if ($clientes->count())
-            <table class="table table-hover table-head-fixed">
+            <table class="table table-sm table-hover table-head-fixed">
                 <thead class="table-light">
                     <tr>
                         <th scope="col">

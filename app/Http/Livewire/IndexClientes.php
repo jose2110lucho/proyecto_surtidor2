@@ -22,7 +22,7 @@ class IndexClientes extends Component
             ->orwhere('apellido', 'ilike', '%' . $this->search . '%')
             ->orwhere('ci', 'ilike', $this->search . '%')
             ->orderby($this->sort, $this->direction)
-            ->paginate(8);
+            ->paginate(15);
         return view('livewire.index-clientes', compact('clientes'));
     }
 
