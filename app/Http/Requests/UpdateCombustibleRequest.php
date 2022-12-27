@@ -24,13 +24,11 @@ class UpdateCombustibleRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'codigo'=>'required',
-            'nombre'=>'required',
+            'nombre'=>'required|unique:combustibles',
+            'tipo'=>'required',
             'precio_compra'=>'required',
             'precio_venta'=>'',
             'unidad_medida'=>'required'
-
         ];
     }
 }

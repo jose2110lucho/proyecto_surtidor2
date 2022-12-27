@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label>Combustible</label>
-                            <p class="form-control my-colorpicker1">{{ $tanque->combustible }}</p>
+                            <p class="form-control my-colorpicker1">{{ $tanque->combustible->nombre }}</p>
 
                         </div>
                         <div class="col-sm-4">
@@ -85,11 +85,11 @@
 
                     <div class="row">
                         <div class="col">
-                            <div class="progress my-1" style="height: 2px;">
+                            <div class="progress my-1" style="height: 4px;">
                                 <div class="progress-bar bg-cyan "
                                     style="width:{{ ($tanque->cantidad_min * 100) / $tanque->capacidad }}%;"></div>
                             </div>
-                            <div class="progress" style="height: 30px;">
+                            <div class="progress" style="height: 40px;">
                                 <div class="progress-bar text-left p-2 progress-bar-striped progress-bar-animated 
                                 @if ($tanque->cantidad_disponible > $tanque->cantidad_min) bg-cyan
                                 @else bg-red @endif"
@@ -103,8 +103,7 @@
                             @endif
 
                         </div>
-                    </div>
-                    <div class="row justify-content-end">
+
                         <div class="col-md-4">
                             <div class="accordion" id="acordion_recarga">
                                 <div class="card mt-n2">
@@ -145,7 +144,8 @@
 
                                                 </div>
                                                 @error('cantidad_recarga')
-                                                    <div id="validacionRecarga" class="invalid-feedback">*{{ $message }}
+                                                    <div id="validacionRecarga" class="invalid-feedback">
+                                                        *{{ $message }}
                                                     </div>
                                                 @enderror
                                             </form>

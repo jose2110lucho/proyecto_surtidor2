@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tanque;
 use Illuminate\Database\Seeder;
 
 class TanqueSeeder extends Seeder
@@ -13,6 +14,5 @@ class TanqueSeeder extends Seeder
      */
     public function run()
     {
-        //
     }
 }

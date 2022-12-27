@@ -48,7 +48,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Combustible</label>
-                                <p class="form-control my-colorpicker1">{{ $bomba->combustible }}</p>
+                                <p class="form-control my-colorpicker1">{{ $bomba->tanque->combustible->nombre }}</p>
                             </div>
 
                         </div>

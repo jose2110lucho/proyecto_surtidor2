@@ -5,7 +5,6 @@
 @section('content')
     <section class="content">
         <div class="container-fluid p-4">
-            <!-- SELECT2 EXAMPLE -->
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
@@ -16,7 +15,6 @@
                 </div>
                 <form action="{{ route('tanques.store') }}" method="POST">
                     @csrf
-                    <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -33,14 +31,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="combustible">Combustible</label>
-                                    <input name="combustible" class="form-control my-colorpicker1"
-                                        value="{{ old('combustible') }}">
-
-                                    @error('combustible')
-                                        <small class="text-danger">*{{ $message }}</small>
-                                    @enderror
+                                    <select name="combustible_id" class="form-control select2" style="width: 100%;">
+                                        @foreach ($combustibles as $combustible)
+                                            <option value="{{ $combustible->id }}">
+                                                {{ $combustible->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -54,6 +52,7 @@
                                     </select>
                                 </div>
                             </div>
+
                         </div>
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
@@ -101,10 +100,7 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
                     <div class="card-footer">
                         <div class="card-tools">
                             <div class="d-flex justify-content-end">
@@ -119,7 +115,5 @@
                 </form>
             </div>
         </div>
-
-        <!-- /.container-fluid -->
     </section>
 @stop

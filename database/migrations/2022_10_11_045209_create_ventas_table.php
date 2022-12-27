@@ -15,6 +15,14 @@ class CreateVentasTable extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
+            $table->integer('codigo');
+            $table->string('tipo_comprobante');
+            $table->integer('num_comprobante');
+            $table->dateTime('fecha_hora');
+            $table->integer('impuesto');
+            $table->integer('total_venta');
+            $table->string('estado');
+        
             $table->timestamps();
         });
     }

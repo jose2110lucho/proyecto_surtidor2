@@ -23,7 +23,7 @@ class Producto extends Model //implements Auditable
         'descripcion',
         'imagen',
     ];
-
+    
     public function premio()
     {
         return $this->belongsTo(Premio::class, 'producto_id', 'id');

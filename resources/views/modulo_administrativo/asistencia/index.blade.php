@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('adminlte::page')
 
 @section('content_header')
     <h1>Lista de Asistencias </h1>
@@ -251,8 +251,8 @@
                         d.fecha_fin = fechaFin;
                         d._token = token;
                         d.usuario = usuario;
-                        console.log(d);
-                    },
+                        
+                    },     
                 },
 
                 dataType: 'json',

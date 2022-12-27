@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>Lista de Empleados</h1>
+    <h1>Lista de Empleados </h1>
 @stop
 
 @section('content')
@@ -20,7 +20,6 @@
     <div class="table-responsive">
         <table class="table">
             <table class="table caption-top">
-                <caption></caption>
                 <thead>
                     <tr>
                         <th scope="col">Foto</th>
@@ -35,10 +34,12 @@
                 <tbody>
                     @foreach ($user as $usuario)
                         <tr>
-                            <th scope="row"> <img src="{{ $usuario->foto_perfil ? app('firebase.storage')->getBucket()->object($usuario->foto_perfil)->signedUrl(Carbon\Carbon::now()->addSeconds(5)) : asset('/img/user-default.jpeg') }}" alt="" height="80px"></th>
+                            <th scope="row"> <img
+                                    src="{{ $usuario->foto_perfil? app('firebase.storage')->getBucket()->object($usuario->foto_perfil)->signedUrl(Carbon\Carbon::now()->addSeconds(5)): asset('/img/user-default.jpeg') }}"
+                                    alt="" height="80px"></th>
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->telefono }}</td>
-                            <td>{{$usuario->role_name()}}</td>
+                            <td>{{ $usuario->role_name() }}</td>
                             <td>
                                 @if (Cache::has('user-is-online-' . $usuario->id))
                                     <span class="text-success">Online</span>

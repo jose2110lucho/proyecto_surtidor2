@@ -1,9 +1,9 @@
-<table class="table table-hover table-head-fixed" id="table_vehiculos" width="100%">
+<table class="table table-sm table-hover table-head-fixed" id="table_vehiculos" width="100%">
     <thead class="table-light">
         <tr>
             <th>PLACA</th>
+            <th>CLIENTE</th>
             <th>TIPO</th>
-            <th>MARCA</th>
             <th>B-SISA</th>
             <th>ACCIONES</th>
         </tr>
@@ -44,6 +44,3 @@
         @endisset
     </tbody>
 </table>
-<div class="d-flex px-3 pt-3 flex-row-reverse">
-
-</div>

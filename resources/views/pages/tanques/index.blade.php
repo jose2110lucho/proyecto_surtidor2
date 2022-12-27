@@ -31,11 +31,22 @@
                                 <h3 class="card-title card-success pr-2">
                                     <strong>{{ 'Tanque: ' . $tanque->codigo . ' ' . ' ' }}</strong>
                                 </h3>
-                                <span
-                                    class="badge px-1  @if ($tanque->combustible == 'gasolina') bg-orange
-                                    @else bg-yellow @endif"
-                                    style="width: 60px;">
-                                    {{ $tanque->combustible }}
+                                @switch($tanque->combustible->tipo)
+                                    @case('gasolina')
+                                        <span class="badge px-1 bg-orange">
+                                        @break
+
+                                        @case('etanol')
+                                        <span class="badge px-1 bg-yellow">
+                                        @break
+
+                                        @case('diesel')
+                                        <span class="badge px-1 bg-red">
+                                        @break
+
+                                        @default
+                                    @endswitch
+                                    {{ $tanque->combustible->nombre }}
                                 </span>
                             </div>
                             <div class="card-tools">
@@ -47,49 +58,50 @@
                                 </a>
 
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="-minus"></i>
+                                    <i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row align-items-center">
-                            <div class="col-sm-4">
-                                <label>Capacidad: </label>
-                                <p>{{ $tanque->capacidad . ' litros' }}</p>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Capacidad: </label>
+                                    <p>{{ $tanque->capacidad . ' litros' }}</p>
+                                </div>
+
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-group text-center">
+                            <div class="col-sm-3">
+                                <div class="form-group text-left">
                                     <label>Ultima carga</label>
                                     <p>
                                         {{ is_null($tanque->fecha_carga) ? '- - -' : \Carbon\Carbon::parse($tanque->fecha_carga)->format('d/m/Y - h:i') }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-group text-right">
+                            <div class="col-sm-3">
+                                <div class="form-group text-left">
                                     <label>Estado</label>
                                     <p>
                                         {{ $tanque->estado ? 'Activo' : 'Inactivo' }}
                                     </p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="progress my-1" style="height: 2px;">
+                            <div class="col col-sm-3">
+                                <div class="progress my-1" style="height: 4px;">
                                     <div class="progress-bar bg-cyan "
                                         style="width:{{ ($tanque->cantidad_min * 100) / $tanque->capacidad }}%;"></div>
                                 </div>
-                                <div class="progress" style="height: 30px;">
-                                    <div class="progress-bar text-left p-2 progress-bar-animated 
+                                <div class="progress" style="height: 35px;" aria-valuemax="100">
+                                    <div class="progress-bar text-left p-2 progress-bar-animated  
                                     @if ($tanque->cantidad_disponible > $tanque->cantidad_min) bg-cyan
-                                    @else bg-red @endif"
+                                    @else bg-red @endif "
                                         style="width:{{ ($tanque->cantidad_disponible * 100) / $tanque->capacidad }}%">
-                                        {{ 'Quedan: ' . $tanque->cantidad_disponible . ' lts' }}
-
+                                        {{ round(($tanque->cantidad_disponible * 100) / $tanque->capacidad, 1) . '%' }}
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -98,4 +110,7 @@
         </div>
 
     </section>
+@stop
+
+@section('css')
 @stop

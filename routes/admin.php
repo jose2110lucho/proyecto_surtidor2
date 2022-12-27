@@ -3,14 +3,12 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 
-use App\Http\Controllers\Admin\HomeControllerAdmin;
-use App\Http\Controllers\EmpleadoController;
-
-Route::get('',[HomeControllerAdmin::class, 'index'])->name('admin.home');
-Route::resource('user',EmpleadoController::class)->names('modulo_administrativo.empleado');
+Route::get('',[HomeController::class, 'dashboard'])->name('admin.home');
+Route::resource('user',UserController::class)->names('modulo_administrativo.empleado');
 
 Route::resource('roles', RoleController::class)->names('admin.roles');
 
