@@ -23,11 +23,12 @@ use App\Http\Controllers\VehiculoController;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\UserBombaController;
-use App\Http\Controllers\VentaCombustibleController;
+//use App\Http\Controllers\VentaCombustibleController;
 
 
 use App\Http\Controllers\NotaVentaProductoController;
 use App\Http\Controllers\FacturaProductoController;
+use App\Http\Controllers\NotaVentaCombustibleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 
@@ -92,6 +93,23 @@ Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProd
 Route::get('factura_producto/{nota_venta_producto_id}/generateInvoice',[FacturaProductoController::class,'generateInvoice'])->name('factura_producto.generateInvoice');
 Route::get('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'create'])->name('factura_producto.create');
 Route::post('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'store'])->name('factura_producto.store');
+
+
+
+
+
+
+//------------------NotaVentaCombustible--------------------------
+Route::get('nota_venta_combustible',[NotaVentaCombustibleController::class,'index'])->name('nota_venta_combustible.index');
+Route::get('nota_venta_combustible/create',[NotaVentaCombustibleController::class,'create'])->name('nota_venta_combustible.create');
+Route::post('nota_venta_combustible',[NotaVentaCombustibleController::class,'store'])->name('nota_venta_combustible.store');
+Route::get('nota_venta_combustible/{nota_venta_combustible_id}/show',[NotaVentaCombustibleController::class,'show'])->name('nota_venta_combustible.show');
+
+
+
+
+
+
 
 //-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);

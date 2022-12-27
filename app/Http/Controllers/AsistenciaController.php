@@ -6,7 +6,8 @@ use App\Models\Asistencia;
 use Illuminate\Http\Request;
 use App\Models\Turno;
 use App\Models\UserTurno;
-
+use App\Models\UserBomba;
+use App\Models\Bomba;
 use Asistencias;
 use DateTime;
 use DateTimeZone;
@@ -126,6 +127,12 @@ class AsistenciaController extends Controller
         $asistencia->fecha_salida = $DateAndTime;
         $asistencia->save();
         $turno = Turno::find($turno_id);
+
+        $bomba_id = UserBomba::where('user_id', '=', $user_id)->orderBy('fecha_asignacion', 'desc')->first()->bomba_id;
+        $bomba = Bomba::find($bomba_id);
+        $bomba->libre = true;
+        $bomba->save();
+
         return redirect()->route('asistencia.create', ['turno' => $turno]);
     }
 

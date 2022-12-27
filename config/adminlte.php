@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Surtidor Bicentenario ',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -448,31 +448,31 @@ return [
             'icon'    => 'fas fa-fw fa-dollar-sign',
             //'can'     => 'venta.combustible.create',
             'submenu' => [
+                
                 [
-                    'text' => 'Combustible',
-                    'url'  => 'venta/combustible/bomba',
+                    'text'    => 'Combustible',
                     'icon'    => 'fas fa-fire',
+                    'submenu' => [
+                        [
+                            'text' => 'Nuevo nota de venta',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'nota_venta_combustible/create',
+                        ],
+                        [
+                            'text' => 'Lista de notas de venta',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'nota_venta_combustible',
+                        ],
+                    ],
                 ],
+
+
                 [
                     'text'    => 'Productos',
                     'icon'    => 'fas fa-fw fa-shopping-cart',
                     'url'  => 'nota_venta_producto',
                     'submenu' => [
-                        /* [
-                            'text' => 'Nuevo nota de venta',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'nota_venta_producto/create',
-                        ],
-                        [
-                            'text' => 'Reporte(s)',
-                            'icon'    => 'fas fa-fw fa-file-invoice-dollar',
-                            'url'  => 'ventas-productos/reporte',
-                        ],
-                        [
-                            'text' => 'Graficos',
-                            'icon'    => 'fas fas fa-fw fa-chart-pie',
-                            'url'  => 'ventas-productos/graficos',
-                        ], */
+                        
                         [
                             'text' => 'Nuevo nota de venta',
                             'icon'    => '',
