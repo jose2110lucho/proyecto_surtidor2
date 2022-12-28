@@ -12,6 +12,14 @@ use App\Models\Tanque;
 use App\Models\UserBomba;
 use App\Models\Combustible;
 
+
+
+use Illuminate\Support\MessageBag;
+
+
+
+
+
 use DateTime;
 use DateTimeZone;
 
@@ -39,13 +47,19 @@ class NotaVentaCombustibleController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $bomba_id = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->first()->bomba_id;
-        $bomba = Bomba::find($bomba_id);
-        $tanque = Tanque::where('id', '=', $bomba->tanque_id)->first();
-        $combustible = Combustible::find($tanque->combustible_id);
-        $lista_vehiculos = Vehiculo::all();
-        
-        return view('modulo_ventas/nota_venta_combustible/create',['lista_vehiculos'=>$lista_vehiculos,'bomba'=>$bomba,'tanque'=>$tanque,'combustible'=>$combustible]);
+        $user_bomba = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->get();
+        if(count($user_bomba) == 0){
+            return view('modulo_ventas/nota_venta_combustible/create',['sin_bomba_asignada'=>true]);
+        }else{
+            $bomba_id = $user_bomba->first()->bomba_id;
+            $bomba = Bomba::find($bomba_id);
+            $tanque = Tanque::where('id', '=', $bomba->tanque_id)->first();
+            $combustible = Combustible::find($tanque->combustible_id);
+            $lista_vehiculos = Vehiculo::all();
+            
+            return view('modulo_ventas/nota_venta_combustible/create',['lista_vehiculos'=>$lista_vehiculos,'bomba'=>$bomba,'tanque'=>$tanque,'combustible'=>$combustible,'sin_bomba_asignada'=>false]);
+        }
+       
     }
 
     /**
@@ -65,8 +79,12 @@ class NotaVentaCombustibleController extends Controller
         if ($vehiculo_id == "0") {
             return redirect('nota_venta_combustible/create');
         } else {
+
+            $user = Auth::user();
+            $user_bomba_id = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->first()->id;
+            $user_bomba = UserBomba::find($user_bomba_id);
+            $tanque = $user_bomba->bomba->tanque;
             
-            $tanque = Tanque::find($request->tanque_id);
             if($tanque->cantidad_disponible - $request->cantidad_combustible > 0){
 
                 $nota_venta_combustible = new NotaVentaCombustible();
@@ -74,6 +92,7 @@ class NotaVentaCombustibleController extends Controller
                 $nota_venta_combustible->total = $request->cantidad_combustible * $request->precio;
                 $nota_venta_combustible->cantidad_combustible = $request->cantidad_combustible;
                 $nota_venta_combustible->vehiculo_id = $vehiculo_id;
+                $nota_venta_combustible->user_bombas_id = $user_bomba_id;
                 $nota_venta_combustible->save();
 
                 $tanque->cantidad_disponible = $tanque->cantidad_disponible - $request->cantidad_combustible;
@@ -85,15 +104,14 @@ class NotaVentaCombustibleController extends Controller
                     $cliente = Cliente::find($vehiculo->cliente_id);
                     $cliente->puntos =  $cliente->puntos + 1;
                     $cliente->save();
-                }
 
- 
+                }
+                
                 return redirect('nota_venta_combustible');
 
             }else{
-
-                return redirect()->route('nota_venta_combustible.create');
-                
+                $vehiculo = Vehiculo::find($vehiculo_id);
+                return redirect()->route('nota_venta_combustible.create')->with(['vehiculo_id' => $vehiculo->id.'`'.$vehiculo->b_sisa])->withErrors(['errors' => 'cantidad de combustible insuficiente!']);
             }
      
         }    
@@ -107,18 +125,22 @@ class NotaVentaCombustibleController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
-        $bomba_id = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->first()->bomba_id;
-        $bomba = Bomba::find($bomba_id);
+        
+        
+        /* $bomba = Bomba::find($bomba_id);
         $tanque = Tanque::where('id', '=', $bomba->tanque_id)->first();
-        $combustible = Combustible::find($tanque->combustible_id);
+        $combustible = Combustible::find($tanque->combustible_id); */
 
-        $nota_venta_combustible = NotaVentaCombustible::join('vehiculos', 'nota_venta_combustible.vehiculo_id', 'vehiculos.id')
+        /* $nota_venta_combustible = NotaVentaCombustible::join('vehiculos', 'nota_venta_combustible.vehiculo_id', 'vehiculos.id')
         ->join('clientes','vehiculos.cliente_id','clientes.id')
         ->where('nota_venta_combustible.id','=',$id)
-        ->select('nota_venta_combustible.*', 'vehiculos.placa','clientes.nombre')->first();
+        ->select('nota_venta_combustible.*', 'vehiculos.placa','clientes.nombre')->first(); */
         
-        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','bomba','tanque','combustible','user'));
+        $nota_venta_combustible = NotaVentaCombustible::find($id);
+        $combustible =  $nota_venta_combustible->userBombas->bomba->tanque->combustible;
+        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','combustible'));
+
+       // return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','bomba','tanque','combustible','user'));
     }
 
     /**

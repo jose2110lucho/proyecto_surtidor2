@@ -61,9 +61,27 @@
                                     <i class="fa fa-pen"></i>
                                 </a>
 
+                                <a class="btn btn-tool" >
+                                    <form action="{{route('bombas.liberar',[$bomba->id])}}" method="POST" >
+                                        @csrf
+                                        {{ method_field('PUT') }}
+                                        <button type="submmit" class="btn btn-tool">
+                                            
+                                            @if ($bomba->libre)
+                                                <i class="fas fa-solid fa-lock-open"></i>
+                                            @else
+                                                 <i class="fas fa-solid fa-lock"></i> 
+                                            @endif
+
+                                        </button>
+                                    </form>
+                                </a>
+
+                                
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
+                                
                             </div>
                         </div>
                     </div>
@@ -75,6 +93,16 @@
                                     <p type="text" class="">{{ $bomba->estado ? 'Activo' : 'Inactivo' }}</p>
                                 </div>
                             </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Asignacion</label>
+                                    <p type="text" class="">{{ $bomba->libre ? 'libre' : 'ocupado' }}</p>
+                                </div>
+                            </div>
+
+
+
                         </div>
                    
                     </div>

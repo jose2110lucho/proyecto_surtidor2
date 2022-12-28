@@ -15,11 +15,16 @@ class NotaVentaCombustible extends Migration
     {
         Schema::create('nota_venta_combustible', function (Blueprint $table) {
             $table->id(); 
+            
             $table->dateTime('fecha');
             $table->decimal('total',8,2);
+            
             $table->decimal('cantidad_combustible',8,2);
             $table->integer('vehiculo_id')->unsigned();
             $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onDelete('cascade')->onUpdate('cascade');
+//agregado por orden de gerald
+            $table->integer('user_bombas_id')->unsigned()->nullable();
+            $table->foreign('user_bombas_id')->references('id')->on('user_bombas')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });  
