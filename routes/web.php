@@ -133,12 +133,18 @@ Route::resource('vehiculos', VehiculoController::class);
 Route::get('vehiculos/reportes/export-html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
 //---------------BOMBAS------------//
 Route::resource('bombas', BombaController::class);
+
+Route::put('bombas/{bomba_id}/liberar',[BombaController::class,'liberarBomba'])->name('bombas.liberar');
+
+
 //Route::resource('cargas', CargaController::class);
+
 Route::resource('categorias', CategoriaController::class);
 Route::resource('combustibles', CombustibleController::class);
 
 Route::get('/fetch/combustibles/niveles',[CombustibleController::class, 'nivelesCombustible'])->name('fetch.combustibles.niveles');
 Route::resource('pedidos', PedidoController::class);
+
 
 //-----------------NOTACARGA----------------------//
 Route::get('cargas/index',[NotaCargaController::class,'index'])->name('cargas.index');
@@ -146,6 +152,7 @@ Route::get('cargas/create',[NotaCargaController::class,'create'])->name('cargas.
 Route::post('cargas',[NotaCargaController::class,'store'])->name('cargas.store');
 //-----------------DETALLECARGA----------------------//
 Route::get('cargas/show/{nota_carga_id}',[NotaCargaController::class,'show'])->name('cargas.show');
+
 
 //Bombas Reportes//
 Route::get('/pages/bombas/export',[BombaController::class, 'exportBomba'])->name('bombas.export');

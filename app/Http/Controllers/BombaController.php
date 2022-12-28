@@ -136,4 +136,12 @@ class BombaController extends Controller
 
     }
 
+    public function liberarBomba( Request $request, $id ){
+        
+        $bomba = Bomba::find($id);
+        $bomba->libre = true;
+        $bomba->save();
+        return redirect()->route('bombas.index');
+    }
+
 }

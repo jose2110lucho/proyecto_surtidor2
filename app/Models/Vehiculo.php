@@ -21,4 +21,9 @@ class Vehiculo extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
+
+    public function NotaVentaCombustible()
+    {
+        return $this->hasMany(NotaVentaCombustible::class);
+    }
 }
