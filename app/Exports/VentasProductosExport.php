@@ -2,18 +2,33 @@
 
 namespace App\Exports;
 
-use App\Models\NotaVentaProducto;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class VentasProductosExport implements FromCollection
+class VentasProductosExport implements FromQuery, ShouldAutoSize
 {
     use Exportable;
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function collection()
+    public function query()
     {
-        return NotaVentaProducto::all();
+        return DB::table('nota_venta_producto')
+            ->join('clientes', 'nota_venta_producto.cliente_id', '=', 'clientes.id')
+            ->select(['nota_venta_producto.id', 'nota_venta_producto.total','clientes.nombre as cliente'])
+            ->orderBy('id');
     }
+
+    public function headings(): array
+    {
+        return [
+            'ID',
+            'FECHA',
+            'TOTAL',
+            'CLIENTE',
+        ];
+    }
+    
 }

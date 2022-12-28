@@ -7,45 +7,22 @@
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-md-6">
+                    @include('modulo_ventas.nota_venta_combustible.partials.grafica_monto_total')
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">Usuarios activos</div>
                         </div>
-                        <div class="card-body"><canvas id="combustibles_chart"></canvas></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Ultimas compras</div>
-                        </div>
-                        <div class="card-body"><canvas id="myChart"></canvas></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Niveles de combustible</div>
-                        </div>
-                        <div class="card-body"><canvas id="nivel_combustibles_chart"></canvas></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Usuarios activos</div>
-                        </div>
-                        <div class="card-body">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Rol</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
+                        <div class="card-body p-0">
+                            <table class="table table-sm">
                                 <tbody>
                                     @foreach ($users_activos as $user)
                                         <tr>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->role_name() }}</td>
-                                            <td>{{ $user->estado }}</td>
+                                            <td class="align-middle mx-auto"><i
+                                                    class="fas fa-circle text-sm text-green my-auto mx-auto"></i></td>
+                                            <td>{{ $user->name }}<p class="text-secondary my-auto">
+                                                    {{ $user->role_name() }}</p>
+                                            </td>
+                                            <td class="align-middle mx-auto">bomba: </td>
                                         </tr>
                                     @endforeach
 
@@ -53,10 +30,33 @@
                             </table>
                         </div>
                     </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Niveles de combustible</div>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool m-n2" id="export_chart_nivel_combustibles">
+                                    <i class="fas fa-file-download fa-lg"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-1">
+                            <div class="container">
+                                <canvas id="chart_nivel_combustibles"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+                    @include('modulo_ventas.nota_venta_producto.partials.grafica_monto_promedio')
                 </div>
             </div>
         </div>
-        <form action="{{ route('fetch.ventas_productos.monto_promedio.mes') }}" method="post">
+        <form action="{{ route('fetch.ventas_combustibles.monto_promedio.mes') }}" method="post">
             @csrf
             <div class="form-group">
                 <label for=""></label>
@@ -132,27 +132,14 @@
 
 
 @section('js')
+    @include('modulo_ventas.nota_venta_combustible.scripts.script_monto_total')
+    @include('modulo_ventas.nota_venta_producto.scripts.script_monto_promedio')
     <script>
         var combustibles = [];
         var cantidades = [];
         var opacidad = 0.6;
 
-        fetch('{{ route('fetch.combustibles.niveles') }}', {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json, text-plain, */*",
-                },
-            })
-            .then(response => response.json())
-            .then((data) => {
-                data.forEach(element => {
-                    combustibles.push(element.tipo);
-                    cantidades.push(parseInt(element.cantidad_disponible));
-                });
-                generarGrafica();
-            });
-
-        const data = {
+        var data = {
             labels: combustibles,
             datasets: [{
                 label: 'My First dataset',
@@ -169,20 +156,49 @@
             }]
         };
 
-        const config = {
+        var config = {
             type: 'polarArea',
             data: data,
             options: {
-                responsive: true,
+                maintainAspectRatio: false
             }
         };
 
-        function generarGrafica() {
-            new Chart(
-                document.getElementById('nivel_combustibles_chart'),
-                config
-            );
+        var chartNivelCombustibles = new Chart(
+            document.getElementById('chart_nivel_combustibles'),
+            config
+        );
+
+        getDatos();
+
+        function getDatos() {
+            fetch('{{ route('fetch.combustibles.niveles') }}', {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                    },
+                })
+                .then(response => response.json())
+                .then((json) => {
+                    json.forEach(element => {
+                        combustibles.push(element.tipo);
+                        cantidades.push(parseInt(element.cantidad_disponible));
+                    });
+
+                    chartNivelCombustibles.data.labels = combustibles;
+                    chartNivelCombustibles.data.datasets[0].data = cantidades;
+                    chartNivelCombustibles.height = 300;
+                    chartNivelCombustibles.update();
+                    var image = chartNivelCombustibles.toBase64Image();
+                });
         }
+
+        $('#export_chart_nivel_combustibles').on('click', function(a) {
+            var a = document.createElement('a');
+            a.href = chartNivelCombustibles.toBase64Image();
+            a.download = 'Gráfico - Monto promedio por venta.png';
+            a.click();
+        })
     </script>
 
     <script></script>

@@ -85,42 +85,37 @@ Route::post('nota_venta_producto',[NotaVentaProductoController::class,'store'])-
 Route::get('ventas-productos/reportes/export-html', [NotaVentaProductoController::class, 'exportHTML'])->name('ventas_productos.export.html');
 Route::post('/fetch/ventas-productos/monto-total-mes',[NotaVentaProductoController::class, 'ventasMes'])->name('fetch.ventas_productos.mes');
 Route::post('/fetch/ventas-productos/monto-promedio-x-venta',[NotaVentaProductoController::class, 'montoPromedioVentaMes'])->name('fetch.ventas_productos.monto_promedio.mes');
+
 //-----------------DETALLENOTAVENTAPRODUCTO-----------------//
 Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProductoController::class,'show'])->name('detalle_nota_venta_producto.show');
 
 //------------------Generar Factura--------------------------
-
 Route::get('factura_producto/{nota_venta_producto_id}/generateInvoice',[FacturaProductoController::class,'generateInvoice'])->name('factura_producto.generateInvoice');
 Route::get('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'create'])->name('factura_producto.create');
 Route::post('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'store'])->name('factura_producto.store');
-
-
-
-
-
 
 //------------------NotaVentaCombustible--------------------------
 Route::get('nota_venta_combustible',[NotaVentaCombustibleController::class,'index'])->name('nota_venta_combustible.index');
 Route::get('nota_venta_combustible/create',[NotaVentaCombustibleController::class,'create'])->name('nota_venta_combustible.create');
 Route::post('nota_venta_combustible',[NotaVentaCombustibleController::class,'store'])->name('nota_venta_combustible.store');
 Route::get('nota_venta_combustible/{nota_venta_combustible_id}/show',[NotaVentaCombustibleController::class,'show'])->name('nota_venta_combustible.show');
-
-
-
-
-
-
+Route::get('nota_venta_combustible/reportes/export-html', [NotaVentaCombustibleController::class, 'exportHTML'])->name('ventas_combustibles.export.html');
+Route::get('ventas-combustibles/graficas',[NotaVentaCombustibleController::class,'graficas'])->name('ventas_combustibles.graficas');
+Route::post('/fetch/ventas-combustibles/monto-total-mes',[NotaVentaCombustibleController::class, 'ventasMes'])->name('fetch.ventas_combustibles.mes');
+Route::post('/fetch/ventas-combustibles/monto-promedio-x-venta',[NotaVentaCombustibleController::class, 'montoPromedioVentaMes'])->name('fetch.ventas_combustibles.monto_promedio.mes');
 
 //-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/desactivar', [ProveedorController::class, 'desactivar']);
 Route::get('/proveedor/{id}/activar', [ProveedorController::class, 'activar']);
+
 //-----------------CLIENTES--------------------//
 Route::resource('clientes', ClienteController::class)->middleware('auth');
 Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->name('clientes.canjeo');
 Route::patch('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
 Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
 Route::post('clientes/{cliente}/vehiculos', [ClienteController::class, 'storeVehiculo'])->name('clientes.vehiculos.store');
+
 //-----------------ASISTENCIA------------------//
 Route::get('asistencia', [AsistenciaController::class,'index'])->name('asistencia.index'); 
 Route::get('asistencia/{turno}/create', [AsistenciaController::class,'create'])->name('asistencia.create'); 
@@ -135,7 +130,7 @@ Route::put('tanques/{tanque}/llenar', [TanqueController::class, 'llenar'])->name
 Route::resource('premios', PremioController::class)->middleware('auth');
 //-----------------VEHICULOS-----------------//
 Route::resource('vehiculos', VehiculoController::class);
-Route::get('vehiculos/export-html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
+Route::get('vehiculos/reportes/export-html', [VehiculoController::class, 'exportHTML'])->name('vehiculos.export.html');
 //---------------BOMBAS------------//
 Route::resource('bombas', BombaController::class);
 //Route::resource('cargas', CargaController::class);
