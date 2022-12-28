@@ -1,11 +1,8 @@
 @extends('layouts.reportes')
 
-@section('title', 'Reporte de ventas de productos')
+@section('title', 'Reporte de ventas de combustibles')
 
-@section('table-title', 'VENTAS DE PRODUCTOS')
-{{-- <div class="d-grid gap-2">
-    <a class="btn btn-success" href="{{ route('nota_venta_producto.create') }}"> crear </a>
-</div> --}}
+@section('table-title', 'VENTAS DE COMBUSTIBLES')
 
 @section('filters')
     <div class="col-auto mb-n5">
@@ -62,7 +59,7 @@
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: "{{ route('ventas_productos.reportes') }}",
+                    url: "{{ route('nota_venta_combustible.index') }}",
                     data: function(d) {
                         d.buscar = $('#buscar').val();
                         d.start_date = $('#start_date').val();
@@ -78,13 +75,13 @@
                 columns: [{
                         data: 'fecha',
                         name: 'fecha',
-                        searchable: false,
+                        searchable: true,
                         orderable: true,
                     },
                     {
                         data: 'total',
                         name: 'total',
-                        searchable: false,
+                        searchable: true,
                         orderable: true
                     },
                     {
@@ -96,8 +93,8 @@
                     {
                         data: 'actions',
                         name: 'actions',
-                        searchable: false,
-                        orderable: false
+                        searchable: true,
+                        orderable: true
                     },
                 ],
 
@@ -165,7 +162,7 @@
                                 className: 'btn btn-secondary btn-sm',
                                 action: function(e, dt, node, config) {
                                     window.location.href =
-                                        `{{ route('ventas_productos.export.html') }}`;
+                                        `{{ route('ventas_combustibles.export.html') }}`;
                                 }
                             }
                         ]
