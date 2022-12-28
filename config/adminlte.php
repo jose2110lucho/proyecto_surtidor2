@@ -376,7 +376,7 @@ return [
                         [
                             'text' => 'Lista de Cargas',
                             'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'cargas',
+                            'url'  => 'cargas/index',
                         ],
 
 
@@ -447,20 +447,25 @@ return [
             'icon'    => 'fas fa-fw fa-dollar-sign',
             //'can'     => 'venta.combustible.create',
             'submenu' => [
-                
+
                 [
                     'text'    => 'Combustible',
                     'icon'    => 'fas fa-fire',
                     'submenu' => [
                         [
                             'text' => 'Nuevo nota de venta',
-                            'icon'    => 'fas fa-fw fa-plus',
+                            'icon'    => '',
                             'url'  => 'nota_venta_combustible/create',
                         ],
                         [
-                            'text' => 'Lista de notas de venta',
-                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'text' => 'Reporte(s)',
+                            'icon'    => '',
                             'url'  => 'nota_venta_combustible',
+                        ],
+                        [
+                            'text' => 'Gráficas',
+                            'icon'    => '',
+                            'url'  => 'ventas-combustibles/graficas',
                         ],
                     ],
                 ],
@@ -471,9 +476,9 @@ return [
                     'icon'    => 'fas fa-fw fa-shopping-cart',
                     'url'  => 'nota_venta_producto',
                     'submenu' => [
-                        
+
                         [
-                            'text' => 'Nuevo nota de venta',
+                            'text' => 'Registrar venta',
                             'icon'    => '',
                             'url'  => 'nota_venta_producto/create',
                         ],

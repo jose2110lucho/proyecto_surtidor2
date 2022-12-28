@@ -4,9 +4,9 @@ c_detalle int = 1;
 venta_id int;
 nro_detalles int = 0;
 producto_id int;
-producto_precio int;
+producto_precio decimal(8,2);
 producto_cantidad int;
-monto_total int = 0;
+monto_total decimal(8,2) = 0;
 fecha timestamp = '2022-01-01';
 BEGIN while c_nota <= 2000 LOOP monto_total = 0;
 c_detalle = 1;
@@ -22,6 +22,7 @@ LIMIT 1;
 monto_total = (producto_cantidad * producto_precio) + monto_total;
 INSERT INTO detalle_nota_venta_producto (
         cantidad,
+        subtotal,
         nota_venta_producto_id,
         producto_id,
         created_at,
@@ -29,6 +30,7 @@ INSERT INTO detalle_nota_venta_producto (
     )
 VALUES (
         producto_cantidad,
+        producto_cantidad * producto_precio,
         c_nota,
         producto_id,
         NOW(),

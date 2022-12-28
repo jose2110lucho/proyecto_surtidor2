@@ -1,90 +1,58 @@
-@extends('adminlte::page')
+@extends('layouts/master')
 
-@section('title', 'Carga')
+@section('content_header')
+<h1>Notas de Compras de Combustibles</h1>
+@stop
 
 @section('content')
-    <section class="content">
-        <div class="container-fluid p-4">
-            <!-- SELECT2 EXAMPLE -->
-            <div class="card">
-                <div class="bg-purple p-3">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h3 class="px-3 pt-3">
-                            <strong>CARGA</strong>
-                        </h3>
-                        <p class="px-3 text-sm">
-                            LISTA DE CARGAS REGISTRADAS
-                        </p>
-                    </div>
-                    <div class="p-3">
-                        <span class="fa fa-battery-quarter fa-4x"></span>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <!-- SELECT2 EXAMPLE -->
-            @foreach ($cargas as $carga)
-                <div class="card my-4">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="card-title card-success pr-2">
-                                    <strong>{{ 'Codigo: ' . $carga->codigo . ' ' . ' ' }}</strong>
-                                </h3>
-                               
-                            </div>
-                            <div class="card-tools">
-                                <a class="btn btn-tool" href="{{ route('cargas.show', $carga) }}">
-                                    <i class="fa fa-eye"></i>
-                                </a>
 
-                                <a class="btn btn-tool" href="{{ route('cargas.edit', $carga) }}">
-                                    <i class="fa fa-pen"></i>
-                                </a>
 
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Fecha</label>
-                                <p type="text" class="">{{ $carga->fecha }}</p>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Cantidad</label>
-                                    <p type="text" class="">{{ $carga->cantidad}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Precio Unitario</label>
-                                    <p type="text" class="">{{ $carga->precio_unitario }}</p>
-                                </div>
-                            </div>
+<div class="d-grid gap-2">
+    <a class="btn btn-success" href="{{ route('cargas.create') }}"> crear </a>
+</div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Precio Total</label>
-                                    <p type="text" class="">{{ $carga->precio_total }}</p>
-                                </div>
-                            </div>
+<div class="table-responsive">
+    <table class="table">
+        <table class="table caption-top">
+            <caption></caption>
+            <thead>
+              <tr>
+                
+                <th scope="col">ID</th>
+                <th scope="col">Combustible</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Total</th>
+                <th scope="col">Accion</th>
 
+              </tr>
+            </thead>
+            <tbody>
+                @foreach ($lista_nota_carga as $nota_carga)
+                  <tr>
+                    <th scope="row">{{$nota_carga->id}}</th> 
+                    <td >{{$nota_carga->nombre}}</td>
+                    <td>{{$nota_carga->fecha}}</td>
+                    <td>{{$nota_carga->total}}</td>
+              
+
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
                             
-                        </div>
-                       
-                    </div>
-                </div>
-            @endforeach
-        </div>
-        <!-- /.container-fluid -->
-    </section>
+                          <a style="text-align: right" href="{{ url('cargas/show/'. $nota_carga->id) }}"
+                            class="btn btn-success">
+                            <i class="fa fa-eye"></i>
+                          </a>
+
+                         </div>
+                    </td>
+                  </tr>  
+                @endforeach  
+            </tbody>
+          </table>
+    </table>
+  </div>
+
 @stop
-<!--- en el index solo va a mostrar los datos de ID Fecha cantidad(pedida) total     accion el show y muestra los detalles
-    del pedido que será detalle_tanque--->
+
+
+

@@ -39,13 +39,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($lista_productos as $producto)
+                                @foreach ($detalles as $detalle)
                                 <tr>
-                                    <td>{{$producto->producto_id}}</td>
-                                    <td>{{$producto->nombre}}</td>
-                                    <td>{{$producto->cantidad}}</td>
-                                    <td>{{$producto->precio_venta}}</td>
-                                    <td>{{$producto->cantidad*$producto->precio_venta}}</td>
+                                    <td>{{$detalle->producto_id}}</td>
+                                    <td>{{$detalle->nombre}}</td>
+                                    <td>{{$detalle->cantidad}}</td>
+                                    <td>{{$detalle->precio_venta}}</td>
+                                    <td>{{$detalle->subtotal}}</td>
                                 </tr> 
                                 @endforeach
                             </tbody>

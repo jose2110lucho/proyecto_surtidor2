@@ -1,10 +1,11 @@
 @extends('layouts/master')
 
 @section('content_header')
-<h1>Notas de Ventas de Combustible</h1>
+    <h1>Notas de Ventas de Combustible</h1>
 @stop
 
 @section('content')
+
 
 
 <div class="d-grid gap-2">
@@ -54,5 +55,5 @@
     </table>
   </div>
 
-@stop
 
+@stop

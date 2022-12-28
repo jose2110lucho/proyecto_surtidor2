@@ -26,7 +26,7 @@ class VentaCombustibleController extends Controller
         $user = auth()->user();
         $userbombas = UserBomba::select('bomba_id')-> where('user_id', $user->id)->get();
 
-        $bombas = Bomba:: whereIn('id',$userbombas)->get();
+        $bombas = Bomba::whereIn('id',$userbombas)->get();
         return view('pages.ventas_combustible.bombas_list', compact('bombas'));
     }
 
