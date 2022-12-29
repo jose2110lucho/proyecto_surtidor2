@@ -2,7 +2,18 @@
 
 @section('content_header')
 
+@if ($errors->has('errors'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ $errors->first('errors') }}</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 
+@if ($sin_bomba_asignada)
+    <h1>no se le  asigno ninguna bomba</h1>
+@else
 <div class="card">
     <div class="bg-black p-3">
        <div class="d-flex justify-content-between">
@@ -22,10 +33,14 @@
            </div>
          
        </div>
-   </div>
+   </div> 
+</div>  
+@endif
+
 @stop
 
 @section('content')
+    @if ($sin_bomba_asignada == false)
     <div class="card">
         
         <form action="{{route('nota_venta_combustible.store')}}" method="POST">
@@ -41,9 +56,9 @@
                                     <option value="0">seleccionar</option>
                                     
                                     @foreach ($lista_vehiculos as $vehiculo)
-            
-                                        <option value="{{ $vehiculo->id.'`'.$vehiculo->b_sisa }}">{{ $vehiculo->placa}}</option>
-            
+                                        
+                                            <option value="{{ $vehiculo->id.'`'.$vehiculo->b_sisa }}">{{ $vehiculo->placa}}</option>
+
                                     @endforeach
                                 </select>
                         </div>
@@ -53,7 +68,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="cantidad_combustible" id="label_confirmar"  hidden>cantidad de combustible(litros)</label>
-                        <input name="cantidad_combustible" type="number" class="form-control" id="cantidad_combustible" placeholder="introduzca cantidad de combustible" required hidden>
+                        <input name="cantidad_combustible" type="number" class="form-control" id="cantidad_combustible" placeholder="introduzca cantidad de combustible"  required hidden>
                     </div>
                 </div>
                 <!--fin campo cantidad de combustible-->      
@@ -78,13 +93,14 @@
                 <!--aqui termina el codigo del B-SISA-->
                 <!--aqui empieza el codigo del boton guardar-->
                 <div class="d-flex justify-content-end">
-                    <a href="{{ url('nota_venta_producto') }}" class="btn btn-secondary  mr-2">Atras</a>
+                    <a href="{{ url('nota_venta_combustible') }}" class="btn btn-secondary  mr-2">Atras</a>
                     <button class="btn btn-success" id="button_confirmar" type="submit" hidden>Confirmar</button>  
                 </div>
                 <!--aqui termina el codigo del boton guardar-->
             </div>
         </form>
-    </div>
+    </div> 
+    @endif
 
 @stop
 
@@ -159,6 +175,17 @@
         
         $(document).ready(function() {
             $('.js-example-basic-single').select2(); 
+            let vehiculo = "{{session('vehiculo_id')}}";
+            console.log(vehiculo);
+
+            if(vehiculo != ''){
+                $('#vehiculo_id').val(vehiculo).trigger('change');
+            }
+            
+            
+
+
+
         });
 
         //-------------------------------------------------------------------------------------------------------------------------        

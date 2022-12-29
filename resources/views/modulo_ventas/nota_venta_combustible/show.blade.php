@@ -12,25 +12,25 @@
             <!--inicio campo nombre del cliente-->
             <div class="mb-3">
                 <label for="cliente" class="form-label">cliente</label>
-                <p type="text" class="form-control">{{ $nota_venta_combustible->nombre }}</p>
+                <p type="text" class="form-control">{{ $nota_venta_combustible->vehiculo->cliente->nombre }}</p>
             </div>
             <!--fin campo nombre del cliente-->
             <!--inicio campo nombre del vendedor-->
             <div class="mb-3">
                 <label for="cliente" class="form-label">vendedor</label>
-                <p type="text" class="form-control">{{ $user->name }}</p>
+                <p type="text" class="form-control">{{ $nota_venta_combustible->userBombas->user->name }}</p>
             </div>
             <!--fin campo nombre del vendedor-->
             <!--inicio campo nombre del bomba-->
             <div class="mb-3">
                 <label for="bomba" class="form-label">bomba</label>
-                <p type="text" class="form-control">{{ $bomba->nombre }}</p>
+                <p type="text" class="form-control">{{ $nota_venta_combustible->userBombas->bomba->nombre }}</p>
             </div>
             <!--fin campo nombre del bomba-->
             <!--inicio campo nombre del tanque-->
             <div class="mb-3">
                 <label for="tanque" class="form-label">tanque</label>
-                <p type="text" class="form-control">{{ $tanque->descripcion }}</p>
+                <p type="text" class="form-control">{{ $nota_venta_combustible->userBombas->bomba->tanque->descripcion }}</p>
             </div>
             <!--fin campo nombre del tanque-->
             <!--inicio campo fecha-->
@@ -79,6 +79,10 @@
                 </a>
             </div> 
         </div>     
+
+               
+
+
     <!--fin campo botones-->
     </div>
 </div>

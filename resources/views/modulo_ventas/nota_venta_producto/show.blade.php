@@ -89,14 +89,7 @@
                 </div> 
             </div>
             
-        @endif 
-
-
-        
-
-
-        
-        
+        @endif        
     <!--fin campo botones-->
     </div>
 </div>

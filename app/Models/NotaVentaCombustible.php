@@ -14,8 +14,25 @@ class NotaVentaCombustible extends Model
         'total',
         'cantidad_combustible',
         'vehiculo_id',
+        'user_bombas_id',   //colocado por orden de gerald
+
       ];
+
+      public function userBombas()
+    {
+        return $this->belongsTo(UserBomba::class);
+    }
+
+
+    public function vehiculo()
+    {
+        return $this->belongsTo(Vehiculo::class);
+    }
 }
 
 
-            
+
+
+
+
+

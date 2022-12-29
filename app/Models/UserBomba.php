@@ -15,8 +15,18 @@ class UserBomba extends Model
         'bomba_id',
     ];
 
-    public function Bomba()
+    public function bomba()
     {
         return $this->belongsTo('App\Models\Bomba','bomba_id');
+    }
+
+    public function notaVentaCombustible()
+    {
+        return $this->hasMany(NotaVentaCombustible::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
