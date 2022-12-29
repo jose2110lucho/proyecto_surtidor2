@@ -3,14 +3,14 @@
 
     function chartMontoPromediolMes() {
         const ctx = document.getElementById('chart_monto_promedio_mes');
-        var montos = [];
-        var meses = [];
+        var values = [];
+        var labels = [];
 
         var data = {
-            labels: meses,
+            labels: labels,
             datasets: [{
                 label: 'Monto de dinero (bs)',
-                data: montos,
+                data: values,
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                 ],
@@ -48,11 +48,11 @@
                 .then(response => response.json())
                 .then((json) => {
                     json.forEach(element => {
-                        meses.push(element.mes);
-                        montos.push(parseFloat(element.monto_promedio));
+                        labels.push(element.mes);
+                        values.push(parseFloat(element.monto_promedio));
                     });
-                    chart_monto_promedio_mes.data.labels = meses;
-                    chart_monto_promedio_mes.data.datasets[0].data = montos;
+                    chart_monto_promedio_mes.data.labels = labels;
+                    chart_monto_promedio_mes.data.datasets[0].data = values;
                     chart_monto_promedio_mes.update();
                     $("#loading_chart_monto_promedio").find(".spinner-border").remove();
                     var image = chart_monto_promedio_mes.toBase64Image();
@@ -70,8 +70,8 @@
 
         $('#rango_chart_monto_promedio').on('change', function() {
             $("#loading_chart_monto_promedio").prepend('<div class="spinner-border spinner-border-sm"></div>');
-            montos = [];
-            meses = [];
+            values = [];
+            labels = [];
 
             request = {
                 'rango': $('#rango_chart_monto_promedio').val(),

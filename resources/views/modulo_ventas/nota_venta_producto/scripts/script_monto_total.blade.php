@@ -3,14 +3,14 @@
 
     function chartMontoTotalMes() {
         const ctx = document.getElementById('chart_monto_total_mes');
-        var montos = [];
-        var meses = [];
+        var values = [];
+        var labels = [];
 
         var data = {
-            labels: meses,
+            labels: labels,
             datasets: [{
                 label: 'Monto de dinero (bs)',
-                data: montos,
+                data: values,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -59,12 +59,12 @@
                 .then(response => response.json())
                 .then((json) => {
                     json.forEach(element => {
-                        meses.push(element.mes);
-                        montos.push(parseFloat(element.total));
+                        labels.push(element.mes);
+                        values.push(parseFloat(element.total));
                     });
 
-                    chart_monto_total_mes.data.labels = meses;
-                    chart_monto_total_mes.data.datasets[0].data = montos;
+                    chart_monto_total_mes.data.labels = labels;
+                    chart_monto_total_mes.data.datasets[0].data = values;
                     chart_monto_total_mes.update();
                     $("#loading_chart_monto_total").find(".spinner-border").remove();
                 })
@@ -81,8 +81,8 @@
 
         $('#rango_chart_monto_total').on('change', function() {
             $("#loading_chart_monto_total").prepend('<div class="spinner-border spinner-border-sm"></div>');
-            montos = [];
-            meses = [];
+            values = [];
+            labels = [];
 
             request = {
                 'rango': $('#rango_chart_monto_total').val(),
