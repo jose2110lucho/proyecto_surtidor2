@@ -56,18 +56,21 @@
                 </div>
             </div>
         </div>
-        <form action="{{ route('fetch.ventas_combustibles.monto_promedio.mes') }}" method="post">
+        {{-- <form action="{{ route('fetch.ventas_combustibles.ventas_promedio.dia') }}" method="post">
             @csrf
             <div class="form-group">
                 <label for=""></label>
                 <select class="form-control form-control-sm" id="rango" name="rango">
+                     @foreach ($meses as $mes)
+                        <option value="{{$mes['fecha']}}" {{$mes['fecha']->format('m') == today()->format('m') ? 'selected' : ''}}>{{$mes['nombre']}}</option>
+                    @endforeach
                     <option value="3">3 meses</option>
                     <option value="6">6 meses</option>
                     <option value="12">12 meses</option>
                 </select>
                 <button type="submit">link</button>
             </div>
-        </form>
+        </form> --}}
     </section>
 @stop
 

@@ -103,6 +103,8 @@ Route::get('nota_venta_combustible/reportes/export-html', [NotaVentaCombustibleC
 Route::get('ventas-combustibles/graficas',[NotaVentaCombustibleController::class,'graficas'])->name('ventas_combustibles.graficas');
 Route::post('/fetch/ventas-combustibles/monto-total-mes',[NotaVentaCombustibleController::class, 'ventasMes'])->name('fetch.ventas_combustibles.mes');
 Route::post('/fetch/ventas-combustibles/monto-promedio-x-venta',[NotaVentaCombustibleController::class, 'montoPromedioVentaMes'])->name('fetch.ventas_combustibles.monto_promedio.mes');
+Route::post('/fetch/ventas-combustibles/ventas-promedio-x-dia',[NotaVentaCombustibleController::class, 'ventasPromedioDia'])->name('fetch.ventas_combustibles.ventas_promedio.dia');
+Route::post('/fetch/ventas-combustibles/litros-vendidos',[NotaVentaCombustibleController::class, 'litrosVendidosMes'])->name('fetch.ventas_combustibles.litros_vendidos');
 
 //-----------------PROVEEDORES------------------//
 Route::resource('proveedor', ProveedorController::class);

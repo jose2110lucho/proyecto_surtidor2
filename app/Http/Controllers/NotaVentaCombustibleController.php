@@ -13,8 +13,8 @@ use App\Models\Bomba;
 use App\Models\Tanque;
 use App\Models\UserBomba;
 use App\Models\Combustible;
-use Illuminate\Support\MessageBag;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Support\Facades\DB;
@@ -62,19 +62,17 @@ class NotaVentaCombustibleController extends Controller
         $user = Auth::user();
 
         $user_bomba = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->get();
-        if(count($user_bomba) == 0){
-            return view('modulo_ventas/nota_venta_combustible/create',['sin_bomba_asignada'=>true]);
-        }else{
+        if (count($user_bomba) == 0) {
+            return view('modulo_ventas/nota_venta_combustible/create', ['sin_bomba_asignada' => true]);
+        } else {
             $bomba_id = $user_bomba->first()->bomba_id;
             $bomba = Bomba::find($bomba_id);
             $tanque = Tanque::where('id', '=', $bomba->tanque_id)->first();
             $combustible = Combustible::find($tanque->combustible_id);
             $lista_vehiculos = Vehiculo::all();
-            
-            return view('modulo_ventas/nota_venta_combustible/create',['lista_vehiculos'=>$lista_vehiculos,'bomba'=>$bomba,'tanque'=>$tanque,'combustible'=>$combustible,'sin_bomba_asignada'=>false]);
-        }
-       
 
+            return view('modulo_ventas/nota_venta_combustible/create', ['lista_vehiculos' => $lista_vehiculos, 'bomba' => $bomba, 'tanque' => $tanque, 'combustible' => $combustible, 'sin_bomba_asignada' => false]);
+        }
     }
 
     /**
@@ -100,8 +98,8 @@ class NotaVentaCombustibleController extends Controller
             $user_bomba_id = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->first()->id;
             $user_bomba = UserBomba::find($user_bomba_id);
             $tanque = $user_bomba->bomba->tanque;
-            
-            if($tanque->cantidad_disponible - $request->cantidad_combustible > 0){
+
+            if ($tanque->cantidad_disponible - $request->cantidad_combustible > 0) {
 
 
                 $nota_venta_combustible = new NotaVentaCombustible();
@@ -121,16 +119,12 @@ class NotaVentaCombustibleController extends Controller
                     $cliente = Cliente::find($vehiculo->cliente_id);
                     $cliente->puntos =  $cliente->puntos + 1;
                     $cliente->save();
-
-
                 }
-                
+
                 return redirect('nota_venta_combustible');
-
-            }else{
+            } else {
                 $vehiculo = Vehiculo::find($vehiculo_id);
-                return redirect()->route('nota_venta_combustible.create')->with(['vehiculo_id' => $vehiculo->id.'`'.$vehiculo->b_sisa])->withErrors(['errors' => 'cantidad de combustible insuficiente!']);
-
+                return redirect()->route('nota_venta_combustible.create')->with(['vehiculo_id' => $vehiculo->id . '`' . $vehiculo->b_sisa])->withErrors(['errors' => 'cantidad de combustible insuficiente!']);
             }
         }
     }
@@ -143,8 +137,8 @@ class NotaVentaCombustibleController extends Controller
      */
     public function show($id)
     {
-        
-        
+
+
         /* $bomba = Bomba::find($bomba_id);
         $tanque = Tanque::where('id', '=', $bomba->tanque_id)->first();
         $combustible = Combustible::find($tanque->combustible_id); */
@@ -154,12 +148,12 @@ class NotaVentaCombustibleController extends Controller
         ->join('clientes','vehiculos.cliente_id','clientes.id')
         ->where('nota_venta_combustible.id','=',$id)
         ->select('nota_venta_combustible.*', 'vehiculos.placa','clientes.nombre')->first(); */
-        
+
         $nota_venta_combustible = NotaVentaCombustible::find($id);
         $combustible =  $nota_venta_combustible->userBombas->bomba->tanque->combustible;
-        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','combustible'));
+        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible', 'combustible'));
 
-       // return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','bomba','tanque','combustible','user'));
+        // return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','bomba','tanque','combustible','user'));
 
     }
 
@@ -187,7 +181,12 @@ class NotaVentaCombustibleController extends Controller
      */
     public function graficas()
     {
-        return view('modulo_ventas.nota_venta_combustible.graficas');
+        $meses = [];
+        $periodo = CarbonPeriod::create(today()->subMonths(11)->setDay(1), '1 month', today());
+        foreach ($periodo as $mes) {
+            array_push($meses, ['fecha' => $mes, 'nombre' => $this->intToLiteralMonth($mes->format('m'))]);
+        }
+        return view('modulo_ventas.nota_venta_combustible.graficas', compact('meses'));
     }
 
     /**
@@ -201,7 +200,7 @@ class NotaVentaCombustibleController extends Controller
         $end_month = today();
         $pivot_month = today()->subMonths($request->rango - 1);
 
-        $query_ventas_mes = DB::table('nota_venta_combustible')
+        $query = DB::table('nota_venta_combustible')
             ->selectRaw("date_part('month',fecha) as mes, sum(total) as total")
             ->whereDate('fecha', '>=', $pivot_month->setDay(01))
             ->groupBy("mes")
@@ -213,8 +212,8 @@ class NotaVentaCombustibleController extends Controller
         $c = 0;
 
         while ($pivot_month->format('m') != $end_month->format('m')) {
-            if (array_key_exists($c, $query_ventas_mes->toArray()) && $query_ventas_mes[$c]->mes == $pivot_month->format('m')) {
-                array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query_ventas_mes[$c]->mes), "total" => $query_ventas_mes[$c]->total]);
+            if (array_key_exists($c, $query->toArray()) && $query[$c]->mes == $pivot_month->format('m')) {
+                array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query[$c]->mes), "total" => $query[$c]->total]);
             } else {
                 array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($pivot_month->format('m')), "total" => 0]);
                 --$c;
@@ -223,8 +222,8 @@ class NotaVentaCombustibleController extends Controller
             $pivot_month->addMonth(1);
         };
 
-        if (array_key_exists($c, $query_ventas_mes->toArray()) && $query_ventas_mes[$c]->mes == $pivot_month->format('m')) {
-            array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query_ventas_mes[$c]->mes), "total" => $query_ventas_mes[$c]->total]);
+        if (array_key_exists($c, $query->toArray()) && $query[$c]->mes == $pivot_month->format('m')) {
+            array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query[$c]->mes), "total" => $query[$c]->total]);
         } else {
             array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($pivot_month->format('m')), "total" => 0]);
             --$c;
@@ -237,7 +236,7 @@ class NotaVentaCombustibleController extends Controller
         $end_month = today();
         $pivot_month = today()->subMonths($request->rango - 1);
 
-        $query_ventas_mes = DB::table('nota_venta_combustible')
+        $query = DB::table('nota_venta_combustible')
             ->selectRaw("date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
             ->whereDate('fecha', '>=', $pivot_month->setDay(01))
             ->groupBy("mes")
@@ -249,8 +248,8 @@ class NotaVentaCombustibleController extends Controller
         $c = 0;
 
         while ($pivot_month->format('m') != $end_month->format('m')) {
-            if (array_key_exists($c, $query_ventas_mes->toArray()) && $query_ventas_mes[$c]->mes == $pivot_month->format('m')) {
-                array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query_ventas_mes[$c]->mes), "monto_promedio" => $query_ventas_mes[$c]->monto_promedio]);
+            if (array_key_exists($c, $query->toArray()) && $query[$c]->mes == $pivot_month->format('m')) {
+                array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query[$c]->mes), "monto_promedio" => $query[$c]->monto_promedio]);
             } else {
                 array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($pivot_month->format('m')), "monto_promedio" => 0]);
                 --$c;
@@ -259,13 +258,59 @@ class NotaVentaCombustibleController extends Controller
             $pivot_month->addMonth(1);
         };
 
-        if (array_key_exists($c, $query_ventas_mes->toArray()) && $query_ventas_mes[$c]->mes == $pivot_month->format('m')) {
-            array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query_ventas_mes[$c]->mes), "monto_promedio" => $query_ventas_mes[$c]->monto_promedio]);
+        if (array_key_exists($c, $query->toArray()) && $query[$c]->mes == $pivot_month->format('m')) {
+            array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($query[$c]->mes), "monto_promedio" => $query[$c]->monto_promedio]);
         } else {
             array_push($ventas_mes, ["mes" => $this->intToLiteralMonth($pivot_month->format('m')), "monto_promedio" => 0]);
             --$c;
         }
 
         return $ventas_mes;
+    }
+
+    public function litrosVendidosMes(Request $request)
+    {
+        $fecha_mes = new Carbon($request->mes);
+        $query = DB::table('nota_venta_combustible as nvc')
+            ->selectRaw("c.nombre as combustible, sum(cantidad_combustible) as litros")
+            ->join('user_bombas as ub', 'ub.id', '=', 'nvc.user_bombas_id')
+            ->join('bombas as b', 'b.id', '=', 'ub.bomba_id')
+            ->join('tanques as t', 'b.tanque_id', '=', 't.id')
+            ->join('combustibles as c', 't.combustible_id', '=', 'c.id')
+            ->whereYear('fecha', '=', $fecha_mes->format('Y'))
+            ->whereMonth('fecha', '=', $fecha_mes->format('m'))
+            ->groupBy("c.id")
+            ->get();
+
+        return $query;
+    }
+
+    public function ventasPromedioDia(Request $request)
+    {
+        $start_month = today()->subMonths($request->rango - 1)->setDay(1);
+        $query = DB::table('nota_venta_combustible as nvc')
+            ->selectRaw("extract(dow from fecha) as dia, cast(count(nvc.id) as decimal(8,2))/ cast(count(distinct date_part('day',fecha)) as decimal(8,2)) as promedio")
+            ->whereDate('fecha', '>=', $start_month)
+            ->groupBy('dia')
+            ->orderBy('dia')
+            ->get();
+
+        $ventas_dia = array();
+        $c = 0;
+        $dia = 0;
+
+        while ($dia <= 6) {
+            if (array_key_exists($c, $query->toArray()) && $query[$c]->dia == $dia) {
+                array_push($ventas_dia, ["dia" => $this->intToLiteralDay($dia), "promedio" => $query[$c]->promedio]);
+            } else {
+                array_push($ventas_dia, ["dia" => $this->intToLiteralDay($dia), "promedio" => 0]);
+                --$c;
+            }
+            ++$c;
+            ++$dia;
+        };
+        array_push($ventas_dia, $ventas_dia[0]);
+        array_shift($ventas_dia);
+        return $ventas_dia;
     }
 }

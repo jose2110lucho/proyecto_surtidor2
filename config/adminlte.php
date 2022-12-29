@@ -503,12 +503,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'Nuevo cliente',
-                    'icon'    => 'fas fa-fw fa-plus',
+                    'icon'    => '',
                     'url'  => 'clientes/create',
                 ],
                 [
                     'text' => 'Lista de clientes',
-                    'icon'    => 'fas fa-fw fa-list-ul',
+                    'icon'    => '',
                     'url'  => 'clientes',
                 ],
             ],
