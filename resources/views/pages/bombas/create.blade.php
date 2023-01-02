@@ -79,7 +79,8 @@
                                     </select>
                                 </div>
                             </div>
-                        <div class="col-md-4">
+
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 {{ Form::label('Tanque') }}
                                 {{ Form::select('tanque_id',$tanques,$bombas->tanque_id,['class'=>'form-control',
@@ -87,8 +88,22 @@
                                  {!! $errors->first('tanque:id','<div class="invalid-feedback">: message</p>') !!}
                                  </div>
                              </div>
-                            
+                        </div> --}}
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="estado">Tanque</label>
+                                <select name="tanque_id" class="form-control select2" style="width: 100%;">
+                                    @foreach ($tanques as $tanque)
+
+                                        <option value="{{$tanque->id}}" selected>{{$tanque->codigo . ' ' .'('. $tanque->combustible->nombre.')'}}</option>
+                                        
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
+
 
                     </div>
                     @if($errors->any())

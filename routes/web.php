@@ -4,7 +4,11 @@ use App\Http\Controllers\BackupsController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TanqueController;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
 
@@ -16,6 +20,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\BombaController;
 use App\Http\Controllers\CombustibleController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\FacturaCombustibleController;
 use App\Http\Controllers\NotaCargaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\NotaProductoController;
@@ -28,9 +33,9 @@ use App\Http\Controllers\UserBombaController;
 
 use App\Http\Controllers\NotaVentaProductoController;
 use App\Http\Controllers\FacturaProductoController;
+
 use App\Http\Controllers\NotaVentaCombustibleController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
+
 
 
 /*
@@ -89,10 +94,18 @@ Route::post('/fetch/ventas-productos/monto-promedio-x-venta',[NotaVentaProductoC
 //-----------------DETALLENOTAVENTAPRODUCTO-----------------//
 Route::get('detalle_nota_venta_producto/{nota_venta_producto_id}',[NotaVentaProductoController::class,'show'])->name('detalle_nota_venta_producto.show');
 
-//------------------Generar Factura--------------------------
+//------------------Generar Factura/Producto--------------------------
 Route::get('factura_producto/{nota_venta_producto_id}/generateInvoice',[FacturaProductoController::class,'generateInvoice'])->name('factura_producto.generateInvoice');
 Route::get('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'create'])->name('factura_producto.create');
 Route::post('factura_producto/{nota_venta_producto_id}',[FacturaProductoController::class,'store'])->name('factura_producto.store');
+
+
+//------------------Generar Factura/Combustible--------------------------
+Route::get('factura_combustible/{nota_venta_combustible_id}/generateInvoice',[FacturaCombustibleController::class,'generateInvoice'])->name('factura_combustible.generateInvoice');
+Route::get('factura_combustible/{nota_venta_combustible_id}',[FacturaCombustibleController::class,'create'])->name('factura_combustible.create');
+Route::post('factura_combustible/{nota_venta_combustible_id}',[FacturaCombustibleController::class,'store'])->name('factura_combustible.store');
+
+
 
 //------------------NotaVentaCombustible--------------------------
 Route::get('nota_venta_combustible',[NotaVentaCombustibleController::class,'index'])->name('nota_venta_combustible.index');

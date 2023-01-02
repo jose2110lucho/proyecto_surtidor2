@@ -6,6 +6,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Requests\StoreBombaRequest;
 use App\Http\Requests\UpdateBombaRequest;
 use App\Models\Bomba;
+use App\Models\UserBomba;
 use App\Models\Tanque;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -33,8 +34,8 @@ class BombaController extends Controller
      */
     public function create()
     {   $bombas= new Bomba();
-        $tanques = Tanque::pluck('codigo','id'); //se aumento para ver los datos de tanque
-        
+        //$tanques = Tanque::pluck('codigo','id'); //se aumento para ver los datos de tanque
+        $tanques = Tanque::all();
         return view('pages.bombas.create',compact('bombas','tanques'));
     }
 
@@ -55,8 +56,9 @@ class BombaController extends Controller
             'descripcion'=>'required'
             
         ]);*/
+        
         $Bomba = Bomba::create($request->all());
-
+        
        return redirect()->route('bombas.show', $Bomba);
 /*         $bomba = Bomba::create($request->all);
         return redirect()->route('pages.bombas.index');  */
@@ -140,7 +142,13 @@ class BombaController extends Controller
         
         $bomba = Bomba::find($id);
         $bomba->libre = true;
-        $bomba->save();
+        $bomba_liberada = $bomba->save();
+
+        if($bomba_liberada){
+          $user_bomba = UserBomba::where('bomba_id','=',$id)->orderBy('fecha_asignacion','desc')->first();
+          $user_bomba->asignacion_vigente = false;
+          $user_bomba->save();
+        }
         return redirect()->route('bombas.index');
     }
 

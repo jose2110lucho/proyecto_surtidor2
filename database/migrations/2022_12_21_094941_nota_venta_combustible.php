@@ -26,6 +26,9 @@ class NotaVentaCombustible extends Migration
             $table->integer('user_bombas_id')->unsigned()->nullable();
             $table->foreign('user_bombas_id')->references('id')->on('user_bombas')->onDelete('cascade')->onUpdate('cascade');
 
+            $table->integer('turno_id')->unsigned()->nullable();
+            $table->foreign('turno_id')->references('id')->on('turnos')->onDelete('cascade')->onUpdate('cascade');
+
             $table->timestamps();
         });  
     }

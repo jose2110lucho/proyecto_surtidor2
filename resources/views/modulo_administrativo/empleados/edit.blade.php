@@ -6,10 +6,6 @@
 
 @section('content')
 
-<div class="d-grid gap-2">
-    <a class="btn btn-success" href="{{ route('empleadobombas.index', $user) }}"> Asignar bombas </a>
-</div>
-
 <div class="card">
     <div class="card-body">
         <!--aqui empieza el codigo del formulario-->

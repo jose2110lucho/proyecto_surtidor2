@@ -11,6 +11,7 @@ class UserBomba extends Model
     protected $fillable=[
         'id',
         'fecha_asignacion',
+        'asignacion_vigente',
         'user_id',
         'bomba_id',
     ];
