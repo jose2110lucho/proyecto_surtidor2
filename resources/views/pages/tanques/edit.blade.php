@@ -133,7 +133,7 @@
                     <div class="card-footer">
                         <div class="card-tools">
                             <div class="d-flex justify-content-end">
-                                <a type="button" class="btn btn-danger mr-2" href="{{ url()->previous() }}">Cancelar</a>
+                                <a type="button" class="btn btn-secondary mr-2" href="{{ url()->previous() }}">Cancelar</a>
 
                                 <button type="submit" class="btn btn-info">Guardar</button>
 
