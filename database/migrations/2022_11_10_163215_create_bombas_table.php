@@ -14,7 +14,6 @@ class CreateBombasTable extends Migration
     public function up()
     {
         Schema::create('bombas', function (Blueprint $table) {
-            //$table->id();
             $table->bigIncrements('id');
             $table->string('codigo');
             $table->string('nombre')->nullable();
@@ -27,11 +26,6 @@ class CreateBombasTable extends Migration
             ->constrained('tanques')
             ->on('tanques')
             ->onDelete('cascade');
-          // $table->unsignedBigInteger('tanque_id');
-          // $table->foreign('tanque_id')
-            //->references('id')
-            //->on('tanques')
-           // ->onDelete('cascade'); 
             $table->timestamps();
         });
     }
