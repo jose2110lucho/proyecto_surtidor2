@@ -15,7 +15,7 @@ class NotaVentaCombustible extends Model
         'cantidad_combustible',
         'vehiculo_id',
         'user_bombas_id',   //colocado por orden de gerald
-
+        'turno_id',
       ];
 
       public function userBombas()
@@ -27,6 +27,18 @@ class NotaVentaCombustible extends Model
     public function vehiculo()
     {
         return $this->belongsTo(Vehiculo::class);
+    }
+
+
+    public function facturaCombustible()
+    {
+        return $this->belongsTo(FacturaCombustible::class);
+    }
+
+
+    public function turno()
+    {
+        return $this->belongsTo(Turno::class);
     }
 }
 

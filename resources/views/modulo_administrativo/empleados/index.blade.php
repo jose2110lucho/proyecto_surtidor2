@@ -65,9 +65,14 @@
                                     <form action="{{ url('/empleados/' . $usuario->id) }}" method="post">
                                         @csrf
                                         {{ method_field('DELETE') }}
-                                        <input type="submit" onclick="return confirm('¿Estas Seguro de Eliminarlo?')"
-                                            value="ELIMINAR" class="btn btn-danger">
+                                        <button type="submit" onclick="return confirm('¿Estas Seguro de Eliminarlo?')"
+                                             class="btn btn-danger"><i class="fas fa-trash"></i>
+                                        </button>
                                     </form>
+
+                                    <a href="{{ url('/empleados-bombas/' . $usuario->id ) }}" class="btn btn-info">
+                                        <i class="fas fa-fw fa-gas-pump"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

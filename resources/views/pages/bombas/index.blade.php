@@ -45,12 +45,24 @@
                                 <h3 class="card-title card-success pr-2">
                                     <strong>{{ 'Bomba: ' . $bomba->codigo . ' ' . ' ' }}</strong>
                                 </h3>
-                                <span
-                                    class="badge px-1  @if ($bomba->combustible == 'gasolina') bg-orange
-                                    @else bg-yellow @endif"
-                                    style="width: 60px;">
-                                    {{ $bomba->combustible }}
-                                </span>
+                                    @switch($bomba->tanque->combustible->tipo)
+                                        @case('gasolina')
+                                            <span class="badge px-1 bg-orange">
+                                            @break
+    
+                                            @case('etanol')
+                                            <span class="badge px-1 bg-yellow">
+                                            @break
+    
+                                            @case('diesel')
+                                            <span class="badge px-1 bg-red">
+                                            @break
+    
+                                            @default
+                                        @endswitch
+                                        {{ $bomba->tanque->combustible->nombre }}
+                                    </span>
+                                
                             </div>
                             <div class="card-tools">
                                 <a class="btn btn-tool" href="{{ route('bombas.show', $bomba) }}">
@@ -106,9 +118,7 @@
                         </div>
                    
                     </div>
-                </div>
-
-               
+                </div> 
             @endforeach
         </div>
         <!-- /.container-fluid -->
