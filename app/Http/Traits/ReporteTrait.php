@@ -47,4 +47,31 @@ trait ReporteTrait
                 break;
         }
     }
+
+    protected function intToLiteralDay($day_number)
+    {
+        switch ($day_number) {
+            case '1':
+                return 'lunes';
+                break;
+            case '2':
+                return 'martes';
+                break;
+            case '3':
+                return 'miercoles';
+                break;
+            case '4':
+                return 'jueves';
+                break;
+            case '5':
+                return 'viernes';
+                break;
+            case '6':
+                return 'sabado';
+                break;
+            case '0':
+                return 'domingo';
+                break;
+        }
+    }
 }
