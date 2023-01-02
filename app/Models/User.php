@@ -72,4 +72,9 @@ class User extends Authenticatable  implements Auditable
     {
         return $this->hasMany(UserBomba::class);
     }
+
+    public function userTurno()
+    {
+        return $this->hasMany(UserTurno::class);
+    }
 }
