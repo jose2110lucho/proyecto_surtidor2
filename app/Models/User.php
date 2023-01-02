@@ -30,7 +30,6 @@ class User extends Authenticatable  implements Auditable
         'telefono',
         'estado',
         'foto_perfil',
-
     ];
 
     /**
@@ -67,5 +66,15 @@ class User extends Authenticatable  implements Auditable
             ->first();
             
             return $role? $role->name:"";
+    }
+
+    public function userBombas()
+    {
+        return $this->hasMany(UserBomba::class);
+    }
+
+    public function userTurno()
+    {
+        return $this->hasMany(UserTurno::class);
     }
 }

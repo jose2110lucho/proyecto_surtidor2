@@ -21,6 +21,7 @@ class CreateBombasTable extends Migration
             $table->string('combustible')->nullable();
             $table->string('descripcion')->nullable();
             $table->boolean('estado');
+            $table->boolean('libre')->default(true);
             $table->foreignId('tanque_id','id')
             ->nulleable()
             ->constrained('tanques')

@@ -19,4 +19,9 @@ class Turno extends Model
         return $this->belongsToMany(User::class, 'users_turnos', 'turno_id', 'user_id')->withPivot('id')->withTimestamps();
     }
 
+    public function userTurno()
+    {
+        return $this->hasMany(UserTurno::class);
+    }
+
 }

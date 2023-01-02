@@ -15,6 +15,8 @@ class CreateUserBombasTable extends Migration
     {
         Schema::create('user_bombas', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('fecha_asignacion');
+            $table->boolean('asignacion_vigente')->default(true);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('bomba_id')->unsigned();

@@ -6,14 +6,10 @@
 
 @section('content')
 
-<div class="d-grid gap-2">
-    <a class="btn btn-success" href="{{ route('empleadobombas.index',$user) }}"> Asignar bombas </a>
-</div>
-
 <div class="card">
     <div class="card-body">
         <!--aqui empieza el codigo del formulario-->
-        <form method="POST" enctype="multipart/form-data" action="{{ route('empleados.update', $user->id) }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ route('empleados.update', $user) }}">
             @method('PUT')
             @csrf
 

@@ -16,7 +16,7 @@ class ProductoFactory extends Factory
      */
     public function definition()
     {
-        $precio = random_int(10,1000);
+        $precio = random_int(9,350);
         return [
             'nombre' => $this->faker->word(),
             'precio_compra' => $precio,
