@@ -26,18 +26,27 @@
                     </td>
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('vehiculos.show', $vehiculo) }}" class="my-auto"><i class="fa fa-eye fa-fw"
+                            <a href="{{ route('vehiculos.show', $vehiculo) }}" class="my-auto mx-1"><i class="fa fa-eye "
                                     aria-hidden="true"></i></a>
-                            <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="mx-2"><i
-                                    class="fas fa-pen fa-fw"></i></a>
-
-                            <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST" class="my-auto ">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-link text-danger my-n2 mx-n2"><i
-                                        class="fas fa-trash fa-fw"></i></button>
-                            </form>
+                            <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="my-auto ml-2"><i
+                                    class="fas fa-pen"></i></a>
+                            <a class="btn my-auto mx-1" data-toggle="modal" data-target="#modal-delete-vehiculo"><i
+                                    class="fas fa-trash text-danger"></i></a>
                         </div>
+                        <x-alert-confirmation titulo="¿Estás seguro?" id="modal-delete-vehiculo">
+                            <x-slot name="mensaje">
+                                Esta accion es irreversible<br>
+                                </p>
+                            </x-slot>
+
+                            <x-slot name="boton">
+                                <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </x-slot>
+                        </x-alert-confirmation>
                     </td>
                 </tr>
             @endforeach

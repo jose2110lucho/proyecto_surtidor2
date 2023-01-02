@@ -53,10 +53,10 @@
                                 <a class="btn btn-tool" href="{{ route('tanques.show', $tanque) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a class="btn btn-tool" href="{{ route('tanques.edit', $tanque) }}">
+                               {{--  <a class="btn btn-tool" href="{{ route('tanques.edit', $tanque) }}">
                                     <i class="fa fa-pen"></i>
                                 </a>
-
+ --}}
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
