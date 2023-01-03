@@ -32,6 +32,7 @@ class NotaVentaProductoController extends Controller
                 ->select(['nota_venta_producto.*' , 'clientes.nombre as cliente'])
                 ->orderBy('id');
 
+
             return DataTables::of($nota_venta_producto)
                 ->addColumn('actions', 'modulo_ventas.nota_venta_producto.partials.actions')
                 ->rawColumns(['actions'])
@@ -45,10 +46,7 @@ class NotaVentaProductoController extends Controller
                     }
                 })->toJson();
         }
-
-        /* $lista_nota_venta_producto = NotaVentaProducto::join('clientes', 'nota_venta_producto.cliente_id', 'clientes.id')
-            ->select('nota_venta_producto.*', 'clientes.nombre')->get(); */
-        return view('modulo_ventas/nota_venta_producto/reportes'/* , ['lista_nota_venta_producto' => $lista_nota_venta_producto] */);
+        return view('modulo_ventas/nota_venta_producto/reportes');
     }
 
     /**

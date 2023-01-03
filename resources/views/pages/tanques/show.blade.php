@@ -16,17 +16,29 @@
 
                         <div class="card-tools">
                             <div class="d-flex">
-                                <form action="{{ route('tanques.destroy', $tanque) }}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger "
-                                        onclick="return confirm('¿Estas seguro?')">
-                                        <i class="fas fa-trash-alt" aria-hidden="true"></i>
-                                    </button>
-                                    <a href="{{ route('tanques.edit', $tanque) }}" class="btn btn-info">
-                                        <i class="fas fa-pen" aria-hidden="true"></i>
-                                    </a>
-                                </form>
+
+                                <button type="button" class="btn btn-sm btn-danger px-2" data-toggle="modal"
+                                    data-target="#modal-delete-tanque">
+                                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                </button>
+                                <a href="{{ route('tanques.edit', $tanque) }}" class="btn btn-sm btn-info ml-1">
+                                    <i class="fas fa-pen" aria-hidden="true"></i>
+                                </a>
+
+                                <x-alert-confirmation titulo="¿Estás seguro?" id="modal-delete-tanque">
+                                    <x-slot name="mensaje">
+                                        Esta accion es irreversible<br>
+                                        Se eliminará el tanque '{{ $tanque->codigo }}' y toda la información relacionada al
+                                        mismo
+                                    </x-slot>
+                                    <x-slot name="boton">
+                                        <form action="{{ route('tanques.destroy', $tanque) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    </x-slot>
+                                </x-alert-confirmation>
                             </div>
                         </div>
 
