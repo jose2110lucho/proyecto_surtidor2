@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException; 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\URL;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NotaCargaController extends Controller
@@ -23,12 +24,29 @@ class NotaCargaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $lista_nota_carga = NotaCarga::join('combustibles','nota_cargas.combustible_nombre','combustibles.id')
-        ->select('nota_cargas.*','combustibles.nombre')->get();
-        return view('pages/cargas/index',['lista_nota_carga'=>$lista_nota_carga]); 
-    }
+    public function index(Request $request)
+    {  
+            if ($request->ajax()) {
+                $combustible_id = $request->combustible_id;
+                $combustible_nombre = $request->combustible_nombre;
+                $fecha_inicio = $request->fecha_inicio;
+                $fecha_fin = $request->fecha_fin;
+                $combustible_tipo = $request->combustible_tipo;
+                $combustibles = DB::select('select * from listaCombustibles(?,?,?,?,?)', [$combustible_id, $combustible_nombre,$fecha_inicio, $fecha_fin, $combustible_tipo]);
+                return DataTables::of($combustibles)->make(true);
+            }
+            $lista_combustibles = Combustible::all();
+            $lista_nota_carga = NotaCarga::join('combustibles','nota_cargas.combustible_nombre','combustibles.id')
+            ->select('nota_cargas.*','combustibles.nombre')->get();
+            return view('pages/cargas/index',['lista_nota_carga'=>$lista_nota_carga]); 
+        } 
+        /* $tipo=$request->get ('buscarpor');  
+        $combustibles = Combustible::where('nombre','like',"%nombre%"); */
+       /*  $lista_combustibles = Combustible::all(); */
+      /*   $lista_nota_carga = NotaCarga::join('combustibles','nota_cargas.combustible_nombre','combustibles.id')
+        ->select('nota_cargas.*','combustibles.nombre')->get(); */
+       /*  return view('pages/cargas/index',['lista_nota_carga'=>$lista_nota_carga],compact('combustibles')); 
+    } */
 
     /**
      * Show the form for creating a new resource.
@@ -39,6 +57,12 @@ class NotaCargaController extends Controller
     {  
         $lista_combustibles = Combustible::all();//combustibles
         $lista_tanques = Tanque::all(); //productos
+      /*  $combustible = Combustible::/* join('combustibles','combustibles.precio_compra','combustibles.id')
+                                           ->where('combustibles.id','=', $id)
+                                           ->select('combustibles.*','combustibles.precio_compra')->first();  */
+                                           /* when(request()->input('lista_combustibles_id'),function($query){
+                                            $query->where('lista_combustibles_id',request()->input('lista_combustibles_id'));
+                                           })->pluck('id','precio_compra'); */
         return view('/pages/cargas/create',['lista_combustibles'=>$lista_combustibles,'lista_tanques'=>$lista_tanques]);
     }
 
