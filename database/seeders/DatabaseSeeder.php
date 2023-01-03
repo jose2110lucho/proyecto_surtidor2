@@ -1,7 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,5 +28,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Producto::factory(50)->create();
         \App\Models\Premio::factory(5)->create();
         $this->call(VentaProductoSeeder::class);
+        $this->call(VentaCombustibleSeeder::class);
     }
 }
