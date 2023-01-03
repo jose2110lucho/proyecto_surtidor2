@@ -19,13 +19,18 @@
                     <button type="button" class=" btn btn-primary " data-toggle="modal" 
                         data-target="#exampleModal" >Registrar Nueva Carga
                     </button>
+                  
+                    <button type="button" class=" btn btn-warning " data-toggle="modal" 
+                        data-target="#exampleModalPrecio" > Editar Precio Combustible
+                    </button>
                 </div> 
+
 
                 <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                     <label for="combustible_nombre">Combustible </label>
-                    <select class="form-control" id="combustible_nombre" name="combustible_nombre">
+                    <select class="form-control" id="combustible_nombre" name="combustible_nombre" onchange="onChangeSelect()" >
                        @foreach ($lista_combustibles as $combustible)
                           <option value="{{ $combustible->id }}">{{ $combustible->nombre }}</option>
                        @endforeach
@@ -35,7 +40,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                    <label for="cantidad">Cantidad Total Pedido</label>
+                    <label for="cantidad">Cantidad del Pedido</label>
                     <input id="cantidad"  name="cantidad" class="form-control my-colorpicker1"
                     value="{{ old('cantidad') }}">
                         @error('cantidad')
@@ -46,7 +51,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                    <label for="precio_total">Precio Total</label>
+                    <label for="precio_total">Total</label>
                     <input name="precio_total" class="form-control my-colorpicker1" type="number"
                         value="{{ old('precio_total') }}" step=".01" min="0">
 
@@ -54,6 +59,20 @@
                             <small class="text-danger">*{{ $message }}</small>
                          @enderror
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="precio_unitario">Precio Compra(Bs)</label>
+                        {{-- <select id="precio_unitario"name = "precio_unitario" class="form-control">  --}}
+                            <input type="number" name="precio_unitario" id="precio_unitario" placeholder="0.00" value="${{ number_format($combustible->precio_compra, 2) }}" class="form-control total" readonly="">
+                       {{--  value="{{ old('precio_unitario') }}" step=".01" min="0">
+                            @error('precio_unitario')
+                                <small class="text-danger">*{{ $message }}</small>
+                            @enderror --}}
+                            {{-- @foreach ($lista_combustibles as $combustible )
+                             <option value="{{ $combustible->id }}"> {{ $combustible->precio_compra }}</option>
+                            @endforeach --}}
+                        </select>
                 </div>
               </div>
             </div>
@@ -82,14 +101,7 @@
                                    <small class="text-danger">*{{ $message }}</small>
                                 @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="precio_unitario">Precio Unitario(Bs)</label>
-                            <input id="precio_unitario"name = "precio_unitario" class="form-control my-colorpicker1" type="number"
-                                value="{{ old('precio_unitario') }}" step=".01" min="0">
-                                    @error('precio_unitario')
-                                        <small class="text-danger">*{{ $message }}</small>
-                                    @enderror
-                        </div>
+                        
                         
                         <!--Termina el formulario??'-->
                       
@@ -102,6 +114,45 @@
                 
                 </div>
               </div>
+              <!--Comienzo del formulario Editar Combustible'-->
+              <div class="card-body">
+                <div class="modal fade" id="exampleModalPrecio" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel2">Editar Precio de Combustible</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                             <div class="mb-3">
+                              <label for="recipient-name" class="col-form-label">Combustible:</label>
+                              <select name="combustible" id="combustible" class="form-control line-s-2" >
+                                @foreach ($lista_combustibles as $combustible)
+                                <option value="{{ $combustible->id }}">{{ $combustible->nombre }}</option>
+                             @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="precio_compra">Editar Precio</label>
+                                <input id="precio_compra"  name="precio_compra" class="form-control my-colorpicker1" type="number"
+                                value="{{ old('precio_compra') }}">
+                                    @error('precio_compra')
+                                       <small class="text-danger">*{{ $message }}</small>
+                                    @enderror
+                            </div>
+                            
+                            
+                            <!--Termina el formulario??'-->
+                          
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="addRow">Guardar </button> 
+                        </div>
+                      </div>
+                    
+                    </div>
+                  </div>
 
              <table id="example" class="display" style="width:100%">
                     <thead>
@@ -199,6 +250,16 @@
 
         });  
        
+    </script>
+    <script>
+       function onChangeSelect() {
+        $('#lista_combustibles').on('change', function(){
+        var precio_compra = $("option:selected",this).data('precio_compra');
+        $('#precio_compra').val(precio_compra);
+        console.log(precio_compra);
+    });
+
+};
     </script>
 @stop
 
