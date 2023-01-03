@@ -29,5 +29,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\Premio::factory(5)->create();
         $this->call(VentaProductoSeeder::class);
         $this->call(VentaCombustibleSeeder::class);
+        $this->call(TurnoSeeder::class);
+        $this->call(UserTurnoSeeder::class);
     }
 }
+
+
