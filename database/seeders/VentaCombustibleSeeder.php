@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class VentaProductoSeeder extends Seeder
+class VentaCombustibleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class VentaProductoSeeder extends Seeder
      */
     public function run()
     {
-        $path = database_path('scripts/poblar_ventas_producto.sql');
+        $path = database_path('scripts/poblar_ventas_combustible.sql');
         $sql = file_get_contents($path);
         DB::unprepared($sql);
     }

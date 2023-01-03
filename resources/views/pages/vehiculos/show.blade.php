@@ -15,17 +15,9 @@
                         </h4>
                         <div class="card-tools">
                             <div class="d-flex">
-                                <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger "
-                                        onclick="return confirm('¿Estas seguro?')">
-                                        <i class="fas fa-trash-alt" aria-hidden="true"></i>
-                                    </button>
-                                    <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-info">
-                                        <i class="fas fa-pen" aria-hidden="true"></i>
-                                    </a>
-                                </form>
+                                <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-pen" aria-hidden="true"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
