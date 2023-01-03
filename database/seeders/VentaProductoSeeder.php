@@ -14,7 +14,7 @@ class VentaProductoSeeder extends Seeder
      */
     public function run()
     {
-        $path = database_path('scripts/poblar_ventas.sql');
+        $path = database_path('scripts/poblar_ventas_producto.sql');
         $sql = file_get_contents($path);
         DB::unprepared($sql);
     }

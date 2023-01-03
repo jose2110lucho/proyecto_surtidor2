@@ -43,6 +43,11 @@
                                 data-toggle="pill" href="#datos_cliente_edit" role="tab"
                                 aria-controls="datos_cliente_edit">Editar</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $errors->cliente->any() ? 'active' : '' }}" id="delete_cliente_tab"
+                                data-toggle="pill" href="#delete_cliente" role="tab"
+                                aria-controls="delete_cliente">Eliminar</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -53,9 +58,38 @@
                             @include('partials.clientes.show_datos')
                         </div>
 
-                        <div class="tab-pane fade {{ $errors->cliente->any() ? 'show active' : '' }}" id="datos_cliente_edit"
-                            role="tabpanel" aria-labelledby="datos_cliente_edit_tab">
+                        <div class="tab-pane fade {{ $errors->cliente->any() ? 'show active' : '' }}"
+                            id="datos_cliente_edit" role="tabpanel" aria-labelledby="datos_cliente_edit_tab">
                             @include('partials.clientes.form_edit')
+                        </div>
+
+                        <div class="tab-pane fade" id="delete_cliente" role="tabpanel"
+                            aria-labelledby="delete_cliente_tab">
+                            <p>Eliminar cliente con todos los registros asociados</p>
+                            <hr>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-danger px-2" data-toggle="modal"
+                                    data-target="#modal-delete-cliente">
+                                    Eliminar
+                                </button>
+                            </div>
+
+                            <x-alert-confirmation titulo="¿Estás seguro?" id="modal-delete-cliente">
+                                <x-slot name="mensaje">
+                                    Esta accion es irreversible<br>
+                                    Se eliminará al cliente '{{ $cliente->nombre.' '.$cliente->apellido  }}' y todos los registros
+                                    asociados al mismo
+                                </x-slot>
+
+                                <x-slot name="boton">
+                                    <form action="{{ route('clientes.destroy', $cliente) }}" method="POST"
+                                        id="form_delete_cliente">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </x-slot>
+                            </x-alert-confirmation>
                         </div>
                     </div>
                 </div>

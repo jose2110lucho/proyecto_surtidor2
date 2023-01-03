@@ -13,11 +13,12 @@ use Carbon\Carbon;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Type\Decimal;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Traits\ReporteTrait;
 
 class NotaVentaProductoController extends Controller
 {
+    use ReporteTrait;
     /**
      * Display a listing of the resource.
      *
@@ -26,12 +27,13 @@ class NotaVentaProductoController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $vehiculos = DB::table('nota_venta_producto')
+            $nota_venta_producto = DB::table('nota_venta_producto')
                 ->join('clientes', 'nota_venta_producto.cliente_id', '=', 'clientes.id')
-                ->select(['nota_venta_producto.*', 'clientes.nombre as cliente']);
+                ->select(['nota_venta_producto.id', 'nota_venta_producto.total', 'nota_venta_producto.fecha','clientes.nombre as cliente'])
+                ->orderBy('fecha', 'desc');
 
-            return DataTables::of($vehiculos)
-                ->addColumn('actions', 'partials.ventas_productos.actions')
+            return DataTables::of($nota_venta_producto)
+                ->addColumn('actions', 'modulo_ventas.nota_venta_producto.partials.actions')
                 ->rawColumns(['actions'])
                 ->filter(function ($query) use ($request) {
                     if ($request->has('buscar') && !empty($request->get('buscar'))) {
@@ -43,10 +45,7 @@ class NotaVentaProductoController extends Controller
                     }
                 })->toJson();
         }
-
-        $lista_nota_venta_producto = NotaVentaProducto::join('clientes', 'nota_venta_producto.cliente_id', 'clientes.id')
-            ->select('nota_venta_producto.*', 'clientes.nombre')->get();
-        return view('modulo_ventas/nota_venta_producto/reportes', ['lista_nota_venta_producto' => $lista_nota_venta_producto]);
+        return view('modulo_ventas/nota_venta_producto/reportes');
     }
 
     /**
@@ -120,7 +119,7 @@ class NotaVentaProductoController extends Controller
             ->select('nota_venta_producto.*', 'clientes.nombre')->first();
 
 
-        $lista_productos = DetalleNotaVentaProducto::join('producto', 'detalle_nota_venta_producto.producto_id', 'producto.id')
+        $detalles = DetalleNotaVentaProducto::join('producto', 'detalle_nota_venta_producto.producto_id', 'producto.id')
             ->where('detalle_nota_venta_producto.nota_venta_producto_id', '=', $id)
             ->select('detalle_nota_venta_producto.*', 'producto.nombre', 'producto.precio_venta')->get();
 
@@ -129,7 +128,7 @@ class NotaVentaProductoController extends Controller
 
         $existeFactura = count($listaFacturaProducto) > 0 ? true : false;
 
-        return view('modulo_ventas.nota_venta_producto.show', compact('nota_venta_producto', 'lista_productos', 'existeFactura'));
+        return view('modulo_ventas.nota_venta_producto.show', compact('nota_venta_producto', 'detalles', 'existeFactura'));
     }
 
     /**
@@ -180,7 +179,7 @@ class NotaVentaProductoController extends Controller
     public function ventasMes(Request $request)
     {
         $end_month = today();
-        $pivot_month = $this->calcularMesPivote($request->rango);
+        $pivot_month = today()->subMonths($request->rango - 1);
 
         $query_ventas_mes = DB::table('nota_venta_producto')
             ->selectRaw("date_part('month',fecha) as mes, sum(total) as total")
@@ -216,7 +215,7 @@ class NotaVentaProductoController extends Controller
     public function montoPromedioVentaMes(Request $request)
     {
         $end_month = today();
-        $pivot_month = $this->calcularMesPivote($request->rango);
+        $pivot_month = today()->subMonths($request->rango - 1);
 
         $query_ventas_mes = DB::table('nota_venta_producto')
             ->selectRaw("date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
@@ -248,68 +247,5 @@ class NotaVentaProductoController extends Controller
         }
 
         return $ventas_mes;
-    }
-
-    public function intToLiteralMonth($month_number)
-    {
-        switch ($month_number) {
-            case '1':
-                return 'enero';
-                break;
-            case '2':
-                return 'febrero';
-                break;
-            case '3':
-                return 'marzo';
-                break;
-            case '4':
-                return 'abril';
-                break;
-            case '5':
-                return 'mayo';
-                break;
-            case '6':
-                return 'junio';
-                break;
-            case '7':
-                return 'julio';
-                break;
-            case '8':
-                return 'agosto';
-                break;
-            case '9':
-                return 'septiembre';
-                break;
-            case '10':
-                return 'octubre';
-                break;
-            case '11':
-                return 'noviembre';
-                break;
-            case '12':
-                return 'diciembre';
-                break;
-            default:
-                break;
-        }
-    }
-
-    public function calcularMesPivote($rango)
-    {
-        $nro_meses_restar = 11;
-        switch ($rango) {
-            case '3':
-                $nro_meses_restar = 2;
-                break;
-            case '6':
-                $nro_meses_restar = 5;
-                break;
-            case '12':
-                $nro_meses_restar = 11;
-                break;
-            default:
-                break;
-        };
-        return today()->subMonths($nro_meses_restar);
     }
 }

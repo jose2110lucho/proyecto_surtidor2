@@ -8,7 +8,12 @@ use App\Models\User;
 use App\Models\UserBomba;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+
+use DateTime;
+use DateTimeZone;
+
 use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -27,8 +32,8 @@ class UserController extends Controller
 
     public function bombas(User $user)
     {
-        $user_bombas = UserBomba::where('user_id', $user->id)->get();
-        $bombas = Bomba::all();
+        $user_bombas = UserBomba::where('user_id', $user->id)->orderBy('fecha_asignacion','desc')->get();
+        $bombas = Bomba::where('libre', '=', true)->get();
         return view('modulo_administrativo/empleados/bombas', compact('user_bombas', 'bombas', 'user'));
     }
     /**
@@ -42,18 +47,42 @@ class UserController extends Controller
         return view('modulo_administrativo/empleados/create');
     }
 
-    public function asignarbombas(Request $request, User $user)
+    public function asignarBombas(Request $request, User $user)
     {
         $request->validate([
             'bomba_id' => 'required'
         ]);
-        UserBomba::create([
-            'user_id' => $user->id,
-            'bomba_id' => $request->bomba_id
-        ]);
-        return redirect(
-            route('empleadobombas.index', $user)
-        );
+
+        $fecha_hora = new DateTime();  
+        $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
+        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s"); 
+
+        $ultimaAsignacion = UserBomba::where('user_id','=',$user->id)->orderBy('fecha_asignacion','desc')->first();
+
+        $userBomba = new UserBomba();
+        $userBomba->user_id = $user->id;
+        $userBomba->bomba_id = $request->bomba_id;
+        $userBomba->fecha_asignacion = $DateAndTime; 
+        $userBombaGuardado = $userBomba->save();
+
+        $bomba = Bomba::find($request->bomba_id);
+        $bomba->libre = false;
+        $bomba->save();
+
+        /* && isset($ultimaAsignacion) */
+
+        if($userBombaGuardado && $ultimaAsignacion != null){
+
+            $ultimaAsignacion->asignacion_vigente = false;
+            $ultimaAsignacion->save();
+
+            $ultimaBombaAsignada = Bomba::find($ultimaAsignacion->bomba_id);
+            $ultimaBombaAsignada->libre = true;
+            $ultimaBombaAsignada->save();
+
+        }
+
+        return redirect(route('empleadobombas.index', $user));
     }
 
     /**

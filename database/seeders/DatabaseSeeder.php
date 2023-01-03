@@ -1,7 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,10 +21,13 @@ class DatabaseSeeder extends Seeder
         $this->call(ClienteSeeder::class);
         $this->call(CombustibleSeeder::class);
         \App\Models\Cliente::factory(20)->create();
-        \App\Models\Tanque::factory(5)->create();
-     //   \App\Models\Premio::factory(5)->create();
+        \App\Models\Tanque::factory(5)->create(); 
+        $this->call(BombaSeeder::class);
+        $this->call(UserBombaSeeder::class);
         \App\Models\Vehiculo::factory(100)->create();
         \App\Models\Producto::factory(50)->create();
+        \App\Models\Premio::factory(5)->create();
         $this->call(VentaProductoSeeder::class);
+        $this->call(VentaCombustibleSeeder::class);
     }
 }

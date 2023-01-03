@@ -67,4 +67,14 @@ class User extends Authenticatable  implements Auditable
             
             return $role? $role->name:"";
     }
+
+    public function userBombas()
+    {
+        return $this->hasMany(UserBomba::class);
+    }
+
+    public function userTurno()
+    {
+        return $this->hasMany(UserTurno::class);
+    }
 }

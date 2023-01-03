@@ -73,10 +73,9 @@
                                 </button>
                             </div>
 
-                            <x-alert-confirmation titulo="Eliminar premio" id="modal-delete-premio">
+                            <x-alert-confirmation titulo="¿Estás seguro?" id="modal-delete-premio">
                                 <x-slot name="mensaje">
-                                    <p>¿Estás seguro?<br>
-                                        Esta accion es irreversible<br><br>
+                                        Esta accion es irreversible<br>
                                         Se eliminará el premio '{{ $premio->nombre }}' y todos los canjeos
                                         registrados
                                         

@@ -45,12 +45,24 @@
                                 <h3 class="card-title card-success pr-2">
                                     <strong>{{ 'Bomba: ' . $bomba->codigo . ' ' . ' ' }}</strong>
                                 </h3>
-                                <span
-                                    class="badge px-1  @if ($bomba->combustible == 'gasolina') bg-orange
-                                    @else bg-yellow @endif"
-                                    style="width: 60px;">
-                                    {{ $bomba->combustible }}
-                                </span>
+                                    @switch($bomba->tanque->combustible->tipo)
+                                        @case('gasolina')
+                                            <span class="badge px-1 bg-orange">
+                                            @break
+    
+                                            @case('etanol')
+                                            <span class="badge px-1 bg-yellow">
+                                            @break
+    
+                                            @case('diesel')
+                                            <span class="badge px-1 bg-red">
+                                            @break
+    
+                                            @default
+                                        @endswitch
+                                        {{ $bomba->tanque->combustible->nombre }}
+                                    </span>
+                                
                             </div>
                             <div class="card-tools">
                                 <a class="btn btn-tool" href="{{ route('bombas.show', $bomba) }}">
@@ -61,9 +73,27 @@
                                     <i class="fa fa-pen"></i>
                                 </a>
 
+                                <a class="btn btn-tool" >
+                                    <form action="{{route('bombas.liberar',[$bomba->id])}}" method="POST" >
+                                        @csrf
+                                        {{ method_field('PUT') }}
+                                        <button type="submmit" class="btn btn-tool">
+                                            
+                                            @if ($bomba->libre)
+                                                <i class="fas fa-solid fa-lock-open"></i>
+                                            @else
+                                                 <i class="fas fa-solid fa-lock"></i> 
+                                            @endif
+
+                                        </button>
+                                    </form>
+                                </a>
+
+                                
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
+                                
                             </div>
                         </div>
                     </div>
@@ -75,12 +105,20 @@
                                     <p type="text" class="">{{ $bomba->estado ? 'Activo' : 'Inactivo' }}</p>
                                 </div>
                             </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Asignacion</label>
+                                    <p type="text" class="">{{ $bomba->libre ? 'libre' : 'ocupado' }}</p>
+                                </div>
+                            </div>
+
+
+
                         </div>
                    
                     </div>
-                </div>
-
-               
+                </div> 
             @endforeach
         </div>
         <!-- /.container-fluid -->
