@@ -130,7 +130,7 @@ class NotaVentaCombustibleController extends Controller
                     $cliente->save();
                 }
             //falta esto    
-                return redirect('nota_venta_combustible');
+                return redirect()->route('nota_venta_combustible.show', $nota_venta_combustible);
             }else{
                 $vehiculo = Vehiculo::find($vehiculo_id);
                 return redirect()->route('nota_venta_combustible.create')->with(['vehiculo_id' => $vehiculo->id.'`'.$vehiculo->b_sisa])->withErrors(['errors' => 'cantidad de combustible insuficiente!']);
