@@ -24,4 +24,8 @@ class Turno extends Model
         return $this->hasMany(UserTurno::class);
     }
 
+    public function notaVentaCombustible()
+    {
+        return $this->hasMany(notaVentaCombustible::class);
+    }
 }
