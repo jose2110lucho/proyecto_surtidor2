@@ -29,8 +29,9 @@ class NotaVentaProductoController extends Controller
         if ($request->ajax()) {
             $nota_venta_producto = DB::table('nota_venta_producto')
                 ->join('clientes', 'nota_venta_producto.cliente_id', '=', 'clientes.id')
-                ->select(['nota_venta_producto.id', 'nota_venta_producto.total', 'nota_venta_producto.fecha','clientes.nombre as cliente'])
-                ->orderBy('fecha', 'desc');
+                ->select(['nota_venta_producto.*' , 'clientes.nombre as cliente'])
+                ->orderBy('id');
+
 
             return DataTables::of($nota_venta_producto)
                 ->addColumn('actions', 'modulo_ventas.nota_venta_producto.partials.actions')

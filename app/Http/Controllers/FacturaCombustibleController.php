@@ -1,19 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\FacturaCombustible;
 use App\Models\NotaVentaCombustible;
-//use App\Models\DetalleNotaVentaProducto;
 use Illuminate\Http\Request;
 use DateTime;
 use DateTimeZone;
-
-//clases necesarias para la facturacion
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
-
 use Carbon\Carbon;
 use App\Models\Cliente;
 use App\Models\Combustible;
@@ -39,8 +34,6 @@ class FacturaCombustibleController extends Controller
     {
         $nota_venta_combustible = NotaVentaCombustible::find($id);
         $cliente = $nota_venta_combustible->vehiculo->cliente;
-        //return view('modulo_ventas/factura_combustible/create',['nota_venta_combustible_id' => $id,'cliente' => $cliente]);
-
         return view('modulo_ventas/factura_combustible/create',compact('nota_venta_combustible','cliente'));
     }
 
@@ -128,20 +121,9 @@ class FacturaCombustibleController extends Controller
 
     public function generateInvoice($nota_venta_combustible_id){
 
-        /* $cliente = NotaVentaCombustible::join('clientes', 'nota_venta_combustible.cliente_id', 'clientes.id')
-                                         ->where('nota_venta_combustible.id', '=', $nota_venta_combustible_id)
-                                         ->select('clientes.nombre','clientes.apellido')->first(); */
-
         $nota_venta_combustible = NotaVentaCombustible::find($nota_venta_combustible_id);
         $cliente = $nota_venta_combustible->vehiculo->cliente;                                  
-
-        /* $lista_combustibles = DetalleNotaVentacombustible::join('combustible', 'detalle_nota_venta_combustible.combustible_id', 'combustible.id')
-                                                     ->where('detalle_nota_venta_combustible.nota_venta_combustible_id', '=', $nota_venta_combustible_id)
-                                                     ->select('detalle_nota_venta_combustible.*', 'combustible.nombre', 'combustible.precio_venta')->get(); */
-                                                
-        
         $combustible =  $nota_venta_combustible->userBombas->bomba->tanque->combustible;
-
         $factura = FacturaCombustible::where('nota_venta_combustible_id', '=', $nota_venta_combustible_id)->select('*')->first(); 
 
         //Cliente
@@ -170,14 +152,8 @@ class FacturaCombustibleController extends Controller
                     'Bomba' => $bomba->nombre,
                 ],
             ]);
-
-        /* foreach ($combustibles as $nota_venta_combustible) {
-            $items[] = (new InvoiceItem())->title($nota_venta_combustible->combustible->nombre)->pricePerUnit($nota_venta_combustible->combustible->precio_venta)->quantity($nota_venta_combustible->cantidad_combustible);
-        }    */ 
-
+         
         $items[] = (new InvoiceItem())->title($combustible->nombre)->pricePerUnit($combustible->precio_venta)->quantity($nota_venta_combustible->cantidad_combustible);
-
-
 
         $fecha_emision = new DateTime($factura->fecha_limite_emision);
         $cadena = $fecha_emision->format('d/m/Y');
@@ -186,13 +162,10 @@ class FacturaCombustibleController extends Controller
             $factura->lugar_emision,
             'Nro. de autorizacion: '. $factura->numero_autorizacion,
             'Cod. de control: '. $factura->codigo_control,
-            'Fecha limite emision: '. $cadena,
-            
+            'Fecha limite emision: '. $cadena,            
         ];
-        $notes = implode("<br>", $notes);
-        
+        $notes = implode("<br>", $notes);        
         $fecha = Carbon::createFromFormat('Y-m-d H:i:s',$factura->fecha_emision);
-
         $invoice = Invoice::make()
             
             ->serialNumberFormat('{SERIES}')
@@ -207,6 +180,7 @@ class FacturaCombustibleController extends Controller
             ->logo(public_path('img/logo/LogoSurtidor.jpg'))
             ->series($factura->nro_factura)
             ->payUntilDays(0);
+            
         return $invoice->stream();
     }
 }
