@@ -1,18 +1,19 @@
 @extends('layouts/master')
 
 @section('content_header')
-    <h1>Factura</h1>
+    
 @stop
 
 @section('content')
-    <div class="card">
+    <div class="card" style="background-color: antiquewhite">
+        <h1 style="text-align: center">FACTURA</h1>
         <div class="card-body">
             <form action="{{route('factura_combustible.store',[$nota_venta_combustible->id])}}" method="POST">
                 @csrf
                 <!--inicio campo nombre-->
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input name="nombre" type="text" class="form-control" id="nombre" placeholder="introduzca nombre" required value="{{$cliente->nombre.' '.$cliente->apellido}}">
+                    <input name="nombre" type="text" class="form-control" id="nombre" placeholder="introduzca nombre" required value="{{$cliente->nombre.' '.$cliente->apellido}}" style="border-inline: ">
                 </div>
                 <!--fin campo nombre-->
                 <!--inicio campo nit-->
@@ -22,23 +23,15 @@
                 </div>
                 <!--fin campo nit-->
                 <!--aqui empieza el codigo del boton guardar-->
-                <div class="row mb-0">
-                    <div class="col-md-10 offset-md-2">
-                        <a href="{{ route('nota_venta_combustible.show',[$nota_venta_combustible->id]) }}" class="btn btn-secondary">
+                <div style="text-align: right">
+                        <a href="{{ route('nota_venta_combustible.show',[$nota_venta_combustible->id]) }}" class="btn btn-warning">
                             Atras
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="row mb-0" style="text-align:right">
-                    <div class="col-md-10 offset-md-2">
+                        </a>   
                         <button   type="submit" class="btn btn-success">
                             Generar Factura
                         </button>
-                    </div>
                 </div>
             </form>
-
             <!--aqui termina el codigo del boton guardar-->
         </div>
     </div>
