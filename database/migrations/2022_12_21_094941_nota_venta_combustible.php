@@ -22,7 +22,6 @@ class NotaVentaCombustible extends Migration
             $table->foreignId('cliente_id')->nullable()->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('vehiculo_id')->nullable()->constrained('vehiculos')->onDelete('cascade')->onUpdate('cascade');
             
-            $table->string('cliente')->nullable();
             $table->string('placa')->nullable();
             
             $table->integer('user_bombas_id')->unsigned()->nullable();

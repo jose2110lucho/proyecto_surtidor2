@@ -18,9 +18,9 @@
             </div>
             <div class="d-flex px-2">
                 <select class="form-control form-control-sm" id="rango_chart_monto_promedio" name="rango">
-                    <option value="3">3 labels</option>
-                    <option value="6">6 labels</option>
-                    <option value="12">12 labels</option>
+                    <option value="3">3 meses</option>
+                    <option value="6">6 meses</option>
+                    <option value="12">12 meses</option>
                 </select>
             </div>
         </div>
