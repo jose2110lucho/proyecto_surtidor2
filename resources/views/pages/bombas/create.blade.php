@@ -80,17 +80,7 @@
                                 </div>
                             </div>
 
-                        {{-- <div class="col-md-4">
-                            <div class="form-group">
-                                {{ Form::label('Tanque') }}
-                                {{ Form::select('tanque_id',$tanques,$bombas->tanque_id,['class'=>'form-control',
-                                ($errors->has('tanque_id')? 'is-invalid' : ''), 'placeholder'=>'']) }}
-                                 {!! $errors->first('tanque:id','<div class="invalid-feedback">: message</p>') !!}
-                                 </div>
-                             </div>
-                        </div> --}}
-
-
+                        
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="estado">Tanque</label>

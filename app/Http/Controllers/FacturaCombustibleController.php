@@ -134,7 +134,7 @@ class FacturaCombustibleController extends Controller
                     'Lugar' => $factura->lugar_emision,
                     'Placa' => $factura->placa,
                 ],
-            ]);
+        ]);
 
         //vendedor-negocio
             $user = $nota_venta_combustible->userBombas->user;

@@ -1,68 +1,53 @@
 @extends('layouts/master')
 
 @section('content_header')
-<h1> Nota de venta :{{$nota_venta_combustible->id}}  </h1>
+
 @stop
 
 @section('content')
-<div class="card">
+
+<div class="card text-center">
+    <div class="card-header">
+        <h1 style="font-weight: bolder"> NOTA DE VENTA</h1>
+    <label for="Nro" class="d-flex justify-content-end" style="font-size: x-large">Nro: {{$nota_venta_combustible->id}}</label> 
+    <label for="fecha" class="d-flex justify-content-end" style="font-size: x-large">fecha: {{ $nota_venta_combustible->fecha }}</label>  
+    </div>
     <div class="card-body">
-        <div class="card" style="background:cornsilk">
-            <div class="card-body">
-            <!--inicio campo nombre del cliente-->
-            <div class="mb-3">
-                <label for="cliente" class="form-label">cliente</label>
-                <p type="text" class="form-control">{{ $nota_venta_combustible->vehiculo->cliente->nombre }}</p>
-            </div>
-            <!--fin campo nombre del cliente-->
-            <!--inicio campo nombre del vendedor-->
-            <div class="mb-3">
-                <label for="cliente" class="form-label">vendedor</label>
-                <p type="text" class="form-control">{{ $nota_venta_combustible->userBombas->user->name }}</p>
-            </div>
-            <!--fin campo nombre del vendedor-->
-            <!--inicio campo nombre del bomba-->
-            <div class="mb-3">
-                <label for="bomba" class="form-label">bomba</label>
-                <p type="text" class="form-control">{{ $nota_venta_combustible->userBombas->bomba->nombre }}</p>
-            </div>
-            <!--fin campo nombre del bomba-->
-            <!--inicio campo nombre del tanque-->
-            <div class="mb-3">
-                <label for="tanque" class="form-label">tanque</label>
-                <p type="text" class="form-control">{{ $nota_venta_combustible->userBombas->bomba->tanque->descripcion }}</p>
-            </div>
-            <!--fin campo nombre del tanque-->
-            <!--inicio campo fecha-->
-            <div class="mb-3">
-                <label for="fecha" class="form-label">fecha</label>
-                <p type="date" class="form-control">{{ $nota_venta_combustible->fecha }}</p>
-            </div>
-            <!--fin campo fecha-->
-            </div>
-          </div>
-        <div class="card" style="background:cornsilk">
+    <!--inicio campo nombre del cliente-->
+    <ul class="list-group" style="text-align:left">
+        <li class="list-group-item" style="font-size: x-large"> <strong>Nombre del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->nombre }} {{ $nota_venta_combustible->vehiculo->cliente->apellido }}</li>
+        <li class="list-group-item" style="font-size: x-large"><strong>CI del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->ci }}</li>
+        <li class="list-group-item" style="font-size: x-large"> <strong>Telefono del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->telefono }}</li>
+        <li class="list-group-item" style="font-size: x-large"><strong>Vendedor:</strong> {{ $nota_venta_combustible->userBombas->user->name }}</li>
+        <li class="list-group-item" style="font-size: x-large"><strong>Bomba:</strong> {{ $nota_venta_combustible->userBombas->bomba->nombre }}</li>
+        <li class="list-group-item" style="font-size: x-large"><strong>Tanque:</strong> {{ $nota_venta_combustible->userBombas->bomba->tanque->descripcion }}</li>
+      </ul>
+    <!--fin campo nombre del cliente-->
+    </div>
+    <!-- incio seccion de detalle de la nota de venta -->
+    <div class="card-footer text-muted">
+        <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">
                         <table class="table caption-top">
                             <caption></caption>
-                            <thead class="table-white">
+                            <thead class="table-white bg-orange">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">combustible</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Precio</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col"><h4><strong>#</strong></h4></th>
+                                    <th scope="col"><h4><strong>Combustible</strong></h4></th>
+                                    <th scope="col"><h4><strong>Cantidad(Lts)</strong></h4></th>
+                                    <th scope="col"><h4><strong>Precio(Bs)</strong></h4></th>
+                                    <th scope="col"><h4><strong>Total(Bs)</strong></h4></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$combustible->id}}</td>
-                                    <td>{{$combustible->nombre}}</td>
-                                    <td>{{$nota_venta_combustible->cantidad_combustible}}</td>
-                                    <td>{{$combustible->precio_venta}}</td>
-                                    <td>{{$nota_venta_combustible->total}}</td>
+                                    <td><h4>{{$combustible->id}}</h4></td>
+                                    <td><h4>{{$combustible->nombre}}</h4></td>
+                                    <td><h4>{{$nota_venta_combustible->cantidad_combustible}}</h4></td>
+                                    <td><h4>{{$combustible->precio_venta}}</h4></td>
+                                    <td><h4>{{$nota_venta_combustible->total}}</h4></td>
                                 </tr> 
                             </tbody>
                         </table>
@@ -70,41 +55,21 @@
                 </div> 
             </div>
           </div>
-        
-        <!--inicio campo botones-->
-        <div class="row mb-0" style="text-align:right">
-            <div class="col-md-10 offset-md-2">
-                <a href="{{ url('/nota_venta_combustible') }}" class="btn btn-warning">
-                    Atras
-                </a>
-            </div> 
-        </div>     
-
-        @if($existeFactura)
-
-            <div class="row mb-0" style="text-align:right">
-                <div class="col-md-10 offset-md-2">
-                    <a href="{{ route('factura_combustible.generateInvoice',[$nota_venta_combustible->id]) }}" class="btn btn-warning">
-                        Ver Factura
-                    </a>
-                </div> 
-            </div>
-
-        @else
-        
-            <div class="row mb-0" style="text-align:right">
-                <div class="col-md-10 offset-md-2">
-                    <a href="{{ route('factura_combustible.create',[$nota_venta_combustible->id]) }}" class="btn btn-warning">
-                        siguiente
-                    </a>
-                </div> 
-            </div>
-            
-        @endif        
-               
-
-
-    <!--fin campo botones-->
+        <div class="d-flex justify-content-end">
+            <a type="button" class="btn btn-warning" href="{{ url('/nota_venta_combustible') }}" style="margin:5px">
+                Atras 
+            </a>
+                <div>                   
+                    @if($existeFactura)
+                                    <a type="button" class="btn btn-primary" href="{{ route('factura_combustible.generateInvoice',[$nota_venta_combustible->id]) }}" style="margin:5px">
+                                        Ver Factura
+                                    </a>                
+                    @else
+                                    <a type="button" class="btn btn-success" href="{{ route('factura_combustible.create',[$nota_venta_combustible->id]) }}" style="margin:5px">
+                                        siguiente
+                                    </a>  
+                    @endif        
+                </div>
+        </div>
     </div>
-</div>
 @stop
