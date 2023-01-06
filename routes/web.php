@@ -130,7 +130,7 @@ Route::get('clientes/{cliente}/canjear', [ClienteController::class, 'canjeo'])->
 Route::patch('clientes/{cliente}/canjear', [ClienteController::class, 'canjear'])->name('clientes.canjear');
 Route::put('clientes/{cliente}/premios/{premio}', [ClienteController::class, 'destroyPremio'])->name('clientes.destroyPremio');
 Route::post('clientes/{cliente}/vehiculos', [ClienteController::class, 'storeVehiculo'])->name('clientes.vehiculos.store');
-
+Route::post('/fetch/clientes/find-by-vehiculo',[ClienteController::class, 'findByVehiculo'])->name('fetch.clientes.find');
 //-----------------ASISTENCIA------------------//
 Route::get('asistencia', [AsistenciaController::class,'index'])->name('asistencia.index'); 
 Route::get('asistencia/{turno}/create', [AsistenciaController::class,'create'])->name('asistencia.create'); 
