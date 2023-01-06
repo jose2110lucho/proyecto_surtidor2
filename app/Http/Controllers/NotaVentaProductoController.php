@@ -56,9 +56,9 @@ class NotaVentaProductoController extends Controller
      */
     public function create()
     {
-        $lista_productos = Producto::where('estado', '=', true)->select('*')->get();
-        $lista_clientes =  Cliente::where('estado', '=', true)->select('*')->get();
-        return view('modulo_ventas/nota_venta_producto/create', ['lista_productos' => $lista_productos, 'lista_clientes' => $lista_clientes]);
+        $productos = Producto::where('estado', '=', true)->select('*')->get();
+        $clientes =  Cliente::where('estado', '=', true)->select('*')->get();
+        return view('modulo_ventas/nota_venta_producto/create', compact('productos', 'clientes'));
     }
 
     /**

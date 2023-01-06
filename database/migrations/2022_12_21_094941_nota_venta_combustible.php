@@ -15,17 +15,18 @@ class NotaVentaCombustible extends Migration
     {
         Schema::create('nota_venta_combustible', function (Blueprint $table) {
             $table->id(); 
-            
             $table->dateTime('fecha');
-            $table->decimal('total',8,2);
-            
+            $table->decimal('total',8,2); 
             $table->decimal('cantidad_combustible',8,2);
-            $table->integer('vehiculo_id')->unsigned();
-            $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onDelete('cascade')->onUpdate('cascade');
-//agregado por orden de gerald
+            
+            $table->foreignId('cliente_id')->nullable()->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('vehiculo_id')->nullable()->constrained('vehiculos')->onDelete('cascade')->onUpdate('cascade');
+            
+            $table->string('cliente')->nullable();
+            $table->string('placa')->nullable();
+            
             $table->integer('user_bombas_id')->unsigned()->nullable();
             $table->foreign('user_bombas_id')->references('id')->on('user_bombas')->onDelete('cascade')->onUpdate('cascade');
-
             $table->integer('turno_id')->unsigned()->nullable();
             $table->foreign('turno_id')->references('id')->on('turnos')->onDelete('cascade')->onUpdate('cascade');
 

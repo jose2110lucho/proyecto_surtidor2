@@ -24,18 +24,6 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        /* $buscar = $request->get('buscar');
-        if ($buscar) {
-            $clientes = Cliente::orderby('nombre', 'desc')
-                ->where('nombre', 'ilike', '%' . $buscar . '%')
-                ->orwhere('apellido', 'ilike', '%' . $buscar . '%')
-                ->paginate(9);
-            return view('pages.clientes.index', compact('clientes', 'buscar'));
-        } else {
-            $clientes = Cliente::orderby('nombre', 'desc')->paginate(9);
-        } */
-
-        //return $clientes = Cliente::where('nombre', 'ilike', '%' . $this->search . '%')->orderby('nombre', 'asc')->paginate();
         return view('pages.clientes.index');
     }
 
@@ -192,5 +180,17 @@ class ClienteController extends Controller
     {
         $cliente->delete();
         return redirect()->route('clientes.index');
+    }
+
+    public function findByVehiculo(Request $request) 
+    {
+        $vehiculo = Vehiculo::where('placa', strtoupper($request->placa))->get();
+        
+        if ($vehiculo->first()) {
+            return Cliente::find($vehiculo[0]->cliente_id);
+        }else{
+            return [];
+        }
+       
     }
 }
