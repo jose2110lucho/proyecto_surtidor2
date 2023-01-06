@@ -121,8 +121,7 @@ class FacturaCombustibleController extends Controller
 
     public function generateInvoice($nota_venta_combustible_id){
 
-        $nota_venta_combustible = NotaVentaCombustible::find($nota_venta_combustible_id);
-        $cliente = $nota_venta_combustible->vehiculo->cliente;                                  
+        $nota_venta_combustible = NotaVentaCombustible::find($nota_venta_combustible_id);                               
         $combustible =  $nota_venta_combustible->userBombas->bomba->tanque->combustible;
         $factura = FacturaCombustible::where('nota_venta_combustible_id', '=', $nota_venta_combustible_id)->select('*')->first(); 
 

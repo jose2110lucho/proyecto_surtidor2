@@ -88,8 +88,8 @@ class NotaVentaCombustibleController extends Controller
         $fecha_hora = new DateTime();
         $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
         $DateAndTime = $fecha_hora->format("Y-m-d H:i:s");
+        $permitted_chars  =  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $placa = $request->placa;
-        $cliente = $request->cliente;
         $cliente_id = null;
         $vehiculo_id = Vehiculo::where('placa', strtoupper($placa))->get();
 
@@ -118,7 +118,6 @@ class NotaVentaCombustibleController extends Controller
             $nota_venta_combustible->vehiculo_id = $vehiculo_id;
             $nota_venta_combustible->placa = $placa;
             $nota_venta_combustible->cliente_id = $cliente_id;
-            $nota_venta_combustible->cliente = $cliente;
             $nota_venta_combustible->user_bombas_id = $user_bomba_id;
             $nota_venta_combustible->turno_id = $turno->id;
             $nota_venta_combustible->save();
@@ -131,11 +130,33 @@ class NotaVentaCombustibleController extends Controller
                 $cliente->puntos =  $cliente->puntos + 1;
                 $cliente->save();
             }
-            return redirect()->route('nota_venta_combustible.show', $nota_venta_combustible);
+
+            $factura = new FacturaCombustible();
+            $factura->placa = $placa;
+            $factura->nro_factura = random_int(1000, 999999999);
+            $factura->fecha_emision = $DateAndTime;
+            $factura->lugar_emision = "Santa Cruz de la Sierra";
+            $factura->numero_autorizacion = random_int(10000, PHP_INT_MAX);
+            $factura->total = $nota_venta_combustible->total;
+            $factura->codigo_control = substr(str_shuffle($permitted_chars),  0,  16);
+            $factura->nit = $request->nit;
+            $factura->fecha_limite_emision = $this->fechaLimiteEmision($DateAndTime);
+            $factura->nombre_razon_social = $request->cliente;
+            $factura->nota_venta_combustible_id = $nota_venta_combustible->id;
+            $factura->save();
+            
+            return $nota_venta_combustible->id;
+            //return redirect()->route('nota_venta_combustible.show', $nota_venta_combustible);
         } else {
             $vehiculo = Vehiculo::find($vehiculo_id);
             return redirect()->route('nota_venta_combustible.create')->with(['vehiculo_id' => $vehiculo->id . '`' . $vehiculo->b_sisa])->withErrors(['errors' => 'cantidad de combustible insuficiente!']);
         }
+    }
+
+    public function fechaLimiteEmision($fechaEmision)
+    {
+        //sumo 5 meses
+        return date("Y-m-d", strtotime($fechaEmision . "+ 5 month"));
     }
 
     /**
@@ -198,12 +219,13 @@ class NotaVentaCombustibleController extends Controller
     public function ventasMes(Request $request)
     {
         $end_month = today();
-        $pivot_month = today()->subMonths($request->rango - 1);
+        $pivot_month = today()->subMonths($request->rango - 1)->setDay(01);
 
         $query = DB::table('nota_venta_combustible')
-            ->selectRaw("date_part('month',fecha) as mes, sum(total) as total")
-            ->whereDate('fecha', '>=', $pivot_month->setDay(01))
-            ->groupBy("mes")
+            ->selectRaw("date_part('year',fecha) as año, date_part('month',fecha) as mes, sum(total) as total")
+            ->whereDate('fecha', '>=', $pivot_month)
+            ->groupBy(["año", "mes"])
+            ->orderBy('año')
             ->orderBy("mes")
             ->get();
 
@@ -237,9 +259,10 @@ class NotaVentaCombustibleController extends Controller
         $pivot_month = today()->subMonths($request->rango - 1);
 
         $query = DB::table('nota_venta_combustible')
-            ->selectRaw("date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
+            ->selectRaw("date_part('year',fecha) as año, date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
             ->whereDate('fecha', '>=', $pivot_month->setDay(01))
-            ->groupBy("mes")
+            ->groupBy(["año", "mes"])
+            ->orderBy('año')
             ->orderBy("mes")
             ->get();
 

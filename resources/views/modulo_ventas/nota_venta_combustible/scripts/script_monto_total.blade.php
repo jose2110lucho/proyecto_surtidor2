@@ -58,6 +58,7 @@
                 })
                 .then(response => response.json())
                 .then((json) => {
+                    console.log(json)
                     json.forEach(element => {
                         labels.push(element.mes);
                         values.push(parseFloat(element.total));

@@ -183,9 +183,10 @@ class NotaVentaProductoController extends Controller
         $pivot_month = today()->subMonths($request->rango - 1);
 
         $query_ventas_mes = DB::table('nota_venta_producto')
-            ->selectRaw("date_part('month',fecha) as mes, sum(total) as total")
+            ->selectRaw("date_part('year',fecha) as año, date_part('month',fecha) as mes, sum(total) as total")
             ->whereDate('fecha', '>=', $pivot_month->setDay(01))
-            ->groupBy("mes")
+            ->groupBy(["año", "mes"])
+            ->orderBy('año')
             ->orderBy("mes")
             ->get();
 
@@ -219,9 +220,10 @@ class NotaVentaProductoController extends Controller
         $pivot_month = today()->subMonths($request->rango - 1);
 
         $query_ventas_mes = DB::table('nota_venta_producto')
-            ->selectRaw("date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
+            ->selectRaw("date_part('year',fecha) as año, date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
             ->whereDate('fecha', '>=', $pivot_month->setDay(01))
-            ->groupBy("mes")
+            ->groupBy(["año", "mes"])
+            ->orderBy('año')
             ->orderBy("mes")
             ->get();
 
