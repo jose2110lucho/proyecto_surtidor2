@@ -21,7 +21,7 @@ class PremioFactory extends Factory
             'puntos_requeridos' => random_int(500, 1000),
             'estado' => (bool)random_int(0,1),
             'fecha_inicio' => Carbon::today(),
-            'producto_id' => random_int(1, 50),
+            'producto_id' => random_int(1, 7),
             'unidades_producto' => random_int(1, 5),
         ];
     }

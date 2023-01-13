@@ -1,79 +1,74 @@
 @extends('adminlte::page')
 
-@section('content_header')
-    <h1> Producto : {{ $producto->nombre }} </h1>
-@stop
-
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <!--aqui empieza el codigo del formulario-->
-            <form method="POST" action="{{ url('/producto/' . $producto->id) }}">
-                @csrf
-                {{ method_field('PUT') }}
-                <!--inicio campo nombre-->
+    <section class="content">
+        <div class="container-fluid py-4">
+            <div class="card">
+                <div class="card-body">
 
-                <div class="col-sm-4 mx-auto">
-                    <div class="d-flex">
-                        <div class="card border-1 shadow">
-                            <img src="{{$image}}"
-                                alt="foto de perfil del usuario" height="160">
+                    <form method="POST" action="{{ url('/producto/' . $producto->id) }}">
+                        @csrf
+                        {{ method_field('PUT') }}
+                        <div class="row">
+                            <div class="col-sm-2 my-auto mx-auto pb-2">
+                                <div class="d-flex">
+                                    @if ($producto->imagen)
+                                        <img height="190px"
+                                            src="{{ app('firebase.storage')->getBucket()->object($producto->imagen)->signedUrl(\Carbon\Carbon::now()->addSeconds(5)) }}">
+                                    @else
+                                        <img height="190px" src="{{ asset('img/producto-default.jpg') }}" class="img-fluid img-thumbnail">
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-10">
+                                <div class="row p-0">
+                                    <div class="col-auto">
+                                        <label for="nombre">Nombre</label>
+                                        <p type="text" class="border rounded p-2">{{ $producto->nombre }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="descripcion">Descripcion</label>
+                                        <p class="border rounded p-2">{{ $producto->descripcion }}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col col-sm-3">
+                                <label for="precio_compra" class="form-label">Precio de compra</label>
+                                <p type="text" class="form-control">{{ $producto->precio_compra }}</p>
+                            </div>
+
+                            <div class="col col-sm-3">
+                                <label for="precio_venta" class="form-label">Precio de venta</label>
+                                <p type="text" class="form-control">{{ $producto->precio_venta }}</p>
+                            </div>
+
+                            <div class="col col-sm-3">
+                                <label for="cantidad" class="form-label">Stock</label>
+                                <p type="text" class="form-control">{{ $producto->cantidad }}</p>
+                            </div>
+                            <div class="col col-sm-3">
+                                <label for="estado">Estado</label>
+                                <p type="text" class="form-control my-colorpicker1">
+                                    {{ $producto->estado ? 'Disponible' : 'No Disponible' }}</p>
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-auto ">
+                                <a href="{{ url('/producto') }}" class="btn btn-secondary">
+                                    Volver
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">nombre</label>
-                    <p type="text" class="form-control">{{ $producto->nombre }}</p>
-                </div>
-                <!--fin campo nombre-->
-                <!--inicio campo precio_compra-->
-                <div class="mb-3">
-                    <label for="precio_compra" class="form-label">precio de compra</label>
-                    <p type="text" class="form-control">{{ $producto->precio_compra }}</p>
-                </div>
-                <!--fin campo precio_compra-->
-                <!--inicio campo precio_venta-->
-                <div class="mb-3">
-                    <label for="precio_venta" class="form-label">precio de venta</label>
-                    <p type="text" class="form-control">{{ $producto->precio_venta }}</p>
-                </div>
-                <!--fin campo precio_venta-->
-                <!--inicio campo cantidad-->
-                <div class="mb-3">
-                    <label for="cantidad" class="form-label">cantidad</label>
-                    <p type="text" class="form-control">{{ $producto->cantidad }}</p>
-                </div>
-                <!--fin campo cantidad-->
-                <!--inicio campo estado-->
-                <div class="form-group">
-                    <label for="estado">estado</label>
-                    <p type="text" class="form-control my-colorpicker1">
-                        {{ $producto->estado ? 'Disponible' : 'No Disponible' }}</p>
-                </div>
-                <!--inicio campo estado-->
-                <!--inicio campo descripcion-->
-                <div class="mb-3">
-                    <label for="descripcion" class="form-label">descripcion</label>
-                    <p type="text" class="form-control">{{ $producto->descripcion }}</p>
-                </div>
-                <!--fin campo descripcion-->
-                <!--inicio campo imagen-->
-                <div>
-                    <img src="{{ asset($producto->imagen) }}" alt="" class="img-fluid img-thumbnail"
-                        width="80px">
-                </div>
-                <!--fin campo imagen-->
-                <!--inicio campo boton-->
-                <div class="row mb-0">
-                    <div class="col-md-10 offset-md-2">
-                        <a href="{{ url('/producto') }}" class="btn btn-secondary">
-                            Cancelar
-                        </a>
-                    </div>
-                </div>
-                <!--fin campo boton-->
-            </form>
-            <!--aqui termina el codigo del formulario-->
+            </div>
         </div>
-    </div>
+    </section>
 @stop
