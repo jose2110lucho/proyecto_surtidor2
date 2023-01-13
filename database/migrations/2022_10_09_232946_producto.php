@@ -20,7 +20,7 @@ class Producto extends Migration
             $table->decimal('precio_venta', 8,2);
             $table->integer('cantidad');
             $table->boolean('estado')->default(true);
-            $table->string('descripcion');
+            $table->text('descripcion');
             $table->string('imagen')->nullable();
             $table->timestamps();
         });
