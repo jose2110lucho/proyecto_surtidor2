@@ -15,9 +15,6 @@ class FacturaCombustible extends Migration
     {
         Schema::create('factura_combustible', function (Blueprint $table) {
             $table->id();
-            //vendedor
-            //turno del vendedor
-            //bomba desde donde vende
             $table->string('placa');
             $table->integer('nro_factura'); 
             $table->dateTime('fecha_emision');

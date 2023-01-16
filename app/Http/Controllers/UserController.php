@@ -28,11 +28,11 @@ class UserController extends Controller
         return view('modulo_administrativo/empleados/index', ['user' => $user]);
     }
 
-    
+
 
     public function bombas(User $user)
     {
-        $user_bombas = UserBomba::where('user_id', $user->id)->orderBy('fecha_asignacion','desc')->get();
+        $user_bombas = UserBomba::where('user_id', $user->id)->orderBy('fecha_asignacion', 'desc')->get();
         $bombas = Bomba::where('libre', '=', true)->get();
         return view('modulo_administrativo/empleados/bombas', compact('user_bombas', 'bombas', 'user'));
     }
@@ -53,16 +53,16 @@ class UserController extends Controller
             'bomba_id' => 'required'
         ]);
 
-        $fecha_hora = new DateTime();  
+        $fecha_hora = new DateTime();
         $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
-        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s"); 
+        $DateAndTime = $fecha_hora->format("Y-m-d H:i:s");
 
-        $ultimaAsignacion = UserBomba::where('user_id','=',$user->id)->orderBy('fecha_asignacion','desc')->first();
+        $ultimaAsignacion = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->first();
 
         $userBomba = new UserBomba();
         $userBomba->user_id = $user->id;
         $userBomba->bomba_id = $request->bomba_id;
-        $userBomba->fecha_asignacion = $DateAndTime; 
+        $userBomba->fecha_asignacion = $DateAndTime;
         $userBombaGuardado = $userBomba->save();
 
         $bomba = Bomba::find($request->bomba_id);
@@ -71,7 +71,7 @@ class UserController extends Controller
 
         /* && isset($ultimaAsignacion) */
 
-        if($userBombaGuardado && $ultimaAsignacion != null){
+        if ($userBombaGuardado && $ultimaAsignacion != null) {
 
             $ultimaAsignacion->asignacion_vigente = false;
             $ultimaAsignacion->save();
@@ -79,7 +79,6 @@ class UserController extends Controller
             $ultimaBombaAsignada = Bomba::find($ultimaAsignacion->bomba_id);
             $ultimaBombaAsignada->libre = true;
             $ultimaBombaAsignada->save();
-
         }
 
         return redirect(route('empleadobombas.index', $user));
@@ -141,9 +140,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id); 
+        $user = User::findOrFail($id);
         $roles = Role::all();
-        return view('modulo_administrativo.empleados.edit', compact('user', 'roles')); 
+        return view('modulo_administrativo.empleados.edit', compact('user', 'roles'));
     }
 
     /**
@@ -170,7 +169,30 @@ class UserController extends Controller
     public function update(Request $request, $user_id)
     {
         $user = User::find($user_id);
-        $user->update($request->all());
+
+        if ($request->hasfile('foto_perfil')) {
+
+            if ($user->foto_perfil) {
+                if (app('firebase.storage')->getBucket()->object($user->foto_perfil)->exists()) {
+                    app('firebase.storage')->getBucket()->object($user->foto_perfil)->delete();
+                }
+                $user->update(['foto_perfil' => null]);
+            }
+            $image = $request->file('foto_perfil');
+            $firebase_storage_path = 'Users/';
+            $extension = $image->getClientOriginalExtension();
+            $file = $user->id . '.' . $extension;
+            $localfolder = public_path('firebase-temp-uploads') . '/';
+
+            if ($image->move($localfolder, $file)) {
+                $uploadedfile = fopen($localfolder . $file, 'r');
+                app('firebase.storage')->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
+                $user->update((['foto_perfil' => $firebase_storage_path . $file]));
+                unlink($localfolder . $file);
+            }
+        }
+
+        $user->update($request->except(['foto_perfil']));
         return redirect()->route('empleados.show', $user)->with('status', 'Empleado Actualizado Exitosamente!');
     }
 

@@ -63,7 +63,7 @@
         <!--inicio campo botones-->
         <div class="row mb-0" style="text-align:right">
             <div class="col-md-10 offset-md-2">
-                <a href="{{ url('/nota_venta_producto') }}" class="btn btn-warning">
+                <a href="{{ route('ventas_productos.reportes') }}" class="btn btn-warning">
                     Atras
                 </a>
             </div> 

@@ -5,7 +5,6 @@
 @section('content')
     <section class="content">
         <div class="container-fluid p-4">
-
             <div class="card">
                 <div class="d-flex justify-content-between">
                     <div>

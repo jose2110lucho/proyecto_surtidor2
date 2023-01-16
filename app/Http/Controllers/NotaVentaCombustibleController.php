@@ -13,10 +13,7 @@ use App\Models\Bomba;
 use App\Models\Tanque;
 use App\Models\UserBomba;
 use App\Models\Combustible;
-
 use App\Models\User;
-use Illuminate\Support\MessageBag;
-
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DateTime;
@@ -65,14 +62,11 @@ class NotaVentaCombustibleController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $user_bomba = UserBomba::where('user_id', '=', $user->id)->where('asignacion_vigente', '=', true)->first();
 
-
-        
-        $user_bomba = UserBomba::where('user_id', '=', $user->id)->where('asignacion_vigente','=',true)->first();
-
-        if($user_bomba == null){
-            return view('modulo_ventas/nota_venta_combustible/create',['sin_bomba_asignada'=>true]);
-        }else{
+        if ($user_bomba == null) {
+            return view('modulo_ventas/nota_venta_combustible/create', ['sin_bomba_asignada' => true]);
+        } else {
             $bomba_id = $user_bomba->bomba_id;
 
             $bomba = Bomba::find($bomba_id);
@@ -83,7 +77,6 @@ class NotaVentaCombustibleController extends Controller
             return view('modulo_ventas/nota_venta_combustible/create', ['lista_vehiculos' => $lista_vehiculos, 'bomba' => $bomba, 'tanque' => $tanque, 'combustible' => $combustible, 'sin_bomba_asignada' => false]);
         }
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -95,57 +88,75 @@ class NotaVentaCombustibleController extends Controller
         $fecha_hora = new DateTime();
         $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
         $DateAndTime = $fecha_hora->format("Y-m-d H:i:s");
-        $vehiculo_array = explode("`", $request->vehiculo_id);
-        $vehiculo_id = $vehiculo_array[0];
+        $permitted_chars  =  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $placa = $request->placa;
+        $cliente_id = null;
+        $vehiculo_id = Vehiculo::where('placa', strtoupper($placa))->get();
 
-        if ($vehiculo_id == "0") {
-            return redirect('nota_venta_combustible/create');
+        if ($vehiculo_id->first()) {
+            $vehiculo_id = $vehiculo_id[0]->id;
+            $vehiculo = Vehiculo::find($vehiculo_id);
+            $cliente_id = $vehiculo->cliente->id;
         } else {
-
-            $user = Auth::user();
-            $user_bomba_id = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->first()->id;
-            $user_bomba = UserBomba::find($user_bomba_id);
-            $tanque = $user_bomba->bomba->tanque;
-
-
-            $user_model = User::find($user->id);
-            $turno = $user_model->join('users_turnos', 'users.id','users_turnos.user_id')
-                          ->join('turnos', 'turnos.id','users_turnos.turno_id')
-                          ->orderBy('users_turnos.id','desc')->select('turnos.*')->first(); 
-
-            
-            if($tanque->cantidad_disponible - $request->cantidad_combustible > 0){
-
-
-
-                $nota_venta_combustible = new NotaVentaCombustible();
-                $nota_venta_combustible->fecha =  $DateAndTime;
-                $nota_venta_combustible->total = $request->cantidad_combustible * $request->precio;
-                $nota_venta_combustible->cantidad_combustible = $request->cantidad_combustible;
-                $nota_venta_combustible->vehiculo_id = $vehiculo_id;
-                $nota_venta_combustible->user_bombas_id = $user_bomba_id;
-                $nota_venta_combustible->turno_id = $turno->id;
-                $nota_venta_combustible->save();
-
-                $tanque->cantidad_disponible = $tanque->cantidad_disponible - $request->cantidad_combustible;
-                $tanque->save();
-
-                if ($nota_venta_combustible->total >= 100) {
-
-                    $vehiculo = Vehiculo::find($vehiculo_id);
-                    $cliente = Cliente::find($vehiculo->cliente_id);
-                    $cliente->puntos =  $cliente->puntos + 1;
-                    $cliente->save();
-                }
-
-
-            }else{
-
-
-                $vehiculo = Vehiculo::find($vehiculo_id);
-                return redirect()->route('nota_venta_combustible.create')->with(['vehiculo_id' => $vehiculo->id . '`' . $vehiculo->b_sisa])->withErrors(['errors' => 'cantidad de combustible insuficiente!']);
-            }
+            $vehiculo_id = null;
         }
+        $user = Auth::user();
+        $user_bomba_id = UserBomba::where('user_id', '=', $user->id)->orderBy('fecha_asignacion', 'desc')->first()->id;
+        $user_bomba = UserBomba::find($user_bomba_id);
+        $tanque = $user_bomba->bomba->tanque;
+
+        $user_model = User::find($user->id);
+        $turno = $user_model->join('users_turnos', 'users.id', 'users_turnos.user_id')
+            ->join('turnos', 'turnos.id', 'users_turnos.turno_id')
+            ->orderBy('users_turnos.id', 'desc')->select('turnos.*')->first();
+
+        if ($tanque->cantidad_disponible - $request->cantidad_combustible > 0) {
+            $nota_venta_combustible = new NotaVentaCombustible();
+            $nota_venta_combustible->fecha =  $DateAndTime;
+            $nota_venta_combustible->total = $request->total;
+            $nota_venta_combustible->cantidad_combustible = $request->cantidad_combustible;
+            $nota_venta_combustible->vehiculo_id = $vehiculo_id;
+            $nota_venta_combustible->placa = $placa;
+            $nota_venta_combustible->cliente_id = $cliente_id;
+            $nota_venta_combustible->user_bombas_id = $user_bomba_id;
+            $nota_venta_combustible->turno_id = $turno->id;
+            $nota_venta_combustible->save();
+
+            $tanque->cantidad_disponible = $tanque->cantidad_disponible - $request->cantidad_combustible;
+            $tanque->save();
+
+            if ($cliente_id && $nota_venta_combustible->total >= 100) {
+                $cliente = Cliente::find($cliente_id);
+                $cliente->puntos =  $cliente->puntos + 1;
+                $cliente->save();
+            }
+
+            $factura = new FacturaCombustible();
+            $factura->placa = $placa;
+            $factura->nro_factura = random_int(1000, 999999999);
+            $factura->fecha_emision = $DateAndTime;
+            $factura->lugar_emision = "Santa Cruz de la Sierra";
+            $factura->numero_autorizacion = random_int(10000, PHP_INT_MAX);
+            $factura->total = $nota_venta_combustible->total;
+            $factura->codigo_control = substr(str_shuffle($permitted_chars),  0,  16);
+            $factura->nit = $request->nit;
+            $factura->fecha_limite_emision = $this->fechaLimiteEmision($DateAndTime);
+            $factura->nombre_razon_social = $request->cliente;
+            $factura->nota_venta_combustible_id = $nota_venta_combustible->id;
+            $factura->save();
+            
+            return $nota_venta_combustible->id;
+            //return redirect()->route('nota_venta_combustible.show', $nota_venta_combustible);
+        } else {
+            $vehiculo = Vehiculo::find($vehiculo_id);
+            return redirect()->route('nota_venta_combustible.create')->with(['vehiculo_id' => $vehiculo->id . '`' . $vehiculo->b_sisa])->withErrors(['errors' => 'cantidad de combustible insuficiente!']);
+        }
+    }
+
+    public function fechaLimiteEmision($fechaEmision)
+    {
+        //sumo 5 meses
+        return date("Y-m-d", strtotime($fechaEmision . "+ 5 month"));
     }
 
     /**
@@ -156,18 +167,6 @@ class NotaVentaCombustibleController extends Controller
      */
     public function show($id)
     {
-
-
-        /* $bomba = Bomba::find($bomba_id);
-        $tanque = Tanque::where('id', '=', $bomba->tanque_id)->first();
-        $combustible = Combustible::find($tanque->combustible_id); */
-
-
-        /* $nota_venta_combustible = NotaVentaCombustible::join('vehiculos', 'nota_venta_combustible.vehiculo_id', 'vehiculos.id')
-        ->join('clientes','vehiculos.cliente_id','clientes.id')
-        ->where('nota_venta_combustible.id','=',$id)
-        ->select('nota_venta_combustible.*', 'vehiculos.placa','clientes.nombre')->first(); */
-
         $nota_venta_combustible = NotaVentaCombustible::find($id);
         $combustible =  $nota_venta_combustible->userBombas->bomba->tanque->combustible;
 
@@ -176,11 +175,7 @@ class NotaVentaCombustibleController extends Controller
 
         $existeFactura = count($listaFacturaCombustible) > 0 ? true : false;
 
-        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','combustible','existeFactura'));
-
-
-        // return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible','bomba','tanque','combustible','user'));
-
+        return view('modulo_ventas.nota_venta_combustible.show', compact('nota_venta_combustible', 'combustible', 'existeFactura'));
     }
 
     /**
@@ -224,12 +219,13 @@ class NotaVentaCombustibleController extends Controller
     public function ventasMes(Request $request)
     {
         $end_month = today();
-        $pivot_month = today()->subMonths($request->rango - 1);
+        $pivot_month = today()->subMonths($request->rango - 1)->setDay(01);
 
         $query = DB::table('nota_venta_combustible')
-            ->selectRaw("date_part('month',fecha) as mes, sum(total) as total")
-            ->whereDate('fecha', '>=', $pivot_month->setDay(01))
-            ->groupBy("mes")
+            ->selectRaw("date_part('year',fecha) as año, date_part('month',fecha) as mes, sum(total) as total")
+            ->whereDate('fecha', '>=', $pivot_month)
+            ->groupBy(["año", "mes"])
+            ->orderBy('año')
             ->orderBy("mes")
             ->get();
 
@@ -263,9 +259,10 @@ class NotaVentaCombustibleController extends Controller
         $pivot_month = today()->subMonths($request->rango - 1);
 
         $query = DB::table('nota_venta_combustible')
-            ->selectRaw("date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
+            ->selectRaw("date_part('year',fecha) as año, date_part('month',fecha) as mes, sum(total)/count(id) as monto_promedio")
             ->whereDate('fecha', '>=', $pivot_month->setDay(01))
-            ->groupBy("mes")
+            ->groupBy(["año", "mes"])
+            ->orderBy('año')
             ->orderBy("mes")
             ->get();
 

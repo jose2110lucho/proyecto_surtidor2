@@ -1,193 +1,377 @@
 @extends('layouts/master')
 
-@section('content_header')
-
-@if ($errors->has('errors'))
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{ $errors->first('errors') }}</strong> 
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
 @if ($sin_bomba_asignada)
-    <h1>no se le  asigno ninguna bomba</h1>
+    @section('content')
+        <h1>no se le asigno ninguna bomba</h1>
+    @endsection
 @else
-<div class="card">
-    <div class="bg-black p-3">
-       <div class="d-flex justify-content-between">
-           <div>
-               <h3 class="px-3 pt-3">
-                   <strong>REGISTRAR VENTA DE COMBUSTIBLE: {{strtoupper($combustible->nombre)}}</strong>
-               </h3>
-               
-           </div>
-           <div class="p-3">
-               <span class="fas fa-gas-pump fa-5x"></span>
-               <p class="px-3 text-sm">
-                <h3>nombre: {{$bomba->nombre}}</h3>
-                <h3>conectado a: {{$tanque->descripcion}}</h3>
-                <h3>cantidad disponible : {{$tanque->cantidad_disponible}} litros</h3>
-               </p>
-           </div>
-         
-       </div>
-   </div> 
-</div>  
-@endif
+    @section('content')
+        <section class="content">
+            <div class="container-fluid pt-4">
+                @if ($errors->has('errors'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>{{ $errors->first('errors') }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
 
-@stop
-
-@section('content')
-    @if ($sin_bomba_asignada == false)
-    <div class="card">
-        
-        <form action="{{route('nota_venta_combustible.store')}}" method="POST">
-            @csrf
-            <div class="card-body">
-                <!--aqui empieza el codigo del select vehiculo-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="vehiculo_id" >Seleccione una placa(automovil)</label>
-                                <select class="js-example-basic-single form-control"  name="vehiculo_id" id="vehiculo_id" onchange="onChangeSelect()">
-                                    
-                                    <option value="0">seleccionar</option>
-                                    
-                                    @foreach ($lista_vehiculos as $vehiculo)
-                                        
-                                            <option value="{{ $vehiculo->id.'`'.$vehiculo->b_sisa }}">{{ $vehiculo->placa}}</option>
-
-                                    @endforeach
-                                </select>
+                <div class="card">
+                    <div class="card-header my-auto p-0">
+                        <div class="col my-auto pt-2 pl-3">
+                            <h5 class="card-title"><strong>VENTA DE COMBUSTIBLE</strong></h5><br>
+                            <h6 class="text-muted">{{ strtoupper($combustible->nombre) }}</h6>
                         </div>
                     </div>
-                <!--aqui termina el codigo del select vehiculo-->
-                <!--inicio campo cantidad de combustible-->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="cantidad_combustible" id="label_confirmar"  hidden>cantidad de combustible(litros)</label>
-                        <input name="cantidad_combustible" type="number" class="form-control" id="cantidad_combustible" placeholder="introduzca cantidad de combustible"  required hidden>
-                    </div>
+
+                    <form id="form_nota_venta" name="form_nota_venta">
+                        @csrf
+                        <div class="card-body">
+                            <div class="form-row mb-n2 ">
+                                <div class="form-group col-md-1 mr-1 ml-n1">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/4371/4371437.png" width="65px">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="vendedor" class="font-weight-normal">Vendedor</label>
+                                    <input class="form-control form-control-sm bg-white text-muted" name="vendedor"
+                                        id="vendedor" value=" {{ Auth::user()->name . ' ' . Auth::user()->apellido }}"
+                                        readonly>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="turno" class="font-weight-normal">Turno</label>
+                                    <p name="turno" class="form-control form-control-sm my-colorpicker1" id="turno">
+
+                                    </p>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="bomba" class="font-weight-normal">Bomba</label>
+                                    <p name="bomba" class="form-control form-control-sm my-colorpicker1" id="bomba">
+                                        {{ $bomba->codigo }}
+                                    </p>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="tanque" class="font-weight-normal">Tanque</label>
+                                    <p name="tanque" class="form-control form-control-sm my-colorpicker1" id="tanque">
+                                        {{ $tanque->codigo }}
+                                    </p>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="tanque" class="font-weight-normal">Cant. disp.</label>
+                                    <div class="input-group input-group-sm">
+                                        <p name="tanque" class="form-control form-control-sm my-colorpicker1"
+                                            id="tanque">
+                                            {{ $tanque->cantidad_disponible }}
+                                        </p>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Litros</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-1 mr-1 ml-n1 my-auto">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/2554/2554896.png" width="64px">
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="placa">Placa</label>
+                                    <div class="input-group" id="input_placa">
+                                        <input class="form-control" name="placa" id="placa"
+                                            style="text-transform:uppercase">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-sm btn-outline-info" type="button" id="check_bsisa"
+                                                id="button-addon1">Verificar</button>
+                                        </div>
+
+                                    </div>
+                                    <div class="invalid-feedback" id="placa_error">*Placa no valida</div>
+                                    <small class="text-info my-auto" id="check_bsisa_result" hidden>
+                                        <i class="fas fa-check fa-fw"></i> B-SISA Habilitado
+                                    </small>
+
+                                </div>
+
+
+
+                                <div class="form-group col-md-3">
+                                    <label for="cliente">Cliente</label>
+                                    <input name="cliente" class="form-control my-colorpicker1" id="cliente" required>
+                                    </p>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="nit">NIT</label>
+                                    <input name="nit" class="form-control my-colorpicker1" id="nit" required>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-1 mr-1 ml-n1 my-auto">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/747/747781.png" width="65px">
+                                </div>
+
+                                <div class="form-group col-sm-3">
+                                    <label for="precio">Precio de venta</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Bs</span>
+                                        </div>
+                                        <p name="precio" type="number" class="form-control" id="precio">
+                                            {{ $combustible->precio_venta }}</p>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group col-sm-3">
+                                    <label for="cantidad_combustible">Cantidad</label>
+                                    <div class="input-group">
+                                        <input name="cantidad_combustible" type="number" class="form-control"
+                                            id="cantidad_combustible" required step="0.01">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Litros</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-sm-3">
+                                    <label for="total">Total</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Bs</span>
+                                        </div>
+                                        <input type="number" name="total" class="form-control my-colorpicker1"
+                                            id="total" step="0.1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ url('nota_venta_combustible') }}" class="btn btn-secondary  mr-2">Atras</a>
+                                <button class="btn btn-info" id="button_confirmar" type="submit"
+                                    disabled>Confirmar</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <!--fin campo cantidad de combustible-->      
-                </div>
-                 <!--inicio campo precio-->
-                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="precio" id="label_confirmar" >precio(Bs)</label>
-                        <input name="precio" type="number" class="form-control" id="precio" value= "{{$combustible->precio_venta}}"  readonly> 
-                    </div>
-                </div>
-                <!--fin campo precio-->
-                <!--inicio campo tanque_id-->
-                <input type="number" name="tanque_id" value="{{$tanque->id}}" hidden>
-                <!--fin campo tanque_id-->
-                <!--aqui empieza el codigo del B-SISA-->
-                <div class="mb-3"  id="B-SISA" hidden>
-                    <label for="B-SISA" class="col-form-label"> 
-                       <h2> B-SISA <span class="badge rounded-pill bg-danger" id="B-SisaMsg"></span></h2>
-                    </label>     
-                </div>
-                <!--aqui termina el codigo del B-SISA-->
-                <!--aqui empieza el codigo del boton guardar-->
-                <div class="d-flex justify-content-end">
-                    <a href="{{ url('nota_venta_combustible') }}" class="btn btn-secondary  mr-2">Atras</a>
-                    <button class="btn btn-success" id="button_confirmar" type="submit" hidden>Confirmar</button>  
-                </div>
-                <!--aqui termina el codigo del boton guardar-->
             </div>
-        </form>
-    </div> 
-    @endif
-
-@stop
-
-@section('css')
-
-    <!--select2 css-->
-
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        </section>
 
 
-@stop
+        <!-- Modal -->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" aria-hidden="true" id="modalMenuOpciones" tabindex="-1" aria-labelledby="modalMenuOpciones"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"  >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bolder" id="exampleModalLabel">VENTA REALIZADA CON EXITO</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-around">
+                            <a type="button" id="verNotaVenta" class="btn btn-success" target="_blank">
+                                <i class="fas fa-file-invoice-dollar"></i> Ver nota de venta</a>
+                            <a type="button" id="imprimir" class="btn btn-info" target="_blank">
+                                <i class="fas fa-print fa-fw" aria-hidden="true"></i> Imprimir</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-secondary"
+                            href="{{ route('nota_venta_combustible.create') }}">Cerrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @stop
+@endif
+
 @section('js')
-    
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-    <!--select2 js-->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-
     <script>
-        //-------------------------------------------------------------------------------------------------------------------------
-        function onChangeSelect() {
-            
-            let vehiculo = document.getElementById("vehiculo_id").value;
-            
-            vehiculo = vehiculo.split('`')
-            
-             console.log(vehiculo);
-
-             let button_confirmar = document.getElementById("button_confirmar")
-             let label_confirmar = document.getElementById("label_confirmar")
-             let imput_confirmar = document.getElementById("cantidad_combustible")
-
-            if (vehiculo[0] == "0") {
-                
-                document.getElementById("B-SISA").hidden = true;
-                button_confirmar.hidden = true;
-                label_confirmar.hidden = true;
-                imput_confirmar.hidden = true;
-                
-            } else {
-
-
-                let elementoB_sisa =  document.getElementById("B-SisaMsg");
-
-                
-                if(vehiculo[1]){
-
-                    elementoB_sisa.classList.remove('bg-danger');
-                    elementoB_sisa.classList.add('bg-success');
-                    elementoB_sisa.innerHTML = "VALIDO"
-                    button_confirmar.hidden = false;
-                    label_confirmar.hidden = false;
-                    imput_confirmar.hidden = false;
-
-                }else{
-
-                    elementoB_sisa.classList.remove('bg-success');
-                    elementoB_sisa.classList.add('bg-danger');
-                    elementoB_sisa.innerHTML = "NO VALIDO";
-                    button_confirmar.hidden = true;
-                    label_confirmar.hidden = true;
-                    imput_confirmar.hidden = true;
-                }
-
-                document.getElementById("B-SISA").hidden = false;
-                
-            }
-
-        }
-        
+        //Formulario
         $(document).ready(function() {
-            $('.js-example-basic-single').select2(); 
-            let vehiculo = "{{session('vehiculo_id')}}";
-            console.log(vehiculo);
+            $('#placa').on('change', function() {
+                if ($(this).val().length == 7) {
+                    if (verficarFormatoPlaca()) {
+                        placaValida();
 
-            if(vehiculo != ''){
-                $('#vehiculo_id').val(vehiculo).trigger('change');
+                        let request = {
+                            'placa': $(this).val(),
+                        };
+
+                        fetch('{{ route('fetch.clientes.find') }}', {
+                                method: 'POST',
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json",
+                                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                },
+                                body: JSON.stringify(request),
+                            })
+                            .then(response => response.json())
+                            .then((json) => {
+                                if (!jQuery.isEmptyObject(json)) {
+                                    $('#cliente').val(json.nombre + ' ' + json.apellido)
+                                }
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+
+                    } else {
+                        placaInvalida();
+                        bsisaInhabil();
+                    };
+                } else {
+                    placaInvalida();
+                    bsisaInhabil();
+                };
+            })
+
+            $('#check_bsisa').on('click', function() {
+                if (verficarFormatoPlaca()) {
+                    $(this).html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+                    )
+                    bsisaInhabil();
+
+                    setTimeout(function() {
+                        $('#check_bsisa').html('Verificar');
+                        if (placa) {
+                            bsisaHabil();
+                        } else {
+                            bsisaInhabil();
+                        }
+
+                    }, 1100);
+                } else {
+                    placaInvalida()
+                }
+            })
+
+            function placaValida() {
+                placa_status = true;
+                $('#check_bsisa').attr("disabled", false)
+                $('#placa').removeClass('is-invalid')
+                $('#input_placa').removeClass('is-invalid')
             }
-            
-            
 
+            function placaInvalida() {
+                placa_status = false;
+                $('#check_bsisa').attr("disabled", true)
+                $('#placa').addClass('is-invalid')
+                $('#input_placa').addClass('is-invalid')
+            }
 
+            function bsisaHabil() {
+                $('#check_bsisa_result').attr("hidden", false);
+                $('#button_confirmar').attr("disabled", false);
+            }
+
+            function bsisaInhabil() {
+                $('#check_bsisa_result').attr("hidden", true);
+                $('#button_confirmar').attr("disabled", true);
+            }
+
+            function isStringLetters(string) {
+                for (var i = 0; i < string.length; i++) {
+                    if (!string.charAt(i).match(/[a-z]/i)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function isStringNumber(string) {
+                return string >= 0 && string <= 9999;
+            }
+
+            function verficarFormatoPlaca() {
+                var placa = $('#placa').val();
+                if (placa.length == 7) {
+                    var numbers = placa.substr(0, 4);
+                    var letters = placa.substr(4, 7);
+                    if (isStringNumber(numbers) && isStringLetters(letters)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
 
         });
+    </script>
 
-        //-------------------------------------------------------------------------------------------------------------------------        
+    <script>
+        //Calcular total
+        $(document).ready(function() {
+            var precio = $('#precio').text()
+            $('#cantidad_combustible').on('change', function() {
+                var total = $(this).val() * precio;
+                $('#total').val(Math.round(total * 10) / 10)
+
+            })
+
+            $('#total').on('change', function() {
+                var cantidad = $(this).val() / precio;
+                $('#cantidad_combustible').val(Math.round(cantidad * 100) / 100)
+            })
+        })
+    </script>
+
+    <script>
+        //Modal de opciones
+        $(document).ready(function() {
+            var notaVentaId;
+
+            document.querySelector('#form_nota_venta').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "{{ route('nota_venta_combustible.store') }}",
+                    type: "POST",
+                    data: $('#form_nota_venta').serialize(),
+
+                    success: function(response) {
+                        $('#modalMenuOpciones').modal('show');
+                        notaVentaId = response;
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    },
+                });
+            });
+
+            $("#imprimir").click(function(event) {
+                imprimir();
+            })
+
+            $("#verNotaVenta").click(function(event) {
+                verNotaVenta();
+            })
+
+            function imprimir() {
+                var url = '{{ route('factura_combustible.generateInvoice', ':id') }}';
+                url = url.replace(':id', notaVentaId);
+
+                window.open(url, '_blanck')
+            }
+
+            function verNotaVenta() {
+                var url = '{{ route('nota_venta_combustible.show', ':id') }}';
+                url = url.replace(':id', notaVentaId);
+
+                window.open(url, '_blanck')
+            }
+        })
     </script>
 @stop
