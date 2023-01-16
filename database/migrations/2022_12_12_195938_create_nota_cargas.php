@@ -17,8 +17,8 @@ class CreateNotaCargas extends Migration
             $table->id();
             $table->dateTime('fecha');
             $table->decimal('total',8,2);
-            $table->integer('combustible_nombre')->unsigned();
-            $table->foreign('combustible_nombre')->references('id')->on('combustibles')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('combustible_id')->unsigned();
+            $table->foreign('combustible_id')->references('id')->on('combustibles')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
