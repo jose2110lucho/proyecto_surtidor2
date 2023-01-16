@@ -238,91 +238,85 @@
             "time": "2022-08-10T22:54:19+00:00"
         },
         {
-            "name": "dflydev/dot-access-data",
-            "version": "v3.0.2",
+            "name": "composer/semver",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dflydev/dflydev-dot-access-data.git",
-                "reference": "f41715465d65213d644d3141a6a93081be5d3549"
+                "url": "https://github.com/composer/semver.git",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/f41715465d65213d644d3141a6a93081be5d3549",
-                "reference": "f41715465d65213d644d3141a6a93081be5d3549",
+                "url": "https://api.github.com/repos/composer/semver/zipball/3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1 || ^8.0"
+                "php": "^5.3.2 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^0.12.42",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.3",
-                "scrutinizer/ocular": "1.6.0",
-                "squizlabs/php_codesniffer": "^3.5",
-                "vimeo/psalm": "^4.0.0"
+                "phpstan/phpstan": "^1.4",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-main": "3.x-dev"
                 }
-            ],
-            "time": "2022-12-19T10:26:16+00:00"
-        },
-        {
-            "name": "brick/math",
-            "version": "0.10.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/brick/math.git",
-                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/459f2781e1a08d52ee56b0b1444086e038561e3f",
-                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": "^7.4 || ^8.0"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.2",
-                "phpunit/phpunit": "^9.0",
-                "vimeo/psalm": "4.25.0"
             },
             "autoload": {
                 "psr-4": {
-                    "Dflydev\\DotAccessData\\": "src/"
+                    "Composer\\Semver\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Arbitrary-precision arithmetic library",
+            "authors": [
+                {
+                    "name": "Nils Adermann",
+                    "email": "naderman@naderman.de",
+                    "homepage": "http://www.naderman.de"
+                },
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                },
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com",
+                    "homepage": "http://robbast.nl"
+                }
+            ],
+            "description": "Semver library that offers utilities, version constraint parsing and validation.",
             "keywords": [
-                "Arbitrary-precision",
-                "BigInteger",
-                "BigRational",
-                "arithmetic",
-                "bigdecimal",
-                "bignum",
-                "brick",
-                "math"
+                "semantic",
+                "semver",
+                "validation",
+                "versioning"
             ],
             "support": {
-                "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.10.2"
+                "irc": "irc://irc.freenode.org/composer",
+                "issues": "https://github.com/composer/semver/issues",
+                "source": "https://github.com/composer/semver/tree/3.3.2"
             },
             "funding": [
                 {
-                    "url": "https://github.com/BenMorel",
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
                     "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
                 }
             ],
-            "time": "2022-08-10T22:54:19+00:00"
+            "time": "2022-04-01T19:23:25+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1702,37 +1696,79 @@
             "time": "2022-12-07T19:04:55+00:00"
         },
         {
-            "name": "kreait/firebase-php",
-            "version": "6.9.3",
+            "name": "kreait/clock",
+            "version": "1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kreait/firebase-php.git",
-                "reference": "7522705cc40693a6dfad15fbd79ae1607a1facc6"
+                "url": "https://github.com/kreait/clock-php.git",
+                "reference": "49e103382ca36cb2bc2e86ff3b8d11d44d0e0b31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kreait/firebase-php/zipball/7522705cc40693a6dfad15fbd79ae1607a1facc6",
-                "reference": "7522705cc40693a6dfad15fbd79ae1607a1facc6",
+                "url": "https://api.github.com/repos/kreait/clock-php/zipball/49e103382ca36cb2bc2e86ff3b8d11d44d0e0b31",
+                "reference": "49e103382ca36cb2bc2e86ff3b8d11d44d0e0b31",
                 "shasum": ""
             },
             "require": {
-                "beste/clock": "^2.1",
-                "beste/json": "^1.0",
+                "php": "^7.0|^8.0",
+                "stella-maris/clock": "^0.1.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5.14"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Clock.php"
+                ],
+                "psr-4": {
+                    "Kreait\\Clock\\": "src/Clock"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jérôme Gamez",
+                    "email": "jerome@gamez.name"
+                }
+            ],
+            "description": "A PHP 7.0 compatible clock abstraction",
+            "support": {
+                "issues": "https://github.com/kreait/clock-php/issues",
+                "source": "https://github.com/kreait/clock-php/tree/1.2"
+            },
+            "time": "2022-04-20T14:14:35+00:00"
+        },
+        {
+            "name": "kreait/firebase-php",
+            "version": "5.26.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kreait/firebase-php.git",
+                "reference": "8eb92e2415887ff1c4062316bdec9e1069c54d41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kreait/firebase-php/zipball/8eb92e2415887ff1c4062316bdec9e1069c54d41",
+                "reference": "8eb92e2415887ff1c4062316bdec9e1069c54d41",
+                "shasum": ""
+            },
+            "require": {
                 "ext-ctype": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
+                "google/auth": "^1.18",
+                "google/cloud-core": "^1.42.2",
+                "google/cloud-storage": "^1.24.1",
+                "guzzlehttp/guzzle": "^6.5.5|^7.3",
                 "guzzlehttp/promises": "^1.4",
                 "guzzlehttp/psr7": "^1.7|^2.0",
                 "kreait/clock": "^1.1",
-                "fig/http-message-util": "^1.1",
-                "google/auth": "^1.21",
-                "google/cloud-core": "^1.44.2",
-                "google/cloud-storage": "^1.26.2",
-                "guzzlehttp/guzzle": "^7.4.5",
-                "kreait/firebase-tokens": "^3.0",
-                "lcobucci/jwt": "^4.1",
-
+                "kreait/firebase-tokens": "^1.16.1",
                 "mtdowling/jmespath.php": "^2.6.1",
                 "php": "^7.4|^8.0",
                 "psr/cache": "^1.0.1|^2.0|^3.0",
@@ -1745,22 +1781,22 @@
             },
             "require-dev": {
                 "giggsey/libphonenumber-for-php": "^8.12.27",
-                "google/cloud-firestore": "^1.25.1",
+                "google/cloud-firestore": "^1.19.3",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.8.2",
-               "phpstan/phpstan-phpunit": "^1.1.1",
-                "phpunit/phpunit": "^9.5.22",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5.10",
                 "rector/rector": "^0.12.5",
-                  "symfony/var-dumper": "^5.4|^6.1.3"
+                "symfony/var-dumper": "^5.4|^6.0",
                 "symplify/easy-coding-standard": "^10.0"
             },
             "suggest": {
+                "giggsey/libphonenumber-for-php": "^8.9 to validate phone numbers before attempting to send them to Firebase",
                 "google/cloud-firestore": "^1.0 to use the Firestore component"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-7.x": "7.x-dev",
                     "dev-6.x": "6.x-dev",
                     "dev-5.x": "5.x-dev",
                     "dev-4.x": "4.x-dev"
@@ -1791,6 +1827,7 @@
                 "sdk"
             ],
             "support": {
+                "chat": "https://discord.gg/Yacm7unBsr",
                 "docs": "https://firebase-php.readthedocs.io",
                 "issues": "https://github.com/kreait/firebase-php/issues",
                 "source": "https://github.com/kreait/firebase-php"
@@ -1801,48 +1838,55 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-11-03T23:01:38+00:00"
+            "time": "2022-06-14T23:02:41+00:00"
         },
         {
             "name": "kreait/firebase-tokens",
-            "version": "3.0.3",
+            "version": "1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kreait/firebase-tokens-php.git",
-                "reference": "3f732ae04f6548f5130709daf06fcc1ca0561002"
+                "reference": "cad73174508a20961bae72a4c4a621208be83ee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kreait/firebase-tokens-php/zipball/3f732ae04f6548f5130709daf06fcc1ca0561002",
-                "reference": "3f732ae04f6548f5130709daf06fcc1ca0561002",
+                "url": "https://api.github.com/repos/kreait/firebase-tokens-php/zipball/cad73174508a20961bae72a4c4a621208be83ee4",
+                "reference": "cad73174508a20961bae72a4c4a621208be83ee4",
                 "shasum": ""
             },
             "require": {
-                "beste/clock": "^2.0",
                 "ext-json": "*",
                 "ext-openssl": "*",
                 "fig/http-message-util": "^1.1.5",
-                "guzzlehttp/guzzle": "^7.4.5",
-                "lcobucci/jwt": "^4.1.5",
+                "guzzlehttp/guzzle": "^6.3.1|^7.0",
+                "kreait/clock": "^1.1.0",
+                "lcobucci/jwt": "^4.0.4|^4.1.5",
                 "php": "^7.4|^8.0",
-                "psr/cache": "^1.0|^2.0|^3.0"
+                "psr/cache": "^1.0|^2.0|^3.0",
+                "psr/simple-cache": "^1.0.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.4",
+                "firebase/php-jwt": "^5.5.1",
+                "friendsofphp/php-cs-fixer": "^3.10",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.2",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.5.10",
-                "rector/rector": "^0.12.9",
-                "symfony/cache": "^5.4|^6.0",
-                "symfony/var-dumper": "^5.3|^6.0"
+                "phpstan/phpstan": "^0.12.99",
+                "phpstan/phpstan-phpunit": "^0.12.22",
+                "phpunit/phpunit": "^9.5.23",
+                "rector/rector": "^0.11.60",
+                "symfony/cache": "^5.4.11",
+                "symfony/var-dumper": "^5.4.11"
             },
             "suggest": {
-                "psr/cache-implementation": "to cache fetched remote public keys"
+                "firebase/php-jwt": "^5.0 can be used to create and parse tokens",
+                "guzzlehttp/guzzle": "^6.2.1|^7.0 can be used as an HTTP handler",
+                "lcobucci/jwt": "^3.2 can be used to create and parse tokens",
+                "psr/cache-implementation": "to cache fetched remote public keys",
+                "psr/simple-cache-implementation": "to cache fetched remote public keys"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
+                    "Firebase\\Auth\\Token\\": "src/Firebase/Auth/Token",
                     "Kreait\\Firebase\\JWT\\": "src/JWT"
                 }
             },
@@ -1867,7 +1911,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kreait/firebase-tokens-php/issues",
-                "source": "https://github.com/kreait/firebase-tokens-php/tree/3.0.3"
+                "source": "https://github.com/kreait/firebase-tokens-php/tree/1.17.0"
             },
             "funding": [
                 {
@@ -1875,32 +1919,32 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-22T21:40:00+00:00"
+            "time": "2022-08-22T21:31:22+00:00"
         },
         {
             "name": "kreait/laravel-firebase",
-            "version": "4.2.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kreait/laravel-firebase.git",
-                "reference": "35bdebd32cde14735e4edaa13d6684becf6607b4"
+                "reference": "e2110842cb08e48642116e2a9b719c81c80c83be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kreait/laravel-firebase/zipball/35bdebd32cde14735e4edaa13d6684becf6607b4",
-                "reference": "35bdebd32cde14735e4edaa13d6684becf6607b4",
+                "url": "https://api.github.com/repos/kreait/laravel-firebase/zipball/e2110842cb08e48642116e2a9b719c81c80c83be",
+                "reference": "e2110842cb08e48642116e2a9b719c81c80c83be",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^8.0 || ^9.0",
-                "illuminate/support": "^8.0 || ^9.0",
-                "kreait/firebase-php": "^6.7",
-                "php": "^7.4 || ^8.0",
-                "symfony/cache": "^5.4 || ^6.1.2"
+                "illuminate/contracts": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "kreait/firebase-php": "^5.24",
+                "php": "^7.2|^8.0",
+                "symfony/cache": "^5.4|^6.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.0 || 7.0",
-                "symplify/easy-coding-standard": "^10.3.3"
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^4.0|^5.0|^6.0"
             },
             "type": "library",
             "extra": {
@@ -1912,7 +1956,14 @@
                         "Kreait\\Laravel\\Firebase\\ServiceProvider"
                     ],
                     "aliases": {
-                        "Firebase": "Kreait\\Laravel\\Firebase\\Facades\\Firebase"
+                        "Firebase": "Kreait\\Laravel\\Firebase\\Facades\\Firebase",
+                        "FirebaseAuth": "Kreait\\Laravel\\Firebase\\Facades\\FirebaseAuth",
+                        "FirebaseDatabase": "Kreait\\Laravel\\Firebase\\Facades\\FirebaseDatabase",
+                        "FirebaseDynamicLinks": "Kreait\\Laravel\\Firebase\\Facades\\FirebaseDynamicLinks",
+                        "FirebaseFirestore": "Kreait\\Laravel\\Firebase\\Facades\\FirebaseFirestore",
+                        "FirebaseMessaging": "Kreait\\Laravel\\Firebase\\Facades\\FirebaseMessaging",
+                        "FirebaseRemoteConfig": "Kreait\\Laravel\\Firebase\\Facades\\FirebaseRemoteConfig",
+                        "FirebaseStorage": "Kreait\\Laravel\\Firebase\\Facades\\FirebaseStorage"
                     }
                 }
             },
@@ -1934,16 +1985,13 @@
             "description": "A Laravel package for the Firebase PHP Admin SDK",
             "keywords": [
                 "FCM",
-                "api",
-                "database",
                 "firebase",
                 "gcm",
-                "laravel",
-                "sdk"
+                "laravel"
             ],
             "support": {
                 "issues": "https://github.com/kreait/laravel-firebase/issues",
-                "source": "https://github.com/kreait/laravel-firebase/tree/4.2.0"
+                "source": "https://github.com/kreait/laravel-firebase/tree/3.4.0"
             },
             "funding": [
                 {
@@ -1967,7 +2015,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-07-28T18:03:37+00:00"
+            "time": "2021-12-04T14:15:18+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2600,41 +2648,43 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "4.2.1",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "72ac6d807ee51a70ad376ee03a2387e8646e10f3"
+                "reference": "55564265fddf810504110bd68ca311932324b0e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/72ac6d807ee51a70ad376ee03a2387e8646e10f3",
-                "reference": "72ac6d807ee51a70ad376ee03a2387e8646e10f3",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/55564265fddf810504110bd68ca311932324b0e9",
+                "reference": "55564265fddf810504110bd68ca311932324b0e9",
                 "shasum": ""
             },
             "require": {
-                "ext-hash": "*",
-                "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
-                "ext-sodium": "*",
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "infection/infection": "^0.21",
+                "infection/infection": "^0.20",
                 "lcobucci/coding-standard": "^6.0",
-                "mikey179/vfsstream": "^1.6.7",
-                "phpbench/phpbench": "^1.2",
+                "mikey179/vfsstream": "^1.6",
+                "phpbench/phpbench": "^0.17",
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^1.4",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
                 "phpunit/php-invoker": "^3.1",
-                "phpunit/phpunit": "^9.5"
+                "phpunit/phpunit": "^9.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\JWT\\": "src"
@@ -2658,7 +2708,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-                "source": "https://github.com/lcobucci/jwt/tree/4.2.1"
+                "source": "https://github.com/lcobucci/jwt/tree/4.0.4"
             },
             "funding": [
                 {
@@ -2670,7 +2720,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-08-19T23:14:07+00:00"
+            "time": "2021-09-28T19:18:28+00:00"
         },
         {
             "name": "league/commonmark",
@@ -3085,24 +3135,25 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.44",
+            "version": "3.1.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SpartnerNL/Laravel-Excel.git",
-                "reference": "289c3320982510dacfe0dd00de68061a2b7f4a43"
+                "reference": "80627071a8cebb3c1119f1d2881bb6a03a8f9152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/289c3320982510dacfe0dd00de68061a2b7f4a43",
-                "reference": "289c3320982510dacfe0dd00de68061a2b7f4a43",
+                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/80627071a8cebb3c1119f1d2881bb6a03a8f9152",
+                "reference": "80627071a8cebb3c1119f1d2881bb6a03a8f9152",
                 "shasum": ""
             },
             "require": {
+                "composer/semver": "^3.3",
                 "ext-json": "*",
                 "illuminate/support": "5.8.*|^6.0|^7.0|^8.0|^9.0",
                 "php": "^7.0|^8.0",
                 "phpoffice/phpspreadsheet": "^1.18",
-                "psr/simple-cache": "^1.0|^2.0"
+                "psr/simple-cache": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^6.0|^7.0",
@@ -3148,7 +3199,7 @@
             ],
             "support": {
                 "issues": "https://github.com/SpartnerNL/Laravel-Excel/issues",
-                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.44"
+                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.45"
             },
             "funding": [
                 {
@@ -3160,7 +3211,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-14T20:01:10+00:00"
+            "time": "2023-01-02T17:17:56+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -3575,16 +3626,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.64.0",
+            "version": "2.64.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "889546413c97de2d05063b8cb7b193c2531ea211"
+                "reference": "f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/889546413c97de2d05063b8cb7b193c2531ea211",
-                "reference": "889546413c97de2d05063b8cb7b193c2531ea211",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c",
+                "reference": "f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c",
                 "shasum": ""
             },
             "require": {
@@ -3673,7 +3724,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-26T17:36:00+00:00"
+            "time": "2023-01-01T23:17:36+00:00"
         },
         {
             "name": "nette/schema",
@@ -4939,21 +4990,20 @@
         },
         {
             "name": "ramsey/collection",
-            "version": "1.3.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/collection.git",
-                "reference": "ad7475d1c9e70b190ecffc58f2d989416af339b4"
+                "reference": "a4b48764bfbb8f3a6a4d1aeb1a35bb5e9ecac4a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/collection/zipball/ad7475d1c9e70b190ecffc58f2d989416af339b4",
-                "reference": "ad7475d1c9e70b190ecffc58f2d989416af339b4",
+                "url": "https://api.github.com/repos/ramsey/collection/zipball/a4b48764bfbb8f3a6a4d1aeb1a35bb5e9ecac4a5",
+                "reference": "a4b48764bfbb8f3a6a4d1aeb1a35bb5e9ecac4a5",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
-                "symfony/polyfill-php81": "^1.23"
+                "php": "^8.1"
             },
             "require-dev": {
                 "captainhook/plugin-composer": "^5.3",
@@ -5013,7 +5063,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/collection/issues",
-                "source": "https://github.com/ramsey/collection/tree/1.3.0"
+                "source": "https://github.com/ramsey/collection/tree/2.0.0"
             },
             "funding": [
                 {
@@ -5025,27 +5075,27 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-27T19:12:24+00:00"
+            "time": "2022-12-31T21:50:55+00:00"
         },
         {
             "name": "ramsey/uuid",
-            "version": "4.7.0",
+            "version": "4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "5ed9ad582647bbc3864ef78db34bdc1afdcf9b49"
+                "reference": "a1acf96007170234a8399586a6e2ab8feba109d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/5ed9ad582647bbc3864ef78db34bdc1afdcf9b49",
-                "reference": "5ed9ad582647bbc3864ef78db34bdc1afdcf9b49",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/a1acf96007170234a8399586a6e2ab8feba109d1",
+                "reference": "a1acf96007170234a8399586a6e2ab8feba109d1",
                 "shasum": ""
             },
             "require": {
                 "brick/math": "^0.8.8 || ^0.9 || ^0.10",
                 "ext-json": "*",
                 "php": "^8.0",
-                "ramsey/collection": "^1.2"
+                "ramsey/collection": "^1.2 || ^2.0"
             },
             "replace": {
                 "rhumsaa/uuid": "self.version"
@@ -5105,7 +5155,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/uuid/issues",
-                "source": "https://github.com/ramsey/uuid/tree/4.7.0"
+                "source": "https://github.com/ramsey/uuid/tree/4.7.1"
             },
             "funding": [
                 {
@@ -5117,7 +5167,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-19T22:30:49+00:00"
+            "time": "2022-12-31T22:20:34+00:00"
         },
         {
             "name": "riverline/multipart-parser",
@@ -5847,16 +5897,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v6.2.3",
+            "version": "v6.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "640fa048de31988b8924c0715d2e3404266efdac"
+                "reference": "ddd1a70bfdf4ed19facad0db689c7bca979d322e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/640fa048de31988b8924c0715d2e3404266efdac",
-                "reference": "640fa048de31988b8924c0715d2e3404266efdac",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/ddd1a70bfdf4ed19facad0db689c7bca979d322e",
+                "reference": "ddd1a70bfdf4ed19facad0db689c7bca979d322e",
                 "shasum": ""
             },
             "require": {
@@ -5923,7 +5973,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v6.2.3"
+                "source": "https://github.com/symfony/cache/tree/v6.2.4"
             },
             "funding": [
                 {
@@ -5939,7 +5989,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-22T17:55:15+00:00"
+            "time": "2022-12-29T16:29:13+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -6625,16 +6675,16 @@
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v5.4.17",
+            "version": "v5.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "7e38b847a23f986c29b3366684c42ff9de18cb1d"
+                "reference": "5da6f57a13e5d7d77197443cf55697cdf65f1352"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/7e38b847a23f986c29b3366684c42ff9de18cb1d",
-                "reference": "7e38b847a23f986c29b3366684c42ff9de18cb1d",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/5da6f57a13e5d7d77197443cf55697cdf65f1352",
+                "reference": "5da6f57a13e5d7d77197443cf55697cdf65f1352",
                 "shasum": ""
             },
             "require": {
@@ -6717,7 +6767,7 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-kernel/tree/v5.4.17"
+                "source": "https://github.com/symfony/http-kernel/tree/v5.4.18"
             },
             "funding": [
                 {
@@ -6733,7 +6783,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-28T14:51:55+00:00"
+            "time": "2022-12-29T18:54:08+00:00"
         },
         {
             "name": "symfony/mime",
@@ -8657,30 +8707,30 @@
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "10dcfce151b967d20fde1b34ae6640712c3891bc"
+                "reference": "0a0fa9780f5d4e507415a065172d26a98d02047b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/10dcfce151b967d20fde1b34ae6640712c3891bc",
-                "reference": "10dcfce151b967d20fde1b34ae6640712c3891bc",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/0a0fa9780f5d4e507415a065172d26a98d02047b",
+                "reference": "0a0fa9780f5d4e507415a065172d26a98d02047b",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^9",
+                "doctrine/coding-standard": "^9 || ^11",
                 "ext-pdo": "*",
                 "ext-phar": "*",
                 "phpbench/phpbench": "^0.16 || ^1",
                 "phpstan/phpstan": "^1.4",
                 "phpstan/phpstan-phpunit": "^1",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
-                "vimeo/psalm": "^4.22"
+                "vimeo/psalm": "^4.30 || ^5.4"
             },
             "type": "library",
             "autoload": {
@@ -8707,7 +8757,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/instantiator/issues",
-                "source": "https://github.com/doctrine/instantiator/tree/1.4.1"
+                "source": "https://github.com/doctrine/instantiator/tree/1.5.0"
             },
             "funding": [
                 {
@@ -8723,7 +8773,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-03T08:28:38+00:00"
+            "time": "2022-12-30T00:15:36+00:00"
         },
         {
             "name": "facade/flare-client-php",
@@ -10944,5 +10994,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

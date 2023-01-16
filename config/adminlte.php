@@ -374,9 +374,9 @@ return [
                             'url'  => 'cargas/create',
                         ],
                         [
-                            'text' => 'Lista de Cargas',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'cargas/index',
+                            'text' => 'Reporte(s)',
+                            'icon'    => '',
+                            'url'  => 'cargas/reportes',
                         ],
 
 

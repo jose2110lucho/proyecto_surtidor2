@@ -29,8 +29,8 @@
                 <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                    <label for="combustible_nombre">Combustible </label>
-                    <select class="form-control" id="combustible_nombre" name="combustible_nombre" onchange="onChangeSelect()" >
+                    <label for="combustible_id">Combustible </label>
+                    <select class="form-control" id="combustible_id" name="combustible_id" >
                        @foreach ($lista_combustibles as $combustible)
                           <option value="{{ $combustible->id }}">{{ $combustible->nombre }}</option>
                        @endforeach
@@ -63,15 +63,16 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="precio_unitario">Precio Compra(Bs)</label>
-                        {{-- <select id="precio_unitario"name = "precio_unitario" class="form-control">  --}}
-                            <input type="number" name="precio_unitario" id="precio_unitario" placeholder="0.00" value="${{ number_format($combustible->precio_compra, 2) }}" class="form-control total" readonly="">
-                       {{--  value="{{ old('precio_unitario') }}" step=".01" min="0">
-                            @error('precio_unitario')
+                         <select id="precio_unitario"name = "precio_unitario" class="form-control"> 
+                            {{-- <input name="precio_unitario" class="form-control my-colorpicker1" value="{{$combustible->precio_compra}}"> --}}
+                            {{--  <input type="number" name="precio_unitario" id="precio_unitario" placeholder="2" value="${{ number_format($combustible->precio_compra, 2) }}" class="form-control total" readonly="">  --}}
+                            {{-- value="{{ old('precio_unitario') }}" step=".01" min="0"> --}}
+                            {{-- @error('precio_unitario')
                                 <small class="text-danger">*{{ $message }}</small>
-                            @enderror --}}
-                            {{-- @foreach ($lista_combustibles as $combustible )
+                            @enderror  --}}
+                            @foreach ($lista_combustibles as $combustible )
                              <option value="{{ $combustible->id }}"> {{ $combustible->precio_compra }}</option>
-                            @endforeach --}}
+                            @endforeach 
                         </select>
                 </div>
               </div>
@@ -147,7 +148,8 @@
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="addRow">Guardar </button> 
+                        
+                        <button type="button" class="btn btn-primary" id="editarModal">Guardar </button> 
                         </div>
                       </div>
                     
@@ -158,18 +160,18 @@
                     <thead>
                          <tr>
                             
-                            <th>nombre</th>
-                            <th>cantidad</th>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
                             <th>Precio</th>
-                            <th>subtotal</th>
-                            <th>accion</th>
+                            <th>Subtotal</th>
+                            <th>Accion</th>
                          </tr>
                      </thead>
                 </table>
                 <div class="row mb-0">
                     <div class="col-md-10 offset-md-2">
                         <button class="btn btn-success" id="guardar">Guardar</button>
-                            <a href="{{ url('cargas/index') }}" class="btn btn-secondary">
+                            <a href="{{ url('cargas/reportes') }}" class="btn btn-secondary">
                             Atras
                         </a>
                     </div>
@@ -204,7 +206,7 @@
             $('#addRow').on('click', function() {
                 let tanque_codigo = document.getElementById("tanque_codigo").value;
                 let cantidad_tanque = document.getElementById("cantidad_tanque").value;
-                let precio = document.getElementById("precio_unitario").value;;
+                let precio = document.getElementById("precio_unitario").value;//Aqui modifique precio_unitario por precio_compra
                 
                 t.row.add([tanque_codigo, cantidad_tanque, precio, cantidad_tanque * precio]).draw(false);
                 tanqueList.push({
@@ -228,9 +230,9 @@
 
              $("#guardar").click(function(e) {
                  var token = '{{ csrf_token() }}'; 
-                let combustible = document.getElementById("combustible_nombre").value;
+                let combustible = document.getElementById("combustible_id").value;
                 var data = {
-                    combustible_nombre: combustible,
+                    combustible_id: combustible,
                     _token: token,  
                     tanque_list: tanqueList,
                     total: total,
@@ -250,16 +252,6 @@
 
         });  
        
-    </script>
-    <script>
-       function onChangeSelect() {
-        $('#lista_combustibles').on('change', function(){
-        var precio_compra = $("option:selected",this).data('precio_compra');
-        $('#precio_compra').val(precio_compra);
-        console.log(precio_compra);
-    });
-
-};
     </script>
 @stop
 
