@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\StoreCargaRequest;
-use App\Http\Requests\UpdateCargaRequest;
+
+use App\Exports\VentasProductosExport;
 use App\Models\Tanque;
 use App\Models\DetalleCarga;
 use App\Models\NotaCarga;
@@ -10,14 +10,10 @@ use App\Models\Combustible;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\ModelNotFoundException; 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\URL;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Traits\ReporteTrait;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class NotaCargaController extends Controller
 {   use ReporteTrait;
@@ -88,24 +84,19 @@ class NotaCargaController extends Controller
         $nota_carga->fecha=$DateAndTime;
         $nota_carga->total=$total;
         $nota_carga->save();
-        
-        //return $nota_carga->id;
 
         foreach ($tanque_list as $tanque) {
             
             $refill = Tanque::where('codigo',$tanque['tanque_codigo'])->first();
-            //return $refill->id;
             $detalle_carga = new DetalleCarga();
             $detalle_carga->cantidad=$tanque['cantidad_tanque'];
             $detalle_carga->precio_unitario = $tanque['precio'];
             $detalle_carga->nota_cargas_id=$nota_carga->id;
             $detalle_carga->tanque_codigo=$refill->id;
-           //return $detalle_carga;
             $detalle_carga->save();
             
             
             $refill->cantidad_disponible = $refill->cantidad_disponible + $tanque['cantidad_tanque'];
-            //$refill->estado = true;
             $refill->save();
         }
 
@@ -167,6 +158,6 @@ class NotaCargaController extends Controller
     }
     public function exportHTML()
     {
-        return (new VentasProductosExport)->download('reportede ventas.html', \Maatwebsite\Excel\Excel::HTML);
+        return (new VentasProductosExport)->download('reporte de ventas.html', \Maatwebsite\Excel\Excel::HTML);
     }
 }

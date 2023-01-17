@@ -363,13 +363,13 @@ return [
             'can'     => 'admin.home',
             'submenu' => [
                 [
-                    'text' => 'Carga',
+                    'text' => 'Cargas',
                     'icon'    => 'fas fa-fw fa-solid fa-truck',
                     'url'  => 'cargas/*',
                     'submenu' => [
                         [
-                            'text' => 'Nueva Carga',
-                            'icon'    => 'fas fa-fw fa-plus',
+                            'text' => 'Registrar carga',
+                            'icon'    => '',
                             'url'  => 'cargas/create',
                         ],
                         [
@@ -383,18 +383,18 @@ return [
                 ],
 
                 [
-                    'text'    => 'Producto',
+                    'text'    => 'Productos',
                     'icon'    => 'fas fa-fw fa-clipboard-check',
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'Nueva Nota de Compra',
-                            'icon'    => 'fas fa-fw fa-plus',
+                            'text' => 'Registrar compra',
+                            'icon'    => '',
                             'url'  => 'nota_producto/create',
                         ],
                         [
-                            'text' => 'Lista de Notas de Compra',
-                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'text' => 'Reporte(s)',
+                            'icon'    => '',
                             'url'  => 'nota_producto',
                         ],
                     ],
@@ -406,12 +406,12 @@ return [
                     'submenu' => [
                         [
                             'text' => 'Nuevo proveedor',
-                            'icon'    => 'fas fa-fw fa-plus',
+                            'icon'    => '',
                             'url'  => 'proveedor/create',
                         ],
                         [
                             'text' => 'Lista proveedores',
-                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'icon'    => '',
                             'url'  => 'proveedor',
                         ],
                     ],
@@ -431,7 +431,7 @@ return [
                     'icon'    => 'fas fa-fire',
                     'submenu' => [
                         [
-                            'text' => 'Nuevo nota de venta',
+                            'text' => 'Registrar venta',
                             'icon'    => '',
                             'url'  => 'nota_venta_combustible/create',
                         ],

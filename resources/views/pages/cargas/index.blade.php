@@ -4,7 +4,7 @@
 <div class="bg-purple p-5">
   <div class="d-flex justify-content-between">
       <h4 class="card-title">
-          <strong>NOTA DE COMPRAS DE COMBUSTIBLES</strong>
+          <strong>REPORTE DE CARGAS DE COMBUSTIBLES</strong>
       </h4>
   </div>
 </div>
