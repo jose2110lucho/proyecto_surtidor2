@@ -113,7 +113,7 @@
                                 <a href="{{ url('cargas/index') }}" class="btn btn-secondary mr-2">
                                     Atras
                                 </a>
-                                <button class="btn btn-success" id="guardar">Guardar</button>
+                                <button class="btn btn-success" id="guardar" name="guardar">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -150,8 +150,9 @@
 
             $('#addRow').on('click', function() {
 
-                if ($('#cantidad_tanque').val() != 0 && $('#tanque_codigo').children('option').length != 0) {
-                    let tanque_codigo = document.getElementById("tanque_codigo").value;
+                if ($('#cantidad_tanque').val() != 0 && $('#tanque_codigo').children('option').length !=
+                    0) {
+                    let tanque_codigo = $("#tanque_codigo option:selected").text();
                     let cantidad_tanque = document.getElementById("cantidad_tanque").value;
                     let precio = document.getElementById("precio_unitario").value;;
 
@@ -167,40 +168,46 @@
                     $('#combustible').attr("disabled", true)
                     $('#cantidad_total').val("disabled", true)
 
-                    cantidad_total = 0;
-
-                    tanqueList.forEach((element) => {
-                        cantidad_total = cantidad_total + parseFloat(element.cantidad_tanque)
-                    });
-
                     updateCantidadTotal();
                 }
 
             });
 
             function updateCantidadTotal() {
+                cantidad_total = 0;
+
+                tanqueList.forEach((element) => {
+                    cantidad_total = cantidad_total + parseFloat(element.cantidad_tanque)
+                });
                 $('#cantidad_tanque').val("")
                 $('#cantidad_total').val(cantidad_total)
                 $('#precio_total').val($('#cantidad_total').val() * $('#precio_unitario').val())
             }
 
+            function cleanInputs() {
+                $('#cantidad_total').val("")
+                $('#precio_total').val("")
+            }
 
-            $('#example').on('click', 'button', function() {
-                let data_fila = t.row(this).data();
+
+            $('#example tbody').on('click', 'button', function() {
+                let data_fila = t.row($(this).parents('tr')).data();
+                console.log(data_fila)
                 total = total - data_fila[2] * data_fila[3];
-                t.row(this).remove().draw();
+                t.row(($(this).parents('tr'))).remove().draw();
                 tanqueList = tanqueList.filter(data => data.tanque_codigo != data_fila[0]);
 
                 if (tanqueList.length === 0) {
                     $('#combustible').attr("disabled", false)
                 }
+                updateCantidadTotal()
             });
 
             $("#guardar").click(function(e) {
                 var token = '{{ csrf_token() }}';
                 let combustible = document.getElementById("combustible").value;
                 var data = {
-                    combustible_nombre: combustible,
+                    combustible_id: combustible,
                     _token: token,
                     tanque_list: tanqueList,
                     total: total,
@@ -210,6 +217,12 @@
                     type: "post",
                     url: "{{ route('cargas.store') }}",
                     data: data,
+                    beforeSend: function() {
+                        $('#guardar').html(
+                            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+                        )
+                    },
+
                     success: function(cargas_id) {
                         window.location.href =
                             `{{ url('/cargas/show/${cargas_id}/') }}`;
@@ -223,7 +236,7 @@
                 $("#tanque_codigo").empty();
                 tanques.forEach((element) => {
                     if (element.combustible_id == $(this).val()) {
-                        $('#tanque_codigo').append(new Option(element.codigo, element.codigo));
+                        $('#tanque_codigo').append(new Option(element.codigo, element.id));
                     }
                 });
 
