@@ -363,7 +363,7 @@ return [
             'can'     => 'admin.home',
             'submenu' => [
                 [
-                    'text' => 'Carga', //compra de combustible 
+                    'text' => 'Carga',
                     'icon'    => 'fas fa-fw fa-solid fa-truck',
                     'url'  => 'cargas/*',
                     'submenu' => [
@@ -383,29 +383,8 @@ return [
                 ],
 
                 [
-                    'text' => 'Pedidos',
-                    'icon'    => 'fas fa-fire',
-                    'text' => 'Combustible',
-                    'url'  => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Nuevo Pedido',
-                            'icon'    => 'fas fa-fw fa-plus',
-                            'url'  => 'pedidos/create',
-                        ],
-                        [
-                            'text' => 'Lista de Pedidos',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'pedidos',
-                        ],
-
-
-                    ],
-                ],
-
-                [
                     'text'    => 'Producto',
-                    'icon'    => 'fas fa-clipboard-check',
+                    'icon'    => 'fas fa-fw fa-clipboard-check',
                     'url'     => '#',
                     'submenu' => [
                         [

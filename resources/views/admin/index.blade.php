@@ -22,7 +22,6 @@
                                             <td>{{ $user->name }}<p class="text-secondary my-auto">
                                                     {{ $user->role_name() }}</p>
                                             </td>
-                                            <td class="align-middle mx-auto">bomba: </td>
                                         </tr>
                                     @endforeach
 

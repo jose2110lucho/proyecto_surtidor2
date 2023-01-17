@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Traits\ReporteTrait;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class NotaCargaController extends Controller
 {   use ReporteTrait;
@@ -47,7 +48,7 @@ class NotaCargaController extends Controller
                         }
                     })->toJson();
             }
-            
+    
             return view('pages/cargas/reportes');
             
         } 
@@ -60,15 +61,10 @@ class NotaCargaController extends Controller
      */
     public function create()
     {  
-        $lista_combustibles = Combustible::all();//combustibles
-        $lista_tanques = Tanque::all(); //productos
-      /*  $combustible = Combustible::/* join('combustibles','combustibles.precio_compra','combustibles.id')
-                                           ->where('combustibles.id','=', $id)
-                                           ->select('combustibles.*','combustibles.precio_compra')->first();  */
-                                           /* when(request()->input('lista_combustibles_id'),function($query){
-                                            $query->where('lista_combustibles_id',request()->input('lista_combustibles_id'));
-                                           })->pluck('id','precio_compra'); */
-        return view('/pages/cargas/create',['lista_combustibles'=>$lista_combustibles,'lista_tanques'=>$lista_tanques]);
+        $combustibles = Combustible::all();
+        $tanques = Tanque::all(); 
+
+        return view('/pages/cargas/create',compact('combustibles','tanques'));
     }
 
     /**
