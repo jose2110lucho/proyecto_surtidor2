@@ -186,6 +186,7 @@
                 total = total - data_fila[2] * data_fila[3];
                 t.row($(this).parents('tr')).remove().draw();
                 productoList = productoList.filter(data => data.producto_id != data_fila[0]);
+                console.log(productoList)
             });
 
             //-------------------------------------------------------------------------------------------------------------------------

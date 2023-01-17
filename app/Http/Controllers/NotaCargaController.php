@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\URL;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class NotaCargaController extends Controller
 {
@@ -35,7 +36,6 @@ class NotaCargaController extends Controller
                 $combustibles = DB::select('select * from listaCombustibles(?,?,?,?,?)', [$combustible_id, $combustible_nombre,$fecha_inicio, $fecha_fin, $combustible_tipo]);
                 return DataTables::of($combustibles)->make(true);
             }
-            $lista_combustibles = Combustible::all();
             $lista_nota_carga = NotaCarga::join('combustibles','nota_cargas.combustible_nombre','combustibles.id')
             ->select('nota_cargas.*','combustibles.nombre')->get();
             return view('pages/cargas/index',['lista_nota_carga'=>$lista_nota_carga]); 
@@ -55,15 +55,10 @@ class NotaCargaController extends Controller
      */
     public function create()
     {  
-        $lista_combustibles = Combustible::all();//combustibles
-        $lista_tanques = Tanque::all(); //productos
-      /*  $combustible = Combustible::/* join('combustibles','combustibles.precio_compra','combustibles.id')
-                                           ->where('combustibles.id','=', $id)
-                                           ->select('combustibles.*','combustibles.precio_compra')->first();  */
-                                           /* when(request()->input('lista_combustibles_id'),function($query){
-                                            $query->where('lista_combustibles_id',request()->input('lista_combustibles_id'));
-                                           })->pluck('id','precio_compra'); */
-        return view('/pages/cargas/create',['lista_combustibles'=>$lista_combustibles,'lista_tanques'=>$lista_tanques]);
+        $combustibles = Combustible::all();
+        $tanques = Tanque::all(); 
+
+        return view('/pages/cargas/create',compact('combustibles','tanques'));
     }
 
     /**
