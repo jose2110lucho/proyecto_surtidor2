@@ -162,9 +162,11 @@ Route::resource('pedidos', PedidoController::class);
 
 
 //-----------------NOTACARGA----------------------//
-Route::get('cargas/index',[NotaCargaController::class,'index'])->name('cargas.index');
+//Route::get('cargas/index',[NotaCargaController::class,'index'])->name('cargas.index');
 Route::get('cargas/create',[NotaCargaController::class,'create'])->name('cargas.create');
 Route::post('cargas',[NotaCargaController::class,'store'])->name('cargas.store');
+Route::get('cargas/reportes',[NotaCargaController::class,'index'])->name('cargas.reportes');
+Route::get('pages/cargas/reportes/export-html', [NotaCargaController::class, 'exportHTML'])->name('cargas.export.html');
 //-----------------DETALLECARGA----------------------//
 Route::get('cargas/show/{nota_carga_id}',[NotaCargaController::class,'show'])->name('cargas.show');
 

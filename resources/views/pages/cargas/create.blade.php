@@ -149,6 +149,7 @@
             });
 
             $('#addRow').on('click', function() {
+
                 if ($('#cantidad_tanque').val() != 0 && $('#tanque_codigo').children('option').length != 0) {
                     let tanque_codigo = document.getElementById("tanque_codigo").value;
                     let cantidad_tanque = document.getElementById("cantidad_tanque").value;
@@ -174,6 +175,7 @@
 
                     updateCantidadTotal();
                 }
+
             });
 
             function updateCantidadTotal() {

@@ -170,10 +170,9 @@ return [
     'classes_auth_card' => 'card-outline card-primary',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
+    'classes_auth_footer' => 'd-none',
     'classes_auth_icon' => '',
     'classes_auth_btn' => 'btn-flat btn-primary',
-
     /*
     |--------------------------------------------------------------------------
     | Admin Panel Classes
@@ -374,9 +373,9 @@ return [
                             'url'  => 'cargas/create',
                         ],
                         [
-                            'text' => 'Lista de Cargas',
-                            'icon'    => 'fas fa-fw fa-list-ul',
-                            'url'  => 'cargas/index',
+                            'text' => 'Reporte(s)',
+                            'icon'    => '',
+                            'url'  => 'cargas/reportes',
                         ],
 
 
