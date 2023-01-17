@@ -20,8 +20,8 @@ class PremioSeeder extends Seeder
         $premio->puntos_requeridos = '500';
         $premio->stock = '20';
         $premio->estado = true;
-        $premio->fecha_inicio = '01/11/2022';
-        $premio->fecha_fin = '08/11/2022';
+        $premio->fecha_inicio = '2022-11-01';
+        $premio->fecha_fin = '2022-12-01';
 
         $premio->save();
 
@@ -31,8 +31,8 @@ class PremioSeeder extends Seeder
         $premio->puntos_requeridos = '1000';
         $premio->stock = '10';
         $premio->estado = true;
-        $premio->fecha_inicio = '20/10/2022';
-        $premio->fecha_fin = '20/11/2022';
+        $premio->fecha_inicio = '2023-01-10';
+        $premio->fecha_fin = '2023-01-28';
 
         $premio->save();
     }

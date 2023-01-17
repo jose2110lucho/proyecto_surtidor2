@@ -1,8 +1,8 @@
 @extends('layouts.reportes')
 
-@section('title', 'Reporte de compras de Combustible')
+@section('title', 'Reporte de cargas de Combustible')
 
-@section('table-title', 'COMPRA DE COMBUSTIBLE')
+@section('table-title', 'REPORTE DE CARGAS')
 
 @section('filters')
     <div class="col-auto mb-n5">
