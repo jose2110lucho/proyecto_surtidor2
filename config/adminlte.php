@@ -648,11 +648,11 @@ return [
                     'icon'    => 'far fa-eye',
                     'url'  => 'bitacora',
                 ],
-                [
+               /*  [
                     'text' => 'Backup',
                     'icon'    => 'fas fa-fw fa-save',
                     'url'  => 'backups',
-                ],
+                ], */
             ],
         ],
         //------------------------------------------------------------------

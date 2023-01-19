@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ProductoController;
 use App\Http\Controllers\Api\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BombaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,4 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::get('tanques',[TanqueController::class, 'indexApi']);
 //Route::apiResource('tanques', TanqueController::class);
+Route::get('bombas',[BombaController::class, 'indexApi']);
