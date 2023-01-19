@@ -28,8 +28,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BombaSeeder::class);
         $this->call(UserBombaSeeder::class);
         \App\Models\Vehiculo::factory(100)->create();
-        \App\Models\Producto::factory(50)->create();
-        \App\Models\Premio::factory(5)->create();
+        $this->call(ProductoSeeder::class);
+        $this->call(PremioSeeder::class);
         $this->call(VentaProductoSeeder::class);
         $this->call(TurnoSeeder::class);
         $this->call(UserTurnoSeeder::class);

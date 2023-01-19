@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-3">
         <label>Stock</label>
-        <p class="form-control my-colorpicker1">{{ ($premio->stock == 0) ? 'Agotado' : $premio->stock }}</p>
+        <p class="form-control my-colorpicker1">{{ $premio->stock == 0 ? 'Agotado' : $premio->stock }}</p>
     </div>
     <div class="col-md-3">
         <label>Estado</label>
@@ -21,20 +21,27 @@
     <div class="col-md-3">
         <label>Fecha de inicio</label>
         <p name="descripcion" class="border rounded p-2">
-            {{ \Carbon\Carbon::parse($premio->fecha_inicio)->format('d-m-Y H:i')}}
+            {{ \Carbon\Carbon::parse($premio->fecha_inicio)->format('d-m-Y H:i') }}
         </p>
     </div>
     <div class="col-md-3">
         <label>Finalización</label>
-        <p class="border rounded p-2">{{ is_null($premio->fecha_fin) ? 'Indefinido' : \Carbon\Carbon::parse($premio->fecha_fin)->format('d-m-Y H:i') }}</p>
+        <p class="border rounded p-2">
+            {{ is_null($premio->fecha_fin) ? 'Indefinido' : \Carbon\Carbon::parse($premio->fecha_fin)->format('d-m-Y H:i') }}
+        </p>
     </div>
 
     <div class="col-md-6">
         <label>Producto</label>
         <div class="input-group">
-            <p class="form-control" style="width: 50%">
-                {{ is_null($premio->producto_id) ? 'Sin producto' : $premio->producto->nombre }}
-            </p>
+            @if ($premio->producto_id)
+                <a class="form-control" href="{{route('producto.show', $premio->producto_id)}}" style="width: 50%">
+                     {{ $premio->producto->nombre }}
+                </a>
+            @else
+            <p class="form-control" style="width: 50%">Sin producto</p>
+            @endif
+
             <div class="input-group-prepend">
                 <span class="input-group-text" id="">uds.</span>
             </div>

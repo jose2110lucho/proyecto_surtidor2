@@ -96,11 +96,11 @@ class ProductoController extends Controller
         $image = $this->imageDefault;
 
         if ($producto->imagen) {
-            $expiresAt = Carbon::now()->addSeconds(5);
+            $expiresAt = Carbon::now()->addSeconds(10);
             $imageReference = app('firebase.storage')->getBucket()->object($producto->imagen);
             if ($imageReference->exists()) {
                 $image = $imageReference->signedUrl($expiresAt);
-            };
+            }
         }
         return view('modulo_inventario.producto.show', compact('producto', 'image'));
     }

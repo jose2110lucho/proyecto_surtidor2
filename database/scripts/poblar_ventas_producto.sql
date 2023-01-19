@@ -4,9 +4,9 @@ c_detalle int = 1;
 venta_id int;
 nro_detalles int = 0;
 producto_id int;
-producto_precio decimal(8,2);
+producto_precio decimal(8, 2);
 producto_cantidad int;
-monto_total decimal(8,2) = 0;
+monto_total decimal(8, 2) = 0;
 fecha timestamp = '2022-01-01';
 BEGIN while c_nota <= 2000 LOOP monto_total = 0;
 c_detalle = 1;
@@ -17,7 +17,7 @@ while c_detalle <= nro_detalles LOOP producto_cantidad = floor((random() * 2) + 
 SELECT id,
     precio_venta
 FROM producto into producto_id,
-    producto_precio OFFSET floor((random() * 49) + 1)
+    producto_precio OFFSET floor((random() * 15) + 1)
 LIMIT 1;
 monto_total = (producto_cantidad * producto_precio) + monto_total;
 INSERT INTO detalle_nota_venta_producto (
