@@ -182,9 +182,9 @@ Route::get('/categorias-html',[CategoriaController::class, 'categoriahtml'])->na
 Route::get('user-bombas/index',[UserBombaController::class, 'index'])->name('userbombas.index');
 
 //VENTA COMBUSTIBLE
-Route::get('venta/combustible/create/{bomba}',[VentaCombustibleController::class, 'create'])->name('venta.combustible.create');
+/* Route::get('venta/combustible/create/{bomba}',[VentaCombustibleController::class, 'create'])->name('venta.combustible.create');
 Route::get('venta/combustible/bomba',[VentaCombustibleController::class, 'bombasList'])->name('venta.combustible.bombasList');
-Route::post('venta/combustible/bomba_v/{bomba}',[VentaCombustibleController::class, 'vendido'])->name('venta.combustible.bomba_v');
+Route::post('venta/combustible/bomba_v/{bomba}',[VentaCombustibleController::class, 'vendido'])->name('venta.combustible.bomba_v'); */
 
 //Bitacora
 Route::resource('bitacora', BitacoraController::class)->middleware('auth');

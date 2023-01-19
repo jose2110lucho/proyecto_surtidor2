@@ -34,11 +34,15 @@
                     <td>{{$role->id}}</td>
                     <td>{{$role->name}}</td>
                     <td width="10px">
-                        <a class="btn btn-primary btn-sm" href="{{route('admin.roles.edit', $role)}}">Editar</a>
+                        <a class="btn btn-primary btn-sm" href="{{route('admin.roles.edit', $role)}}">
+                            <i class="fa fa-pen"></i>
+                        </a>
                     </td>
 
                     <td width="10px">
-                        <a class="btn btn-danger btn-sm" href="{{route('admin.roles.destroy', $role)}}">Eliminar</a>
+                        <a class="btn btn-danger btn-sm" href="{{route('admin.roles.destroy', $role)}}">
+                            <i class="fa fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 @endforeach
