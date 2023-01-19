@@ -63,8 +63,10 @@ return [
     |
     */
 
+
     'logo' => '<b><span class=" font-italic font-weight-bolder text-monospace">SOFTIDOR</span></b>',
     'logo_img' => 'vendor/adminlte/dist/img/softidor logo.png',
+
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -305,11 +307,11 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        [
+        /* [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
-        ],
+        ], */
 
         //-------------------modulo inventario---------------------------------
         [
@@ -320,16 +322,21 @@ return [
                     'text' => 'Productos',
                     'icon'    => 'fas fa-fw fa-box-open',
                     'url'  => 'producto/*',
+                   
                     'submenu' => [
                         [
                             'text' => 'Nuevo Producto',
                             'icon'    => 'fas fa-fw fa-plus',
                             'url'  => 'producto/create',
+                            
+                            
                         ],
                         [
                             'text' => 'Almacen',
                             'icon'    => 'fas fa-fw fa-warehouse',
                             'url'  => '/producto',
+                          
+                            
                         ],
                     ],
                 ],
@@ -337,16 +344,19 @@ return [
                     'text'    => 'Premios',
                     'icon'    => 'fas fa-fw fa-gift',
                     'url'  => 'premios/*',
+                    
                     'submenu' => [
                         [
                             'text' => 'Nuevo premio',
                             'icon'    => 'fas fa-fw fa-plus',
                             'url'  => 'premios/create',
+                            'can' => 'premios.create',
                         ],
                         [
                             'text' => 'Lista de premios',
                             'icon'    => 'fas fa-fw fa-list-ul',
                             'url'  => 'premios',
+                            
                         ],
                     ],
                 ],
@@ -360,7 +370,6 @@ return [
         [
             'text'    => 'Compras',
             'icon'    => 'fas fa-fw fa-shopping-bag',
-            'can'     => 'admin.home',
             'submenu' => [
                 [
                     'text' => 'Cargas',
@@ -423,7 +432,6 @@ return [
         [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-fw fa-dollar-sign',
-            //'can'     => 'venta.combustible.create',
             'submenu' => [
 
                 [
@@ -573,18 +581,28 @@ return [
                 ],
 
                 [
-                    'text'    => 'Roles & Privilegios',
+                    'text'    => 'Roles & Permisos',
                     'route'   => 'admin.roles.index',
                     'icon'    => 'fas fa-fw fa-handshake',
                     'can'     => 'admin.roles.index',
                 ],
 
                 [
-                    'text'    => 'Asistencias & Turnos',
-                    'icon'    => 'fas fa-fw fa-calendar-plus',
+                    'text'    => 'Turnos',
+                    'icon'    => 'fas fa-fw fa-stopwatch',
                     'url'     => '#',
                     'submenu' => [
                         [
+                            'text' => 'nuevo turno',
+                            'icon'    => 'fas fa-fw fa-plus',
+                            'url'  => 'turno/create',
+                        ],
+                        [
+                            'text' => 'lista de turnos',
+                            'icon'    => 'fas fa-fw fa-list-ul',
+                            'url'  => 'turno',
+                        ],
+                        /* [
                             'text'    => 'Asistencia',
                             'icon'    => 'fas fa-fw fa-clipboard',
                             'url'     => '#',
@@ -595,8 +613,8 @@ return [
                                     'url'  => 'asistencia',
                                 ],
                             ],
-                        ],
-                        [
+                        ], */
+                        /* [
                             'text'    => 'Turnos',
                             'icon'    => 'fas fa-fw fa-stopwatch',
                             'url'     => '#',
@@ -612,7 +630,7 @@ return [
                                     'url'  => 'turno',
                                 ],
                             ],
-                        ],
+                        ], */
                     ],
                 ],
 

@@ -9222,6 +9222,7 @@
         },
         {
             "name": "laravel/sail",
+
             "version": "v1.18.1",
             "source": {
                 "type": "git",
@@ -9232,6 +9233,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sail/zipball/a64f78a4ab86c04a4c5de39bea20a8d36ad48a22",
                 "reference": "a64f78a4ab86c04a4c5de39bea20a8d36ad48a22",
+
                 "shasum": ""
             },
             "require": {
@@ -9278,7 +9280,9 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
+
             "time": "2023-01-11T14:35:04+00:00"
+
         },
         {
             "name": "mockery/mockery",

@@ -18,34 +18,45 @@ class RoleSeeder extends Seeder
     {
         $role1 = Role::create(['name' => 'Administrador']);
         $role2 = Role::create(['name' => 'Empleado']);
+        
+        //permisos para un empleado encargado de una bomba
+        // Modulo Inventario
+            //productos
+            //
+            $role2->givePermissionTo('productos'); // ver todo el caso de uso producto
+            //
+            $role2->givePermissionTo('producto.index');
+            $role2->givePermissionTo('producto.create');
+            $role2->givePermissionTo('producto.edit');
+            $role2->givePermissionTo('producto.destroy');
+            //premios
+            //
+            $role2->givePermissionTo('premios'); // ver todo el caso de uso premios
+            //
+            $role2->givePermissionTo('premios.index');
+            $role2->givePermissionTo('premios.create');
+            $role2->givePermissionTo('premios.edit');
+            $role2->givePermissionTo('premios.destroy');
+        // Modulo Ventas     
+            //combustible
+            $role2->givePermissionTo('nota_venta_combustible.index');
+            $role2->givePermissionTo('nota_venta_combustible.create');
+            $role2->givePermissionTo('nota_venta_combustible.show');
+            //productos
+            $role2->givePermissionTo('nota_venta_producto.index');
+            $role2->givePermissionTo('nota_venta_producto.create');
+            $role2->givePermissionTo('nota_venta_producto.show');
+            //-----------------------------------------------------------------------------
+            //clientes
+            $role2->givePermissionTo('clientes.index');
+            $role2->givePermissionTo('clientes.create');
+            $role2->givePermissionTo('clientes.edit');
+            //vehiculos
+            $role2->givePermissionTo('vehiculos.index');
+            $role2->givePermissionTo('vehiculos.show');
+            $role2->givePermissionTo('vehiculos.edit');
+            $role2->givePermissionTo('vehiculos.destroy');
+            //-----------------------------------------------------------------------------    
 
-        Permission::create(['name' => 'admin.home', 'description'=>'Ver dashboard'])->syncRoles([$role1]);
-///////////////////CLIENTES///////////////////////
-        Permission::create(['name' => 'clientes.index', 'description'=>'Ver lista de clientes'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'clientes.create', 'description'=>'Crear nuevo cliente'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'clientes.edit', 'description'=>'Editar cliente'])->syncRoles([$role1, $role2]);
-
-///////////////////EMPLEADOS///////////////////////
-        Permission::create(['name' => 'empleados.index', 'description'=>'Ver lista de usuarios'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'empleados.create', 'description'=>'Crear nuevo empleado'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'empleados.edit', 'description'=>'Editar Empleado'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'empleados.destroy', 'description'=>'Eliminar Empleado'])->syncRoles([$role1]);
-        Permission::create(['name' => 'empleados.bombas', 'description'=>'Ver bombas'])->syncRoles([$role1]);
-
-///////////////////ROLES///////////////////////
-        Permission::create(['name'=>'admin.roles.index', 'description'=>'Ver lista de Roles'])->syncRoles([$role1]);
-        Permission::create(['name'=>'admin.roles.create', 'description'=>'Crear Rol'])->syncRoles([$role1]);
-        Permission::create(['name'=>'admin.roles.edit', 'description'=>'editar Rol'])->syncRoles([$role1]);
-        Permission::create(['name'=>'admin.roles.destroy', 'description'=>'Eliminar Rol'])->syncRoles([$role1]);
-
-///////////////////LISTA DE BOMBAS///////////////////////
-Permission::create(['name'=>'userbombas.index', 'description'=>'Ver Bombas'])->syncRoles([$role1,$role2]);
-
-///////////////////VENTAS DE COMBUSTIBLE///////////////////////
-Permission::create(['name'=>'venta.combustible.create', 'description'=>'crear venta'])->syncRoles([$role1,$role2]);
-
-///////////////////TANQUE///////////////////////
-Permission::create(['name'=>'tanques.recargar', 'description'=>'recargar tanque'])->syncRoles([$role1,$role2]);
-Permission::create(['name'=>'tanques.llenar', 'description'=>'llenar tanque'])->syncRoles([$role1,$role2]);
     }
 }

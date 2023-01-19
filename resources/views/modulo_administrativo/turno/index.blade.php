@@ -49,10 +49,10 @@
                                  <i class="fa fa-user-plus"></i>
                           </a> 
 
-                          <a style="text-align: right" href="{{route('asistencia.create',$turno)}}"
+                          {{-- <a style="text-align: right" href="{{route('asistencia.create',$turno)}}"
                             class="btn btn-secondary">
                             <i class="fas fa-fw fa-stopwatch"></i>
-                          </a>
+                          </a> --}}
 
                          </div>
                     </td>

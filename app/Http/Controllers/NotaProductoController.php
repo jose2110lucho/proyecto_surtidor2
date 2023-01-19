@@ -87,15 +87,18 @@ class NotaProductoController extends Controller
      */
     public function show($id)
     {
+       
+        $nota_producto_id = NotaProducto::where('nota_productos.id','=', $id)->select('nota_productos.id')->first();
+
         $nota_producto = NotaProducto::join('proveedors','nota_productos.proveedor_id','proveedors.id')
                                            ->where('nota_productos.id','=', $id)
-                                           ->select('nota_productos.*','proveedors.nombre')->first();
-        //dd($nota_producto);                                   
+                                           ->select('nota_productos.*','proveedors.*')->first();
+                                       
         $lista_productos = DetalleProducto::join('producto','detalle_productos.producto_id','producto.id')
                                             ->where('detalle_productos.nota_producto_id','=',$id)
                                             ->select('detalle_productos.*','producto.nombre')->get();                                   
-        //dd($lista_productos);                                    
-        return view('modulo_compras.compra_producto.show',compact('nota_producto','lista_productos'));
+                                       
+        return view('modulo_compras.compra_producto.show',compact('nota_producto','lista_productos','nota_producto_id'));
     }
 
     /**

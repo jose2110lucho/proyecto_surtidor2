@@ -15,12 +15,12 @@
     <div class="card-body">
     <!--inicio campo nombre del cliente-->
     <ul class="list-group" style="text-align:left">
-        <li class="list-group-item" style="font-size: x-large"> <strong>Nombre del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->nombre }} {{ $nota_venta_combustible->vehiculo->cliente->apellido }}</li>
-        <li class="list-group-item" style="font-size: x-large"><strong>CI del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->ci }}</li>
-        <li class="list-group-item" style="font-size: x-large"> <strong>Telefono del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->telefono }}</li>
-        <li class="list-group-item" style="font-size: x-large"><strong>Vendedor:</strong> {{ $nota_venta_combustible->userBombas->user->name }}</li>
-        <li class="list-group-item" style="font-size: x-large"><strong>Bomba:</strong> {{ $nota_venta_combustible->userBombas->bomba->nombre }}</li>
-        <li class="list-group-item" style="font-size: x-large"><strong>Tanque:</strong> {{ $nota_venta_combustible->userBombas->bomba->tanque->descripcion }}</li>
+        <li class="list-group-item" style="font-size: medium"> <strong>Nombre del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->nombre }} {{ $nota_venta_combustible->vehiculo->cliente->apellido }}</li>
+        <li class="list-group-item" style="font-size: medium"><strong>CI del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->ci }}</li>
+        <li class="list-group-item" style="font-size: medium"> <strong>Telefono del cliente:</strong> {{ $nota_venta_combustible->vehiculo->cliente->telefono }}</li>
+        <li class="list-group-item" style="font-size: medium"><strong>Vendedor:</strong> {{ $nota_venta_combustible->userBombas->user->name }}</li>
+        <li class="list-group-item" style="font-size: medium"><strong>Bomba:</strong> {{ $nota_venta_combustible->userBombas->bomba->nombre }}</li>
+        <li class="list-group-item" style="font-size: medium"><strong>Tanque:</strong> {{ $nota_venta_combustible->userBombas->bomba->tanque->descripcion }}</li>
       </ul>
     <!--fin campo nombre del cliente-->
     </div>
@@ -34,20 +34,20 @@
                             <caption></caption>
                             <thead class="table-white bg-orange">
                                 <tr>
-                                    <th scope="col"><h4><strong>#</strong></h4></th>
-                                    <th scope="col"><h4><strong>Combustible</strong></h4></th>
-                                    <th scope="col"><h4><strong>Cantidad(Lts)</strong></h4></th>
-                                    <th scope="col"><h4><strong>Precio(Bs)</strong></h4></th>
-                                    <th scope="col"><h4><strong>Total(Bs)</strong></h4></th>
+                                    <th scope="col"><strong>#</strong></th>
+                                    <th scope="col"><strong>Combustible</strong></th>
+                                    <th scope="col"><strong>Cantidad(Lts)</strong></th>
+                                    <th scope="col"><strong>Precio(Bs)</strong></th>
+                                    <th scope="col"><strong>Total(Bs)</strong></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><h4>{{$combustible->id}}</h4></td>
-                                    <td><h4>{{$combustible->nombre}}</h4></td>
-                                    <td><h4>{{$nota_venta_combustible->cantidad_combustible}}</h4></td>
-                                    <td><h4>{{$combustible->precio_venta}}</h4></td>
-                                    <td><h4>{{$nota_venta_combustible->total}}</h4></td>
+                                    <td>{{$combustible->id}}</td>
+                                    <td>{{$combustible->nombre}}</td>
+                                    <td>{{$nota_venta_combustible->cantidad_combustible}}</td>
+                                    <td>{{$combustible->precio_venta}}</td>
+                                    <td>{{$nota_venta_combustible->total}}</td>
                                 </tr> 
                             </tbody>
                         </table>
@@ -72,4 +72,5 @@
                 </div>
         </div>
     </div>
+</div>
 @stop
