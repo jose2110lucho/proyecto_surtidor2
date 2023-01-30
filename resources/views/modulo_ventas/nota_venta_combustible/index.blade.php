@@ -39,12 +39,11 @@
               
 
                     <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            
+                        <div class="btn-group" role="group" aria-label="Basic example"> 
                             <a style="text-align: right" href="{{ url('nota_venta_combustible/' . $nota_venta_combustible->id . '/show')}}"
-                                class="btn btn-success">
-                                <i class="fa fa-eye"></i>
-                            </a>  
+                              class="btn btn-success">
+                              <i class="fa fa-eye"></i>
+                          </a>   
                          </div>
                     </td>
                     

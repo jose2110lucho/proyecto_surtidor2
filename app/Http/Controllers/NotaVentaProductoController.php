@@ -75,6 +75,7 @@ class NotaVentaProductoController extends Controller
         $fecha_hora = new DateTime();
         $fecha_hora->setTimezone(new DateTimeZone('America/La_Paz'));
         $DateAndTime = $fecha_hora->format("Y-m-d H:i:s");
+        
 
 
         $nota_venta_producto =  new NotaVentaProducto();
@@ -117,7 +118,7 @@ class NotaVentaProductoController extends Controller
 
         $nota_venta_producto = NotaVentaProducto::join('clientes', 'nota_venta_producto.cliente_id', 'clientes.id')
             ->where('nota_venta_producto.id', '=', $id)
-            ->select('nota_venta_producto.*', 'clientes.nombre')->first();
+            ->select('nota_venta_producto.*', 'clientes.*')->first();
 
 
         $detalles = DetalleNotaVentaProducto::join('producto', 'detalle_nota_venta_producto.producto_id', 'producto.id')

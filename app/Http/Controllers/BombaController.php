@@ -27,6 +27,13 @@ class BombaController extends Controller
         return view('pages.bombas.index',compact('bombas'));
     }
 
+    public function indexApi()
+    {
+        $tanques = Bomba::orderby('id', 'asc')->get();
+        return response($tanques, 200);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

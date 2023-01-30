@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Tanque;
 use App\Http\Requests\StoreTanqueRequest;
 use App\Http\Requests\UpdateTanqueRequest;
@@ -33,11 +33,16 @@ class TanqueController extends Controller
     /***********API-Controller********************************/
     public function indexApi()
     {
-        //$tanques = Tanque::orderby('codigo', 'desc')->get();
-        $tanques = Tanque::orderby('id', 'asc')->get();
+        $sql = 'select tanques.id, tanques.codigo, tanques.descripcion, tanques.capacidad,
+        tanques.cantidad_disponible, tanques.cantidad_min, tanques.estado,
+        tanques.fecha_carga, combustibles.nombre
+        from tanques, combustibles
+        where tanques.combustible_id = combustibles.id
+        order by tanques.id';
+
+        $tanques = DB::select($sql);
+
         return response($tanques, 200);
-        //return $tanques;
-        return view('pages.tanques.index', compact('tanques'));
     }
 
     /**
